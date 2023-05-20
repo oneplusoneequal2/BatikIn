@@ -1,7 +1,8 @@
-package com.capstone.batikin
+package com.capstone.batikin.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.capstone.batikin.R
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -197,7 +197,6 @@ fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Uni
 @Preview(showBackground = true)
 @Composable
 fun InputFieldPreview() {
-
     BatikInTheme {
         var name by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }

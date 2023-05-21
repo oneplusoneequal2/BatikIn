@@ -36,7 +36,7 @@ fun Register() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var isButtonEnabled by remember { mutableStateOf(false) }
+//    var isButtonEnabled by remember { mutableStateOf(false) }
 
     val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
     var isEmailValid by remember { mutableStateOf(true) }

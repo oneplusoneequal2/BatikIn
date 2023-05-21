@@ -1,16 +1,13 @@
 package com.capstone.batikin.ui
 
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -201,6 +198,42 @@ fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Uni
 @Composable
 fun InputFieldPreview() {
     BatikInTheme {
-      Register()
+        var name by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var confirmPassword by remember { mutableStateOf("") }
+
+        val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
+        var isEmailValid by remember { mutableStateOf(true) }
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+        ){
+            NameTextField(name = name, onNameChange = { newName -> name = newName })
+
+            Spacer(Modifier.height(8.dp))
+
+            EmailTextField(email = email, onEmailChange = { newValue ->
+                email = newValue
+                isEmailValid = newValue.matches(emailRegex)
+            })
+
+            Spacer(Modifier.height(8.dp))
+
+            PasswordTextField(
+                password = password,
+                onPasswordChange = { password = it }
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            ConfirmPasswordTextField(
+                password = confirmPassword,
+                onPasswordChange = { confirmPassword = it }
+            )
+
+        }
+
     }
 }

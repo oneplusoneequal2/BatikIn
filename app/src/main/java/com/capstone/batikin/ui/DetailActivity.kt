@@ -68,11 +68,25 @@ fun DetailApp() {
             modifier = Modifier.padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Rp. 90.000",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(horizontalArrangement = Arrangement.spacedBy(200.dp)) {
+                Text(
+                    text = "Rp. 90.000",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                FloatingActionButton(
+                    onClick = {},
+                    backgroundColor = colorResource(id = R.color.orange_light),
+                    contentColor = Color.White,
+                    modifier = Modifier.width(34.dp).height(34.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_favorite_border_24),
+                        contentDescription = null
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "Batik Mega Mendung Warna Biru"

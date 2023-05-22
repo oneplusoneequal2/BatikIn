@@ -1,6 +1,8 @@
 package com.capstone.batikin.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -8,10 +10,13 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
+const val emailDummy = "test@gmail.com"
+const val passDummy = "12345678"
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +41,8 @@ fun Login(){
 
     val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
     var isEmailValid by remember { mutableStateOf(true) }
+
+    val context = LocalContext.current
 
     Surface(Modifier.fillMaxSize()) {
         Column(
@@ -70,7 +77,13 @@ fun Login(){
             Spacer(Modifier.height(50.dp))
 
             Button(
-                onClick = { /* pas tombol diteken ngapain */ },
+                onClick = {
+                          if (email == emailDummy && password == passDummy) {
+                              context.startActivity(Intent(context, MainActivity::class.java))
+                          } else {
+                              Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
+                          }
+                },
 //                enabled = isButtonEnabled,
                 enabled = true,
                 colors = ButtonDefaults.buttonColors(

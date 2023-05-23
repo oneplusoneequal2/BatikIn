@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui
+package com.capstone.batikin.ui.screen.register
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,6 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capstone.batikin.ui.ConfirmPasswordTextField
+import com.capstone.batikin.ui.EmailTextField
+import com.capstone.batikin.ui.NameTextField
+import com.capstone.batikin.ui.PasswordTextField
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 

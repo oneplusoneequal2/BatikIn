@@ -11,4 +11,6 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="logo_img">BatikIn Logo</string>
     <string name="hint_name">Nama</string>
+    <string name="title_history">History</string>
+    <string name="title_wishlist">Wishlist</string>
 </resources>

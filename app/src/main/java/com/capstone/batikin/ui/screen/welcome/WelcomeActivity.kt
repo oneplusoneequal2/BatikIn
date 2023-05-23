@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui
+package com.capstone.batikin.ui.screen.welcome
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.batikin.R
+import com.capstone.batikin.ui.screen.login.LoginActivity
+import com.capstone.batikin.ui.screen.register.RegisterActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 class WelcomeActivity : ComponentActivity() {

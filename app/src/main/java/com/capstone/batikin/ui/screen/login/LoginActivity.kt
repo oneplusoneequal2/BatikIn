@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui
+package com.capstone.batikin.ui.screen.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capstone.batikin.ui.EmailTextField
+import com.capstone.batikin.ui.PasswordTextField
+import com.capstone.batikin.ui.screen.main.MainActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 const val emailDummy = "test@gmail.com"

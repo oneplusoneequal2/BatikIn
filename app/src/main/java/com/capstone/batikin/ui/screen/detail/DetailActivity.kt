@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui
+package com.capstone.batikin.ui.screen.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

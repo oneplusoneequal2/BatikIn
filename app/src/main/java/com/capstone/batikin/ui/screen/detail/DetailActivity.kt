@@ -33,7 +33,6 @@ import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 class DetailActivity : ComponentActivity() {
 
-    // nanti dihapus
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

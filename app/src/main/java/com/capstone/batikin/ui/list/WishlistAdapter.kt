@@ -32,8 +32,14 @@ class WishlistAdapter(private val dataList: ArrayList<Batik>) : RecyclerView.Ada
                 binding.tvPriceWishlist.text = this.price.toString()
                 if (this.isFavourite) {
                     binding.ivHeartWishlist.setImageResource(R.drawable.baseline_favorite_24)
+                    binding.ivHeartWishlist.setOnClickListener {
+                        binding.ivHeartWishlist.setImageResource(R.drawable.baseline_favorite_border_24)
+                    }
                 } else {
                     binding.ivHeartWishlist.setImageResource(R.drawable.baseline_favorite_border_24)
+                    binding.ivHeartWishlist.setOnClickListener {
+                        binding.ivHeartWishlist.setImageResource(R.drawable.baseline_favorite_24)
+                    }
                 }
                 holder.itemView.setOnClickListener {
                     val context = holder.itemView.context

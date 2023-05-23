@@ -15,4 +15,5 @@
     <string name="title_wishlist">Wishlist</string>
     <string name="item_title">"Batik Mega Mendung "</string>
     <string name="price">Rp. 90.000</string>
+    <string name="rating_default">4.5</string>
 </resources>

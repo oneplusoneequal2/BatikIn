@@ -10,5 +10,6 @@ data class Batik(
     val photoUrl: String,
     val price: Int,
     val desc: String,
+    val rating: Double,
     val isFavourite: Boolean
 ): Parcelable

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.capstone.batikin.databinding.FragmentWishlistBinding
 import com.capstone.batikin.model.listDummy
-import com.capstone.batikin.ui.list.WishlistAdapter
+import com.capstone.batikin.ui.list.BatikAdapter
 
 class WishlistFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class WishlistFragment : Fragment() {
 
         binding.rvWishlist.layoutManager = GridLayoutManager(context, 2)
 
-        binding.rvWishlist.adapter = WishlistAdapter(listDummy)
+        binding.rvWishlist.adapter = BatikAdapter(listDummy)
 
         return binding.root
     }

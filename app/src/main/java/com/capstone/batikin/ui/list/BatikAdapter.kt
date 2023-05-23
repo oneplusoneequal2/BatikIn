@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
@@ -68,28 +68,50 @@ class BatikAdapter(private val dataList: ArrayList<Batik>) : RecyclerView.Adapte
                         photoUrl = data.photoUrl,
                         price = data.price.toString(),
                         desc = data.desc,
-                        isFavourite = data.isFavourite
+                        isFavourite = data.isFavourite,
+                        onClick = {
+                            val context = holder.itemView.context
+                            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+                            // DataDummy
+                            // nanti dihapus
+
+                            intent.apply {
+                                putExtra("id_extra", data.id)
+                                putExtra("photo_extra", data.photoUrl)
+                                putExtra("title_extra", data.title)
+                                putExtra("price_extra", data.price)
+                                putExtra("desc_extra", data.desc)
+                                putExtra("favourite_extra", data.isFavourite)
+                            }
+
+                            context.startActivity(intent)
+                        },
+                        onHeartClick = {
+                            dataList.removeAt(position)
+                            notifyItemRemoved(position)
+                            notifyItemRangeChanged(position, dataList.size)
+                        }
                     )
                 }
             }
 
-            holder.itemView.setOnClickListener {
-                val context = holder.itemView.context
-                val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-                // DataDummy
-                // nanti dihapus
-
-                intent.apply {
-                    putExtra("id_extra", data.id)
-                    putExtra("photo_extra", data.photoUrl)
-                    putExtra("title_extra", data.title)
-                    putExtra("price_extra", data.price)
-                    putExtra("desc_extra", data.desc)
-                    putExtra("favourite_extra", data.isFavourite)
-                }
-
-                context.startActivity(intent)
-            }
+//            holder.itemView.setOnClickListener {
+//                val context = holder.itemView.context
+//                val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+//                // DataDummy
+//                // nanti dihapus
+//
+//                intent.apply {
+//                    putExtra("id_extra", data.id)
+//                    putExtra("photo_extra", data.photoUrl)
+//                    putExtra("title_extra", data.title)
+//                    putExtra("price_extra", data.price)
+//                    putExtra("desc_extra", data.desc)
+//                    putExtra("favourite_extra", data.isFavourite)
+//                }
+//
+//                context.startActivity(intent)
+//            }
         }
     }
 
@@ -102,10 +124,12 @@ fun BatikItem(
     photoUrl: String,
     price: String,
     desc: String,
-    isFavourite: Boolean
+    isFavourite: Boolean,
+    onClick: () -> Unit,
+    onHeartClick: () -> Unit
 ) {
 
-    ConstraintLayout {
+    ConstraintLayout(modifier = Modifier.clickable(true, onClick = onClick)) {
         val (titleText, photo, priceText, descText, heartIcon, starIcon, ratingText) = createRefs()
 
         AsyncImage(
@@ -130,6 +154,7 @@ fun BatikItem(
             modifier = Modifier.constrainAs(titleText) {
                 top.linkTo(photo.bottom, margin = 5.dp)
                 start.linkTo(parent.start, margin = 10.dp)
+                end.linkTo(parent.end, margin = 10.dp)
             }
         )
 
@@ -147,10 +172,12 @@ fun BatikItem(
             painter = painterResource(
                 if (isFavourite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24),
             contentDescription = null,
-            modifier = Modifier.constrainAs(heartIcon) {
-                end.linkTo(parent.end, margin = 10.dp)
-                top.linkTo(titleText.bottom)
-            },
+            modifier = Modifier
+                .constrainAs(heartIcon) {
+                    end.linkTo(parent.end, margin = 10.dp)
+                    top.linkTo(titleText.bottom)
+                }
+                .clickable(true, onClick =  onHeartClick),
             tint = Color.Red
         )
 
@@ -169,20 +196,18 @@ fun BatikItem(
         Icon(
             painter = painterResource(id = R.drawable.baseline_star_24),
             contentDescription = null,
-            modifier = Modifier.constrainAs(starIcon) {
-                top.linkTo(descText.bottom, 10.dp)
-                start.linkTo(parent.start, margin = 10.dp)
-                bottom.linkTo(parent.bottom)
-            }
-                .clickable {
-
+            modifier = Modifier
+                .constrainAs(starIcon) {
+                    top.linkTo(descText.bottom, 10.dp)
+                    start.linkTo(parent.start, margin = 10.dp)
+                    bottom.linkTo(parent.bottom)
                 },
             tint = Color.Yellow
         )
 
         Text(
             text = "4.5",
-            fontSize = 12.sp,
+            fontSize = 13.sp,
             modifier = Modifier.constrainAs(ratingText) {
                 start.linkTo(starIcon.end, 5.dp)
                 top.linkTo(descText.bottom, 10.dp)
@@ -203,6 +228,8 @@ fun BatikItemPreview() {
             price = listDummy[0].price.toString(),
             desc = listDummy[0].desc,
             isFavourite = listDummy[0].isFavourite,
+            onClick = {},
+            onHeartClick = {}
         )
     }
 }

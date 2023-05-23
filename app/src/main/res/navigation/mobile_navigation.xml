@@ -22,4 +22,10 @@
         android:name="com.capstone.batikin.ui.screen.main.wishlist.WishlistFragment"
         android:label="@string/title_wishlist"
         tools:layout="@layout/fragment_wishlist" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.capstone.batikin.ui.screen.main.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

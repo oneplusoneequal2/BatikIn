@@ -16,4 +16,11 @@
     <string name="item_title">"Batik Mega Mendung "</string>
     <string name="price">Rp. 90.000</string>
     <string name="rating_default">4.5</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_profile">Profile</string>
+    <string name="nama">Alan</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+    <string name="log_out">Log Out</string>
 </resources>

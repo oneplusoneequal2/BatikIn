@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui.screen.main.notifications
+package com.capstone.batikin.ui.screen.main.wishlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

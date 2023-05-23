@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.capstone.batikin.ui.screen.main.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_history"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_wishlist"
-        android:name="com.capstone.batikin.ui.screen.main.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.capstone.batikin.ui.screen.main.wishlist.WishlistFragment"
+        android:label="@string/title_wishlist"
+        tools:layout="@layout/fragment_wishlist" />
 </navigation>

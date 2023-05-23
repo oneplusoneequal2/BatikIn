@@ -1,35 +1,45 @@
 package com.capstone.batikin.ui.screen.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.R
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
+
 class DetailActivity : ComponentActivity() {
+
+    // nanti dihapus
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Data dummy
+        // nanti dihapus diganti pke api
+        val photo = intent.getStringExtra("photo_extra").toString()
+        val title = intent.getStringExtra("title_extra").toString()
+        val price = intent.getIntExtra("price_extra", 0).toString()
+        val desc = intent.getStringExtra("desc_extra").toString()
+
+
         setContent {
             BatikInTheme {
                 // A surface container using the 'background' color from the theme
@@ -37,7 +47,7 @@ class DetailActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    DetailApp()
+                    DetailApp(photo, title, price, desc)
                 }
             }
         }
@@ -45,10 +55,12 @@ class DetailActivity : ComponentActivity() {
 }
 
 @Composable
-fun DetailApp() {
+fun DetailApp(photo: String, title: String, price: String, desc: String) {
     var isExpanded by remember { mutableStateOf(false) }
+
     Column() {
         Box() {
+            // Gambar dari link masih ngebug
             Image(
                 painter = painterResource(R.drawable.logo_batikin),
                 contentDescription = null,
@@ -61,7 +73,7 @@ fun DetailApp() {
                 contentDescription = "Back",
                 modifier = Modifier
                     .padding(16.dp)
-                    .clickable { }
+                    .clickable {}
             )
         }
         Column(
@@ -70,7 +82,8 @@ fun DetailApp() {
             Spacer(modifier = Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(200.dp)) {
                 Text(
-                    text = "Rp. 90.000",
+//                    text = "Rp. 90.000",
+                    text = "Rp. $price",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -78,7 +91,9 @@ fun DetailApp() {
                     onClick = {},
                     backgroundColor = colorResource(id = R.color.orange_light),
                     contentColor = Color.White,
-                    modifier = Modifier.width(34.dp).height(34.dp)
+                    modifier = Modifier
+                        .width(34.dp)
+                        .height(34.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.baseline_favorite_border_24),
@@ -89,7 +104,8 @@ fun DetailApp() {
 
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "Batik Mega Mendung Warna Biru"
+//                text = "Batik Mega Mendung Warna Biru"
+                text = title
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -98,7 +114,8 @@ fun DetailApp() {
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = stringResource(id = R.string.default_desc),
+//                text = stringResource(id = R.string.default_desc),
+                text = desc,
                 maxLines = if (isExpanded) 10 else 3,
                 overflow = TextOverflow.Ellipsis
             )
@@ -148,6 +165,6 @@ fun DetailApp() {
 @Composable
 fun DetailAppPreview() {
     BatikInTheme {
-        DetailApp()
+        DetailApp("", "test", "100000", "test")
     }
 }

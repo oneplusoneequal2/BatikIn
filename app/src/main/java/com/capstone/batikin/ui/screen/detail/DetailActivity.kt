@@ -2,16 +2,19 @@ package com.capstone.batikin.ui.screen.detail
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.capstone.batikin.R
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
@@ -57,28 +62,65 @@ class DetailActivity : ComponentActivity() {
 @Composable
 fun DetailApp(photo: String, title: String, price: String, desc: String) {
     var isExpanded by remember { mutableStateOf(false) }
+    var loadingDone by remember {mutableStateOf(false)}
 
-    Column() {
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(photo)
+            .size(coil.size.Size.ORIGINAL) // Set the target size to load the image at.
+            .build()
+    )
+
+    loadingDone = painter.state !is AsyncImagePainter.State.Loading
+
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Box() {
-            // Gambar dari link masih ngebug
-            Image(
-                painter = painterResource(R.drawable.logo_batikin),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
-            )
+            // Gambar dari link ngebug di emulator tapi bisa di hp asli
+
+//            if (painter.state is AsyncImagePainter.State.Loading) {
+//                CircularProgressIndicator(
+//                    modifier = Modifier.align(Alignment.Center)
+//                )
+//            } else {
+//                Image(
+//                    painter = painter,
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                )
+//            }
+            if (loadingDone) {
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
+
+//            Image(
+//                painter = painterResource(R.drawable.logo_batikin),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 16.dp)
+//            )
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back",
+                tint = Color.White,
                 modifier = Modifier
                     .padding(16.dp)
                     .clickable {}
+                    .background(colorResource(id = R.color.orange_light), shape = CircleShape)
             )
         }
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            if (!loadingDone) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
             Spacer(modifier = Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(200.dp)) {
                 Text(
@@ -165,6 +207,11 @@ fun DetailApp(photo: String, title: String, price: String, desc: String) {
 @Composable
 fun DetailAppPreview() {
     BatikInTheme {
-        DetailApp("", "test", "100000", "test")
+        DetailApp(
+            "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
+            "test",
+            "100000",
+            "test"
+        )
     }
 }

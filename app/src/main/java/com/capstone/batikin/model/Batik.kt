@@ -8,5 +8,7 @@ data class Batik(
     val id: Int,
     val title: String,
     val photoUrl: String,
-    val desc: String
+    val price: Int,
+    val desc: String,
+    val isFavourite: Boolean
 ): Parcelable

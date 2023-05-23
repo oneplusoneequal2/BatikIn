@@ -29,7 +29,7 @@ class WishlistFragment : Fragment() {
 
         _binding = FragmentWishlistBinding.inflate(inflater, container, false)
 
-        binding.rvWishlist.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        binding.rvWishlist.layoutManager = GridLayoutManager(context, 2)
 
         binding.rvWishlist.adapter = BatikAdapter(listDummy)
 

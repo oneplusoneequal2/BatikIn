@@ -172,7 +172,7 @@ fun DetailApp(photo: String, title: String, price: String, desc: String) {
             )
             Spacer(modifier = Modifier.height(10.dp))
             Divider()
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
                 Button(
                     onClick = {},
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),

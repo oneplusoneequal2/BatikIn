@@ -23,4 +23,14 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="language">Language</string>
     <string name="log_out">Log Out</string>
+
+    <string-array name="category_batik">
+        <item>Motif Batik Sogan (Solo)</item>
+        <item>Motif Batik Gentongan (Madura)</item>
+        <item>Motif Batik Mega Mendung (Cirebon)</item>
+        <item>Motif Batik Kraton (Yogyakarta)</item>
+        <item>Motif Batik Simbut (Banten)</item>
+        <item>Motif Pring Sedapur (Magetan)</item>
+    </string-array>
+
 </resources>

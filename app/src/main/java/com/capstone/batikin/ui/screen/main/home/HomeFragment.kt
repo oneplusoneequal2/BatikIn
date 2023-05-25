@@ -7,7 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.capstone.batikin.databinding.FragmentHomeBinding
+import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.list.BatikAdapterHome
 
 class HomeFragment : Fragment() {
 
@@ -22,17 +28,22 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        // Recommendation list
+
+        binding.rvRecommendation.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvRecommendation.adapter = BatikAdapterHome(listDummy)
+
+        // Discover more list
+
+        binding.rvDiscover.layoutManager = GridLayoutManager(context, 2)
+
+        binding.rvDiscover.adapter = BatikAdapterHome(listDummy)
+
+
+        return binding.root
     }
 
     override fun onDestroyView() {

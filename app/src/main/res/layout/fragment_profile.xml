@@ -7,105 +7,110 @@
     tools:context=".ui.screen.main.profile.ProfileFragment"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/composeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingBottom="?attr/actionBarSize">
+        android:layout_height="match_parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:civ_border_width="2dp"
-            android:src="@drawable/baseline_account_circle_24"
-            app:civ_border_color="@color/orange_light"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            tools:src="@tools:sample/avatars"/>
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:paddingBottom="?attr/actionBarSize">-->
 
-        <TextView
-            android:id="@+id/nama"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/gray"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="@+id/profile_image"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="@+id/profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image"
-            android:text="@string/nama" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/profile_image"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            app:civ_border_width="2dp"-->
+<!--            android:src="@drawable/logo_batikin"-->
+<!--            app:civ_border_color="@color/orange_light"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            tools:src="@tools:sample/avatars"/>-->
 
-
-        <ImageView
-            android:id="@+id/img_darkmode"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/dark_mode"
-            app:layout_constraintBottom_toBottomOf="@+id/dark_mode"
-            android:src="@drawable/dark_mode"
-            />
-
-        <TextView
-            android:id="@+id/dark_mode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:layout_marginTop="50dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginStart="50dp"
-            app:layout_constraintStart_toEndOf="@+id/img_darkmode"
-            app:layout_constraintTop_toBottomOf="@+id/nama"
-            app:layout_constraintBottom_toTopOf="@+id/img_darkmode"
-            android:text="@string/dark_mode" />
-
-        <ImageView
-            android:id="@+id/img_language"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/language"
-            app:layout_constraintBottom_toBottomOf="@+id/language"
-            android:src="@drawable/language"
-            />
-
-        <TextView
-            android:id="@+id/language"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:layout_marginTop="60dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginStart="50dp"
-            app:layout_constraintStart_toEndOf="@+id/img_language"
-            app:layout_constraintTop_toBottomOf="@+id/dark_mode"
-            app:layout_constraintBottom_toTopOf="@+id/img_language"
-            android:text="@string/language" />
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/language"
-            android:text="@string/log_out"
-            style="@style/LogoutButton" />
+<!--        <TextView-->
+<!--            android:id="@+id/nama"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textAlignment="center"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/profile_image"-->
+<!--            app:layout_constraintHorizontal_bias="0.501"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/profile_image"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/profile_image"-->
+<!--            android:text="@string/nama" />-->
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        <ImageView-->
+<!--            android:id="@+id/img_darkmode"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/dark_mode"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/dark_mode"-->
+<!--            android:src="@drawable/dark_mode"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dark_mode"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_marginStart="50dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/img_darkmode"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/nama"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/img_darkmode"-->
+<!--            android:text="@string/dark_mode" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/img_language"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/language"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/language"-->
+<!--            android:src="@drawable/language"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/language"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:layout_marginTop="60dp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_marginStart="50dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/img_language"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dark_mode"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/img_language"-->
+<!--            android:text="@string/language" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_logout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="80dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/language"-->
+<!--            android:text="@string/log_out"-->
+<!--            style="@style/LogoutButton" />-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </FrameLayout>
 

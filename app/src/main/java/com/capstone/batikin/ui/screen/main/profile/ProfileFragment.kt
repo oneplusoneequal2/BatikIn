@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -24,7 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PowerSettingsNew
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -64,125 +66,210 @@ class ProfileFragment : Fragment() {
 
 @Composable
 fun ProfileScreen() {
-
-    val popupShown = remember { mutableStateOf(false) }
+    val expanded = remember { mutableStateOf(false) }
+    val selectedOption = remember { mutableStateOf("") }
+    val showDialog = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp)
-            .verticalScroll(rememberScrollState()),
-    horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .padding(top = 20.dp, bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo_batikin),
             contentDescription = null,
             modifier = Modifier
-                .size(200.dp)
+                .size(120.dp)
                 .clip(CircleShape)
-                .border(2.dp, Color.Yellow, CircleShape)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = stringResource(id = R.string.nama),
-            color = Color.Gray,
+            text = "John Doe",
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = 24.sp,
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+
+        // Settings
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, Color.White, shape = RoundedCornerShape(4.dp))
+                .background(Color.White)
+                .clickable { expanded.value = !expanded.value }
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.dark_mode),
-                contentDescription = null,
-                modifier = Modifier.size(30.dp)
-            )
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            ) {
 
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = stringResource(id = R.string.dark_mode),
-                color = Color.Gray,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.clickable {
-                    popupShown.value = true
-                }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.language),
-                contentDescription = null,
-                modifier = Modifier.size(30.dp)
-            )
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Text(
-                text = stringResource(id = R.string.language),
-                color = Color.Gray,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.clickable {
-                    popupShown.value = true
-                }
-            )
-        }
-
-        // Show pop-up
-        if (popupShown.value) {
-            AlertDialog(
-                onDismissRequest = { popupShown.value = false },
-                title = {
-                    Text(text = "Fitur ini masih dalam pengembangan")
-                },
-                confirmButton = {
-                    TextButton(onClick = { popupShown.value = false }) {
-                        Text(text = "OK")
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Settings",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp
+                        )
                     }
+
+                    Icon(
+                        imageVector = if (expanded.value) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = null,
+                        tint = Color.Gray,
+                    )
                 }
-            )
+
+                if (expanded.value) {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Dark Mode
+                    Column(
+                        modifier = Modifier
+                        .clickable {
+                            selectedOption.value = "Dark Mode"
+                            showDialog.value = true
+                        }
+                        .padding(vertical = 8.dp),
+                    ) {
+                        Row(
+
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.DarkMode,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Dark Mode",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+
+                        }
+
+                        Text(
+                            text = "Aktifkan dark mode",
+                            fontSize = 8.sp,
+                            color = Color.Gray,
+                            modifier = Modifier.padding(start = 25.dp)
+                        )
+                    }
+
+
+//                    Divider(color = Color.LightGray, thickness = 1.dp)
+
+                    // Language
+                    Column(
+                        modifier = Modifier
+                            .clickable {
+                                selectedOption.value = "Language"
+                                showDialog.value = true
+                            }
+                            .padding(vertical = 8.dp),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Language,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Language",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+
+                        }
+                        Text(
+                            text = "Ubah bahasa aplikasi",
+                            fontSize = 8.sp,
+                            color = Color.Gray,
+                            modifier = Modifier.padding(start = 25.dp)
+                        )
+                    }
+
+                }
+            }
+
+
+        if (showDialog.value) {
+                AlertDialog(
+                    onDismissRequest = { showDialog.value = false },
+                    title = {
+                        Text(text = "Fitur ini masih dalam pengembangan")
+                    },
+                    confirmButton = {
+                        TextButton(onClick = { showDialog.value = false }) {
+                            Text(text = "OK")
+                        }
+                    }
+                )
+            }
+
         }
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        Button(
-            onClick = { /* Handle logout button click */ },
-            modifier = Modifier.wrapContentWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
-            shape = RoundedCornerShape(24.dp)
+        //Log out
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { /* button click */ }
+                .background(Color.White, shape = RoundedCornerShape(2.dp))
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
+            ) {
                 Icon(
                     imageVector = Icons.Default.PowerSettingsNew,
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = Color.Black,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = stringResource(id = R.string.log_out),
-                    color = Color.White
+                    text = "Log Out",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
         }
 
     }
 }
+
+
 
 @Preview
 @Composable

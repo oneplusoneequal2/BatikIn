@@ -79,7 +79,7 @@ fun WelcomeApp() {
                 .width(242.dp)
                 .height(45.dp)
         ) {
-            Text(text = "Sign In", color = Color.White, fontSize = 16.sp)
+            Text(text = "Login", color = Color.White, fontSize = 16.sp)
         }
         Spacer(modifier = Modifier.height(15.dp))
         Button(

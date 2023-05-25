@@ -123,6 +123,7 @@ val listDummy = arrayListOf<Batik>(
 )
 
 val categoryDummy = arrayListOf<String>(
+    "Semua",
    "Sogan (Solo)",
     "Gentongan (Madura)",
     "Mega Mendung (Cirebon)",

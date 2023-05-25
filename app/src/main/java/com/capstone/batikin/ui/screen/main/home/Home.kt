@@ -105,7 +105,7 @@ fun SectionHeader(text: String) {
 fun HomeBanner() {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(30.dp))
+            .clip(shape = RoundedCornerShape(20.dp))
             .background(color = Color.Gray)
             .fillMaxWidth()
             .height(100.dp),
@@ -190,12 +190,12 @@ fun CategoryItem(title: String) {
 fun Item(item: Batik, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Surface(
-        elevation = 8.dp
+        elevation = 8.dp,
+        shape = RoundedCornerShape(15.dp)
     ) {
         Column(
             modifier = modifier
                 .width(100.dp)
-                .clip(RoundedCornerShape(20.dp))
                 .clickable(true, onClick = {
                     val intent = Intent(context, DetailActivity::class.java)
                     intent.apply {
@@ -221,7 +221,9 @@ fun Item(item: Batik, modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp)
             )
             Text(
                 text = item.desc,
@@ -230,17 +232,23 @@ fun Item(item: Batik, modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Normal,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp)
             )
             Text(
                 text = "Rp. ${item.price}",
                 fontWeight = FontWeight.Normal,
 //            fontSize = 18.sp,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier
+                    .padding(start = 4.dp, end = 4.dp)
             )
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(start = 4.dp, bottom = 10.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Star,
@@ -249,7 +257,8 @@ fun Item(item: Batik, modifier: Modifier = Modifier) {
                 )
                 Text(
                     text = item.rating.toString(),
-                    fontSize = 15.sp
+                    fontSize = 15.sp,
+
                 )
             }
         }

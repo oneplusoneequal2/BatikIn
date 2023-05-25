@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.capstone.batikin.R
 import com.capstone.batikin.databinding.FragmentHomeBinding
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.list.BatikAdapterHome
@@ -54,6 +58,7 @@ class HomeFragment : Fragment() {
                 HomeApp(
                     dataList = listDummy,
                     modifier = Modifier
+                        .background(Color.White)
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState()),
                 )

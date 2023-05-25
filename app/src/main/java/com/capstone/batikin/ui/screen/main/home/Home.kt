@@ -76,7 +76,7 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             state = rememberLazyStaggeredGridState(),
             verticalItemSpacing = 20.dp,
-            modifier = Modifier.height(500.dp)
+            modifier = Modifier.height(300.dp)
         ) {
             items(listDummy) {
                 Item(
@@ -85,10 +85,6 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
                 )
             }
         }
-
-        Text(
-            text = "Test"
-        )
     }
 }
 
@@ -193,67 +189,72 @@ fun CategoryItem(title: String) {
 @Composable
 fun Item(item: Batik, modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Column(
-        modifier = modifier
-            .width(100.dp)
-            .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
-            .clickable(true, onClick = {
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.apply {
-                    putExtra("id_extra", item.id)
-                    putExtra("photo_extra", item.photoUrl)
-                    putExtra("title_extra", item.title)
-                    putExtra("price_extra", item.price)
-                    putExtra("desc_extra", item.desc)
-                    putExtra("favourite_extra", item.isFavourite)
-                }
-                context.startActivity(intent)
-            })
+    Surface(
+        elevation = 8.dp
     ) {
-        AsyncImage(
-            model = item.photoUrl,
-            contentDescription = null,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = item.title,
-//            fontSize = 20.sp,
-            style = MaterialTheme.typography.subtitle1,
-            fontWeight = FontWeight.Bold,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = item.desc,
-//            fontSize = 19.sp,
-            style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.Normal,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = "Rp. ${item.price}",
-            fontWeight = FontWeight.Normal,
-//            fontSize = 18.sp,
-            style = MaterialTheme.typography.body2
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = modifier
+                .width(100.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .clickable(true, onClick = {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.apply {
+                        putExtra("id_extra", item.id)
+                        putExtra("photo_extra", item.photoUrl)
+                        putExtra("title_extra", item.title)
+                        putExtra("price_extra", item.price)
+                        putExtra("desc_extra", item.desc)
+                        putExtra("favourite_extra", item.isFavourite)
+                    }
+                    context.startActivity(intent)
+                })
         ) {
-            Icon(
-                imageVector = Icons.Default.Star,
+            AsyncImage(
+                model = item.photoUrl,
                 contentDescription = null,
-                tint = colorResource(id = R.color.orange_light)
+                modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = item.rating.toString(),
-                fontSize = 15.sp
+                text = item.title,
+//            fontSize = 20.sp,
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                modifier = Modifier.fillMaxWidth()
             )
+            Text(
+                text = item.desc,
+//            fontSize = 19.sp,
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight.Normal,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(
+                text = "Rp. ${item.price}",
+                fontWeight = FontWeight.Normal,
+//            fontSize = 18.sp,
+                style = MaterialTheme.typography.body2
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.orange_light)
+                )
+                Text(
+                    text = item.rating.toString(),
+                    fontSize = 15.sp
+                )
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true)

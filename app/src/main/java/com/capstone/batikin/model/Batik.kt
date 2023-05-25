@@ -11,5 +11,5 @@ data class Batik(
     val price: Int,
     val desc: String,
     val rating: Double,
-    val isFavourite: Boolean
+    var isFavourite: Boolean = false
 ): Parcelable

@@ -5,4 +5,14 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#FF9900</item>
     </style>
+
+    <style name="LogoutButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/button_round_corner</item>
+        <item name="android:drawableLeft">@drawable/ic_power_off</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

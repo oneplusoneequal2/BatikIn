@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+<<<<<<< HEAD
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.capstone.batikin.R
@@ -43,6 +44,15 @@ import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.list.BatikAdapter
 import com.capstone.batikin.ui.screen.login.Login
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+=======
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.capstone.batikin.databinding.FragmentHomeBinding
+import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.list.BatikAdapterHome
+>>>>>>> 59d1d780a9b327e47ea8a7829b8a10806673bac7
 
 class HomeFragment : Fragment() {
 
@@ -57,6 +67,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+<<<<<<< HEAD
 
         (activity as AppCompatActivity).supportActionBar?.hide()
 
@@ -78,6 +89,22 @@ class HomeFragment : Fragment() {
         binding.rvHome.layoutManager = GridLayoutManager(context, 2)
 
         binding.rvHome.adapter = BatikAdapter(listDummy)
+=======
+
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // Recommendation list
+
+        binding.rvRecommendation.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvRecommendation.adapter = BatikAdapterHome(listDummy)
+
+        // Discover more list
+
+        binding.rvDiscover.layoutManager = GridLayoutManager(context, 2)
+
+        binding.rvDiscover.adapter = BatikAdapterHome(listDummy)
+
+>>>>>>> 59d1d780a9b327e47ea8a7829b8a10806673bac7
 
         return binding.root
     }

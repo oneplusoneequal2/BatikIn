@@ -13,7 +13,24 @@
     <string name="hint_name">Nama</string>
     <string name="title_history">History</string>
     <string name="title_wishlist">Wishlist</string>
-    <string name="item_title">"Batik Mega Mendung "</string>
+    <string name="item_title">Batik Mega Mendung</string>
     <string name="price">Rp. 90.000</string>
     <string name="rating_default">4.5</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_profile">Profile</string>
+    <string name="nama">Alan</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+    <string name="log_out">Log Out</string>
+
+    <string-array name="category_batik">
+        <item>Motif Batik Sogan (Solo)</item>
+        <item>Motif Batik Gentongan (Madura)</item>
+        <item>Motif Batik Mega Mendung (Cirebon)</item>
+        <item>Motif Batik Kraton (Yogyakarta)</item>
+        <item>Motif Batik Simbut (Banten)</item>
+        <item>Motif Pring Sedapur (Magetan)</item>
+    </string-array>
+
 </resources>

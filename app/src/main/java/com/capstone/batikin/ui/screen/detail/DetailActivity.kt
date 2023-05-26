@@ -1,5 +1,6 @@
 package com.capstone.batikin.ui.screen.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -28,6 +29,8 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.capstone.batikin.R
+import com.capstone.batikin.ui.screen.payment.PaymentActivity
+import com.capstone.batikin.ui.screen.register.RegisterActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 
@@ -63,6 +66,9 @@ class DetailActivity : ComponentActivity() {
 fun DetailApp(photo: String, title: String, price: String, desc: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var loadingDone by remember {mutableStateOf(false)}
+
+    val context = LocalContext.current
+
 
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
@@ -174,7 +180,10 @@ fun DetailApp(photo: String, title: String, price: String, desc: String) {
             Divider()
             Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
                 Button(
-                    onClick = {},
+                    onClick = {
+                        val intent = Intent(context, PaymentActivity::class.java)
+                        context.startActivity(intent)
+                    },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                     modifier = Modifier.width(150.dp)
                 ) {

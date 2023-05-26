@@ -51,46 +51,60 @@ import com.google.android.material.resources.MaterialAttributes
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-        HomeBanner()
+    var query by remember { mutableStateOf("") }
 
-        SectionHeader(text = "Batik Categories")
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            items(categoryDummy){
-                CategoryItem(title = it)
+    Scaffold(
+        topBar = { TopBar(query) { query = it } }
+    ) { paddingValues ->
+        Column(modifier = modifier
+            .padding(
+                start = 16.dp,
+                top = 16.dp,
+                end = 16.dp,
+                bottom = paddingValues.calculateBottomPadding()),
+        verticalArrangement = Arrangement.spacedBy(16.dp)) {
+
+            HomeBanner()
+
+            SectionHeader(text = "Batik Categories")
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                items(categoryDummy){
+                    CategoryItem(title = it)
+                }
             }
-        }
-        
-        SectionHeader(text = "Recommendation")
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            items(dataList, key = { item ->
-                item.id
-            }) {
-                Item(
-                    it
-                )
-            }
-        }
 
-        SectionHeader(text = "Discover More")
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            state = rememberLazyStaggeredGridState(),
-            verticalItemSpacing = 20.dp,
-            modifier = Modifier.height(300.dp)
-        ) {
-            items(listDummy, key = { item ->
-                item.id
-            }) {
-                Item(
-                    item = it,
-                    modifier = Modifier.width(50.dp)
-                )
+            SectionHeader(text = "Recommendation")
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                items(dataList, key = { item ->
+                    item.id
+                }) {
+                    Item(
+                        it
+                    )
+                }
+            }
+
+            SectionHeader(text = "Discover More")
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                state = rememberLazyStaggeredGridState(),
+                verticalItemSpacing = 20.dp,
+                modifier = Modifier.height(300.dp)
+            ) {
+                items(listDummy, key = { item ->
+                    item.id
+                }) {
+                    Item(
+                        item = it,
+                        modifier = Modifier.width(50.dp)
+                    )
+                }
             }
         }
     }
+
 }
 
 @Composable

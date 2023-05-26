@@ -19,8 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 @Composable
-fun TopBar() {
-    var query by remember { mutableStateOf("") }
+fun TopBar(query: String, onChange: (String) -> Unit) {
 
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primary,
@@ -28,9 +27,9 @@ fun TopBar() {
         contentColor = Color.White
     ) {
 
-        SearchBar(query = query, onChange = {query = it})
+        SearchBar(query = query, onChange = onChange)
 
-        Spacer(modifier = Modifier.width(30.dp))
+        Spacer(modifier = Modifier.width(50.dp))
 
         Icon(
             imageVector = Icons.Default.ShoppingCart,
@@ -48,8 +47,11 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         label = { Text("Search batik here")},
         onValueChange = onChange ,
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(30.dp))
-            .background(color = Color.White),
+            .clip(shape = RoundedCornerShape(30.dp)),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            textColor = Color.Gray
+        ),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -62,7 +64,9 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun TopBarPreview() {
+    var query by remember { mutableStateOf("") }
+
     BatikInTheme {
-        TopBar()
+        TopBar(query) { query = it }
     }
 }

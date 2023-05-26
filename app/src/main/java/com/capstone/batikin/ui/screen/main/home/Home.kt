@@ -43,6 +43,7 @@ import com.capstone.batikin.R
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.categoryDummy
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.components.TopBar
 import com.capstone.batikin.ui.screen.detail.DetailActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.google.android.material.resources.MaterialAttributes

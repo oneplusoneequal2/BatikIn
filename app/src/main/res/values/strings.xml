@@ -32,5 +32,14 @@
         <item>Simbut (Banten)</item>
         <item>Sedapur (Magetan)</item>
     </string-array>
+    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="plus_symbol">+</string>
+    <string name="minus_symbol">-</string>
+    <string name="price_payment">Rp. %d </string>
+
+
+<!--    bottom nav-->
+    <string name="hide_bottom_view_on_scroll_behavior">com.google.android.material.bottomnavigation.HideBottomViewOnScrollBehavior</string>
+    <string name="fab_bottom_appbar_behavior">com.google.android.material.behavior.FloatingActionButton.Behavior</string>
 
 </resources>

@@ -13,7 +13,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        2,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -22,7 +22,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        3,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -31,7 +31,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        4,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -40,7 +40,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        5,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -49,7 +49,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        6,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -58,7 +58,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        7,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -67,7 +67,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        8,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -76,7 +76,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        9,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -85,7 +85,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        10,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -94,7 +94,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        11,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -103,7 +103,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        12,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,
@@ -112,7 +112,7 @@ val listDummy = arrayListOf<Batik>(
         true
     ),
     Batik(
-        1,
+        13,
         "Batik Mega Mendung",
         "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
         90000,

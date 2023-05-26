@@ -63,7 +63,9 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
         
         SectionHeader(text = "Recommendation")
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            items(dataList) {
+            items(dataList, key = { item ->
+                item.id
+            }) {
                 Item(
                     it
                 )
@@ -78,7 +80,9 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
             verticalItemSpacing = 20.dp,
             modifier = Modifier.height(300.dp)
         ) {
-            items(listDummy) {
+            items(listDummy, key = { item ->
+                item.id
+            }) {
                 Item(
                     item = it,
                     modifier = Modifier.width(50.dp)
@@ -138,25 +142,7 @@ fun HomeBanner() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CategoryItem(title: String) {
-//    Column(
-//        modifier = Modifier
-////            .width(100.dp)
-////            .height(100.dp)
-//            .background(MaterialTheme.colors.primaryVariant)
-//            .clip(shape = CircleShape),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(
-//            text = title,
-////            fontSize = 16.sp,
-//            style = MaterialTheme.typography.subtitle2,
-//            fontWeight = FontWeight.SemiBold,
-//            color = MaterialTheme.colors.onPrimary,
-//            maxLines = 1,
-//            overflow = TextOverflow.Ellipsis,
-//        )
-//    }
+
     var isClick by remember { mutableStateOf(title == categoryDummy[0]) }
 
     // masih blm bisa di klik
@@ -176,7 +162,6 @@ fun CategoryItem(title: String) {
     ) {
         Text(
             text = title,
-//            fontSize = 16.sp,
             style = MaterialTheme.typography.subtitle2,
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,

@@ -21,6 +21,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +39,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.capstone.batikin.R
 import com.capstone.batikin.model.Batik
@@ -46,13 +50,24 @@ import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.components.TopBar
 import com.capstone.batikin.ui.screen.detail.DetailActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.capstone.batikin.viewmodel.MainViewModel
 import com.google.android.material.resources.MaterialAttributes
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
+fun HomeApp(modifier: Modifier = Modifier) {
 
     var query by remember { mutableStateOf("") }
+
+    val mainViewModel = viewModel<MainViewModel>()
+
+    mainViewModel.getData()
+
+    val dataList by mainViewModel.listData.observeAsState()
+
+    val data = ArrayList<Batik>()
+
+    dataList?.let { data.addAll(it) }
 
     Scaffold(
         topBar = { TopBar(query) { query = it } }
@@ -76,7 +91,7 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
 
             SectionHeader(text = "Recommendation")
             LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(dataList, key = { item ->
+                items(data, key = { item ->
                     item.id
                 }) {
                     Item(
@@ -93,7 +108,7 @@ fun HomeApp(modifier: Modifier = Modifier, dataList: ArrayList<Batik>) {
                 verticalItemSpacing = 20.dp,
                 modifier = Modifier.height(300.dp)
             ) {
-                items(listDummy, key = { item ->
+                items(data, key = { item ->
                     item.id
                 }) {
                     Item(
@@ -295,9 +310,10 @@ fun ItemPreview() {
 @Composable
 fun HomeAppPreview() {
     BatikInTheme {
-        HomeApp(modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-            , listDummy)
+        HomeApp(
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+        )
     }
 }

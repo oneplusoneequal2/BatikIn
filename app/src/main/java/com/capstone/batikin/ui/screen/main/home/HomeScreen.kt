@@ -189,7 +189,7 @@ fun Item(
         elevation = 8.dp,
         shape = RoundedCornerShape(15.dp),
         modifier = modifier.clickable {
-            navController.navigate(Screen.DetailBatik.createRoute(batikDetail = item.id))
+            navController.navigate(Screen.DetailBatik.createRoute(batikId = item.id))
         }
     ) {
         Column() {

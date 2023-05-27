@@ -29,6 +29,7 @@ import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.screen.detail.DetailApp
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
 
@@ -101,19 +102,19 @@ fun BatikApp(
                 ProfileScreen()
             }
             //Implement detail
-//            composable(
-//                route = Screen.DetailBatik.route,
-//                arguments = listOf(
-//                    navArgument("batikDetail"){
-//                        type = NavType.StringType
-//                    }
-//                )
-//            ){
-//                val name = it.arguments?.getString("batikDetail")
-//                if (name != null) {
-//                    Detail(name = name)
-//                }
-//            }
+            composable(
+                route = Screen.DetailBatik.route,
+                arguments = listOf(
+                    navArgument("batikId"){
+                        type = NavType.IntType
+                    }
+                )
+            ){
+                val batikId = it.arguments?.getInt("batikId")
+                if (batikId != null) {
+                    DetailApp(id = batikId)
+                }
+            }
         }
     }
 

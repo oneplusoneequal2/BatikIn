@@ -52,6 +52,10 @@ import com.capstone.batikin.ui.screen.detail.DetailActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.capstone.batikin.viewmodel.MainViewModel
 import com.google.android.material.resources.MaterialAttributes
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -67,7 +71,9 @@ fun HomeApp(modifier: Modifier = Modifier) {
 
     val data = ArrayList<Batik>()
 
-    dataList?.let { data.addAll(it) }
+    dataList?.map {
+        data.add(it)
+    }
 
     Scaffold(
         topBar = { TopBar(query) { query = it } }

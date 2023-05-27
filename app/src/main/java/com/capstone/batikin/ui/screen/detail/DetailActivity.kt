@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -29,26 +30,31 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.capstone.batikin.R
+import com.capstone.batikin.databinding.ActivityDetailBinding
 import com.capstone.batikin.ui.screen.payment.PaymentActivity
 import com.capstone.batikin.ui.screen.register.RegisterActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 
-class DetailActivity : ComponentActivity() {
+class DetailActivity : AppCompatActivity() {
 
-    // nanti dihapus
+   private lateinit var binding: ActivityDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Data dummy
-        // nanti dihapus diganti pke api
+        supportActionBar?.show()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val photo = intent.getStringExtra("photo_extra").toString()
         val title = intent.getStringExtra("title_extra").toString()
         val price = intent.getIntExtra("price_extra", 0).toString()
         val desc = intent.getStringExtra("desc_extra").toString()
 
 
-        setContent {
+
+        binding.cvDetail.setContent {
             BatikInTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -62,32 +68,40 @@ class DetailActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun DetailApp(photo: String, title: String, price: String, desc: String) {
-    var isExpanded by remember { mutableStateOf(false) }
-    var loadingDone by remember {mutableStateOf(false)}
-
-    val context = LocalContext.current
-
-
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(photo)
-            .size(coil.size.Size.ORIGINAL) // Set the target size to load the image at.
-            .build()
-    )
-
-    loadingDone = painter.state !is AsyncImagePainter.State.Loading
-
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Box() {
-            // Gambar dari link ngebug di emulator tapi bisa di hp asli
-
-//            if (painter.state is AsyncImagePainter.State.Loading) {
-//                CircularProgressIndicator(
-//                    modifier = Modifier.align(Alignment.Center)
-//                )
-//            } else {
+//@Composable
+//fun DetailApp(photo: String, title: String, price: String, desc: String) {
+//    var isExpanded by remember { mutableStateOf(false) }
+//    var loadingDone by remember {mutableStateOf(false)}
+//
+//    val context = LocalContext.current
+//
+//
+//    val painter = rememberAsyncImagePainter(
+//        model = ImageRequest.Builder(LocalContext.current)
+//            .data(photo)
+//            .size(coil.size.Size.ORIGINAL) // Set the target size to load the image at.
+//            .build()
+//    )
+//
+//    loadingDone = painter.state !is AsyncImagePainter.State.Loading
+//
+//    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+//        Box() {
+//            // Gambar dari link ngebug di emulator tapi bisa di hp asli
+//
+////            if (painter.state is AsyncImagePainter.State.Loading) {
+////                CircularProgressIndicator(
+////                    modifier = Modifier.align(Alignment.Center)
+////                )
+////            } else {
+////                Image(
+////                    painter = painter,
+////                    contentDescription = null,
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                )
+////            }
+//            if (loadingDone) {
 //                Image(
 //                    painter = painter,
 //                    contentDescription = null,
@@ -95,132 +109,124 @@ fun DetailApp(photo: String, title: String, price: String, desc: String) {
 //                        .fillMaxWidth()
 //                )
 //            }
-            if (loadingDone) {
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-            }
-
-//            Image(
-//                painter = painterResource(R.drawable.logo_batikin),
-//                contentDescription = null,
+//
+////            Image(
+////                painter = painterResource(R.drawable.logo_batikin),
+////                contentDescription = null,
+////                modifier = Modifier
+////                    .fillMaxWidth()
+////                    .padding(top = 16.dp)
+////            )
+//            Icon(
+//                imageVector = Icons.Default.ArrowBack,
+//                contentDescription = "Back",
+//                tint = Color.White,
 //                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(top = 16.dp)
+//                    .padding(16.dp)
+//                    .clickable {}
+//                    .background(colorResource(id = R.color.orange_light), shape = CircleShape)
 //            )
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.White,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .clickable {}
-                    .background(colorResource(id = R.color.orange_light), shape = CircleShape)
-            )
-        }
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            if (!loadingDone) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(200.dp)) {
-                Text(
-//                    text = "Rp. 90.000",
-                    text = "Rp. $price",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                FloatingActionButton(
-                    onClick = {},
-                    backgroundColor = colorResource(id = R.color.orange_light),
-                    contentColor = Color.White,
-                    modifier = Modifier
-                        .width(34.dp)
-                        .height(34.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_favorite_border_24),
-                        contentDescription = null
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-//                text = "Batik Mega Mendung Warna Biru"
-                text = title
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Deskripsi",
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-//                text = stringResource(id = R.string.default_desc),
-                text = desc,
-                maxLines = if (isExpanded) 10 else 3,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = if (!isExpanded) "Lihat Semua" else "Sembunyikan Semua",
-                modifier = Modifier
-                    .clickable {
-                        isExpanded = !isExpanded
-                    },
-                color = colorResource(id = R.color.orange_light)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Divider()
-            Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
-                Button(
-                    onClick = {
-                        val intent = Intent(context, PaymentActivity::class.java)
-                        context.startActivity(intent)
-                    },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    modifier = Modifier.width(150.dp)
-                ) {
-                    Text(
-                        text = "Beli Langsung",
-                        color = colorResource(id = R.color.orange_light),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.orange_light)),
-                    modifier = Modifier.width(150.dp)
-                    ) {
-                    Text(
-                        text = "+Keranjang",
-                        color = Color.White,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DetailAppPreview() {
-    BatikInTheme {
-        DetailApp(
-            "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
-            "test",
-            "100000",
-            "test"
-        )
-    }
-}
+//        }
+//        Column(
+//            modifier = Modifier.padding(16.dp)
+//        ) {
+//            if (!loadingDone) {
+//                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Row(horizontalArrangement = Arrangement.spacedBy(200.dp)) {
+//                Text(
+////                    text = "Rp. 90.000",
+//                    text = "Rp. $price",
+//                    fontSize = 20.sp,
+//                    fontWeight = FontWeight.Bold
+//                )
+//                FloatingActionButton(
+//                    onClick = {},
+//                    backgroundColor = colorResource(id = R.color.orange_light),
+//                    contentColor = Color.White,
+//                    modifier = Modifier
+//                        .width(34.dp)
+//                        .height(34.dp)
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.baseline_favorite_border_24),
+//                        contentDescription = null
+//                    )
+//                }
+//            }
+//
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Text(
+////                text = "Batik Mega Mendung Warna Biru"
+//                text = title
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Text(
+//                text = "Deskripsi",
+//                fontWeight = FontWeight.Bold
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Text(
+////                text = stringResource(id = R.string.default_desc),
+//                text = desc,
+//                maxLines = if (isExpanded) 10 else 3,
+//                overflow = TextOverflow.Ellipsis
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Text(
+//                text = if (!isExpanded) "Lihat Semua" else "Sembunyikan Semua",
+//                modifier = Modifier
+//                    .clickable {
+//                        isExpanded = !isExpanded
+//                    },
+//                color = colorResource(id = R.color.orange_light)
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
+//            Divider()
+//            Row(horizontalArrangement = Arrangement.spacedBy(40.dp)) {
+//                Button(
+//                    onClick = {
+//                        val intent = Intent(context, PaymentActivity::class.java)
+//                        context.startActivity(intent)
+//                    },
+//                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+//                    modifier = Modifier.width(150.dp)
+//                ) {
+//                    Text(
+//                        text = "Beli Langsung",
+//                        color = colorResource(id = R.color.orange_light),
+//                        fontSize = 15.sp,
+//                        fontWeight = FontWeight.Bold
+//                    )
+//                }
+//                Button(
+//                    onClick = {},
+//                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.orange_light)),
+//                    modifier = Modifier.width(150.dp)
+//                    ) {
+//                    Text(
+//                        text = "+Keranjang",
+//                        color = Color.White,
+//                        fontSize = 15.sp,
+//                        fontWeight = FontWeight.Bold
+//                    )
+//                }
+//            }
+//        }
+//    }
+//
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DetailAppPreview() {
+//    BatikInTheme {
+//        DetailApp(
+//            "https://img.freepik.com/premium-vector/batik-mega-mendung-pattern-background_98143-544.jpg?w=2000",
+//            "test",
+//            "100000",
+//            "test"
+//        )
+//    }
+//}

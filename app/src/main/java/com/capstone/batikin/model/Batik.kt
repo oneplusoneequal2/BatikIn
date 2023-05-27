@@ -3,7 +3,7 @@ package com.capstone.batikin.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
+
 data class Batik(
     val id: Int,
     val title: String,
@@ -13,4 +13,4 @@ data class Batik(
     val rating: Double,
     var isFavourite: Boolean = false,
 //    var count: Int ///
-): Parcelable
+)

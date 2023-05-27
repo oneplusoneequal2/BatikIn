@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,6 +27,7 @@ import com.capstone.batikin.databinding.FragmentHomeBinding
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.list.BatikAdapterHome
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.capstone.batikin.viewmodel.MainViewModel
 
 class HomeFragment : Fragment() {
 
@@ -57,7 +59,6 @@ class HomeFragment : Fragment() {
         binding.cvHome.setContent {
             BatikInTheme {
                 HomeApp(
-                    dataList = listDummy,
                     modifier = Modifier
                         .background(MaterialTheme.colors.background)
 //                        .padding(16.dp)

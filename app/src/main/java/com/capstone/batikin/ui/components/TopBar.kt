@@ -29,7 +29,7 @@ fun TopBar(query: String, onChange: (String) -> Unit) {
 
         SearchBar(query = query, onChange = onChange)
 
-        Spacer(modifier = Modifier.width(50.dp))
+        Spacer(modifier = Modifier.width(20.dp))
 
         Icon(
             imageVector = Icons.Default.ShoppingCart,

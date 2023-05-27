@@ -58,7 +58,6 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
                 contentDescription = null)
         },
     )
-
 }
 
 @Preview(showBackground = true)

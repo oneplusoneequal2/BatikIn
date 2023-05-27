@@ -48,7 +48,12 @@ fun DetailApp(id: Int) {
 
     loadingDone = painter.state !is AsyncImagePainter.State.Loading
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState()).padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+//            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
         Box() {
             if (loadingDone) {
                 Image(
@@ -131,29 +136,37 @@ fun DetailApp(id: Int) {
             Row(horizontalArrangement = Arrangement.Center,) {
                 Button(
                     onClick = {
-                        val intent = Intent(context, PaymentActivity::class.java)
-                        context.startActivity(intent)
+
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    modifier = Modifier.width(150.dp)
+                    modifier = Modifier
+                        .width(170.dp)
+                        .padding(start = 8.dp, end = 8.dp)
+
                 ) {
                     Text(
-                        text = "Beli Langsung",
+                        text = "+ Keranjang",
                         color = colorResource(id = R.color.orange_light),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+
                     )
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        val intent = Intent(context, PaymentActivity::class.java)
+                        context.startActivity(intent)
+                    },
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.orange_light)),
-                    modifier = Modifier.width(150.dp)
+                    modifier = Modifier
+                        .width(200.dp)
+                        .padding(start = 8.dp, end = 8.dp)
                 ) {
                     Text(
-                        text = "+Keranjang",
+                        text = "Beli Langsung",
                         color = Color.White,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }

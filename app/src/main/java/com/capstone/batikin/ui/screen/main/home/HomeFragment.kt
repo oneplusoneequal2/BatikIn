@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,12 +59,14 @@ class HomeFragment : Fragment() {
 
         binding.cvHome.setContent {
             BatikInTheme {
-                HomeApp(
-                    modifier = Modifier
-                        .background(MaterialTheme.colors.background)
-//                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
-                )
+//                HomeCompose(navController = findNavController())
+
+//                HomeApp(
+//                    modifier = Modifier
+//                        .background(MaterialTheme.colors.background)
+////                        .padding(16.dp)
+//                        .verticalScroll(rememberScrollState()),
+//                )
             }
         }
 

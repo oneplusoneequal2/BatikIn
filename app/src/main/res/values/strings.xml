@@ -41,5 +41,9 @@
 <!--    bottom nav-->
     <string name="hide_bottom_view_on_scroll_behavior">com.google.android.material.bottomnavigation.HideBottomViewOnScrollBehavior</string>
     <string name="fab_bottom_appbar_behavior">com.google.android.material.behavior.FloatingActionButton.Behavior</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_history">History</string>
+    <string name="menu_wishlist">Wishlist</string>
+    <string name="menu_profile">Profile</string>
 
 </resources>

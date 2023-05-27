@@ -55,15 +55,15 @@ class DetailActivity : AppCompatActivity() {
 
 
         binding.cvDetail.setContent {
-            BatikInTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    DetailApp(photo, title, price, desc)
-                }
-            }
+//            BatikInTheme {
+//                // A surface container using the 'background' color from the theme
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colors.background
+//                ) {
+//                    DetailApp(photo, title, price, desc)
+//                }
+//            }
         }
     }
 }

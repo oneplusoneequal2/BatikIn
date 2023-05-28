@@ -17,31 +17,37 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.model.Batik
 import coil.compose.rememberImagePainter
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.navigation.Screen
 
 
 @Composable
-fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier) {
+fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController) {
     LazyColumn(
         modifier = modifier,
     ) {
         items(wishlistItems) { item ->
-            WishlistItem(item = item)
+            WishlistItem(item = item, navController = navController)
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun WishlistItem(item: Batik) {
+fun WishlistItem(item: Batik, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp), // Atur jarak horizontal dan vertical pada Card
         elevation = 8.dp,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        onClick = {navController.navigate(Screen.DetailBatik.createRoute(batikId = item.id))}
     ) {
         Row(
             modifier = Modifier.padding(2.dp),
@@ -91,6 +97,7 @@ fun WishlistItem(item: Batik) {
 @Composable
 fun WishlistScreenPreview() {
     val wishlistItems = listDummy
+    var navController: NavHostController = rememberNavController()
 
-    WishlistScreen(wishlistItems = wishlistItems)
+    WishlistScreen(wishlistItems = wishlistItems, navController = navController)
 }

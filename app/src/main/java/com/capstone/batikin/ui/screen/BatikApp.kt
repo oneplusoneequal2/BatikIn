@@ -95,7 +95,7 @@ fun BatikApp(
             }
             composable(Screen.Wishlist.route) {
                 // Implementasi tampilan untuk Wishlist
-                WishlistScreen(wishlistItems = wishlistItems)
+                WishlistScreen(wishlistItems = wishlistItems, navController = navController)
             }
             composable(Screen.Profile.route) {
                 // Implementasi tampilan untuk Profile

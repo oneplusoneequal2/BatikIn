@@ -112,7 +112,7 @@ fun BatikApp(
             ){
                 val batikId = it.arguments?.getInt("batikId")
                 if (batikId != null) {
-                    DetailApp(id = batikId)
+                    DetailApp(id = batikId, navController)
                 }
             }
         }

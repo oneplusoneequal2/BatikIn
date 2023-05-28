@@ -19,7 +19,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -31,7 +33,7 @@ import com.capstone.batikin.ui.screen.payment.PaymentActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 @Composable
-fun DetailApp(id: Int) {
+fun DetailApp(id: Int, navController: NavController) {
     var isExpanded by remember { mutableStateOf(false) }
     var loadingDone by remember { mutableStateOf(false) }
 
@@ -63,15 +65,15 @@ fun DetailApp(id: Int) {
                         .fillMaxWidth()
                 )
             }
-//            Icon(
-//                imageVector = Icons.Default.ArrowBack,
-//                contentDescription = "Back",
-//                tint = Color.White,
-//                modifier = Modifier
-//                    .padding(16.dp)
-//                    .clickable {}
-//                    .background(colorResource(id = R.color.orange_light), shape = CircleShape)
-//            )
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable { navController.navigateUp() }
+                    .background(colorResource(id = R.color.orange_light), shape = CircleShape)
+            )
         }
         Column(
             modifier = Modifier.padding(16.dp)
@@ -278,9 +280,11 @@ fun DetailApp(id: Int) {
 @Preview(showBackground = true)
 @Composable
 fun DetailAppPreview() {
+    var navController : NavHostController = rememberNavController()
     BatikInTheme {
         DetailApp(
-            1
+            1,
+            navController
         )
     }
 }

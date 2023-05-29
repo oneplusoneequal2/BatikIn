@@ -98,7 +98,7 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         value = query,
         onValueChange = onChange,
         modifier = Modifier
-            .width(320.dp),
+            .width(280.dp),
         textStyle = TextStyle(color = Color.Gray),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.Gray,

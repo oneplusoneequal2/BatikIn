@@ -71,8 +71,8 @@ fun BatikApp(
                         // Navigasi ke CameraScreen
                         navController.navigate(Screen.Camera.route)
                     },
-                    backgroundColor = Color.White,
-                    contentColor = Color(0xFFFFA500), // Warna ikon
+                    backgroundColor = Color(0xFFFFA500),
+                    contentColor = Color.White, // Warna ikon
                 ) {
                     Icon(
                         imageVector = Icons.Default.CameraAlt,
@@ -185,7 +185,8 @@ fun BatikBottomBar(
         modifier = modifier
             .background(Color.Transparent),
 //        cutoutShape = CutCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
-        cutoutShape = CircleShape
+        cutoutShape = CircleShape,
+        backgroundColor = Color.White
 
     ) {
 //        navigationItems.forEachIndexed { index, item ->
@@ -197,7 +198,13 @@ fun BatikBottomBar(
                         contentDescription = item.title
                     )
                 },
-                label = { Text(item.title) },
+                label = {
+                    if (currentRoute == item.screen.route) {
+                        Text(item.title)
+                    } else{
+                        Text(item.title, color = Color.White)
+                    }
+                },
                 selected = currentRoute == item.screen.route,
                 onClick = {
                     navController.navigate(item.screen.route) {
@@ -206,7 +213,9 @@ fun BatikBottomBar(
                         }
                         launchSingleTop = true
                     }
-                }
+                },
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = Color.Gray
             )
             if (item.title == stringResource(R.string.menu_history)) {
                 Spacer(modifier = Modifier.width(70.dp)) // Jarak yang berbeda untuk "History"

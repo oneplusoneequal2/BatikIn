@@ -44,7 +44,7 @@ import com.capstone.batikin.ui.navigation.Screen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier, innerPaddingValues: PaddingValues) {
     var query by remember { mutableStateOf("") }
 
     val mainViewModel = viewModel<MainViewModel>()
@@ -64,6 +64,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Transparent)
+            .padding(innerPaddingValues)
 //        modifier = Modifier.background(Color.Transparent),
 //        backgroundColor = Color.Transparent// Mengatur latbel Scaffold jadi transparan
     ) { paddingValues ->

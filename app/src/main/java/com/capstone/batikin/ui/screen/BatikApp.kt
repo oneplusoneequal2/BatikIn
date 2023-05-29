@@ -92,14 +92,14 @@ fun BatikApp(
             // Set nilai status isDetailScreen sesuai dengan rute saat ini
             isDetailScreen.value = currentRoute == Screen.DetailBatik.route
 
-            NavigationHost(navController = navController)
+            NavigationHost(navController = navController, innerPaddingValues = innerPadding)
         }
     }
 }
 
 
 @Composable
-fun NavigationHost(navController: NavHostController) {
+fun NavigationHost(navController: NavHostController, innerPaddingValues: PaddingValues) {
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
@@ -108,7 +108,7 @@ fun NavigationHost(navController: NavHostController) {
 
 
         composable(Screen.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, innerPaddingValues = innerPaddingValues)
         }
         composable(Screen.History.route) {
             // Implementasi tampilan untuk History

@@ -29,6 +29,7 @@ import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.screen.camera.CameraApp
 import com.capstone.batikin.ui.screen.detail.DetailApp
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
@@ -101,6 +102,9 @@ fun BatikApp(
                 // Implementasi tampilan untuk Profile
                 ProfileScreen()
             }
+            composable(Screen.Camera.route) {
+                CameraApp()
+            }
             //Implement detail
             composable(
                 route = Screen.DetailBatik.route,
@@ -143,6 +147,12 @@ fun BatikBottomBar(
             title = stringResource(R.string.menu_wishlist),
             icon = Icons.Default.Favorite,
             screen = Screen.Wishlist
+        ),
+        // Camera
+        NavigationItem(
+            title = stringResource(R.string.Camera),
+            icon = Icons.Default.Camera,
+            screen = Screen.Camera
         ),
         NavigationItem(
             title = stringResource(R.string.menu_profile),

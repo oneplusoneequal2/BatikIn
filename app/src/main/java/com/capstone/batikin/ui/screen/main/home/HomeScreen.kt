@@ -57,7 +57,13 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
     }
 
     Scaffold(
-        topBar = { TopBar(query) { query = it } },
+        topBar = {
+            TopBar(query) { query = it }
+         },
+
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Transparent)
 //        modifier = Modifier.background(Color.Transparent),
 //        backgroundColor = Color.Transparent// Mengatur latbel Scaffold jadi transparan
     ) { paddingValues ->
@@ -66,7 +72,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
                 .fillMaxWidth()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(start = 8.dp, top = 16.dp, end = 8.dp)
+//                .padding(start = 8.dp, top = 16.dp, end = 8.dp)
 //                .background(Color.Transparent)
         ) {
             HomeBanner()
@@ -84,7 +90,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             SectionHeader(text = "Recommendation")
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 items(data, key = { item -> item.id }) { item ->
                     Item(
@@ -102,7 +108,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .height(600.dp) //klo height gk diatur bisa error infinity
-                    .padding(8.dp),
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp) // Atur jarak antara item
             ) {
                 items(data, key = { item -> item.id }) { item ->
@@ -193,7 +199,8 @@ fun SectionHeader(text: String) {
 //        fontSize = 26.sp,
         fontWeight = FontWeight.ExtraBold,
         color = Color.Gray,
-        style = MaterialTheme.typography.h6
+        style = MaterialTheme.typography.h6,
+        modifier = Modifier.padding(horizontal = 8.dp)
     )
 }
 
@@ -203,7 +210,7 @@ fun SectionHeader(text: String) {
 fun HomeBanner() {
     Box(
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(20.dp))
+//            .clip(shape = RoundedCornerShape(20.dp))
             .background(color = Color.Gray)
             .fillMaxWidth()
             .height(100.dp),
@@ -253,6 +260,7 @@ fun CategoryItem(title: String) {
             disabledContentColor = Color.Black
         ),
         border = BorderStroke(0.5.dp, Color.Gray),
+        modifier = Modifier.padding(horizontal = 8.dp)
     ) {
         Text(
             text = title,

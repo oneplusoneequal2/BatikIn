@@ -80,7 +80,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             SectionHeader(text = "Batik Categories")
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             ) {
                 items(categoryDummy) { category ->
                     CategoryItem(title = category)
@@ -144,20 +144,21 @@ fun Item(
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
                     text = item.title,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.subtitle2,
                     fontWeight = FontWeight.Bold,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
                 Text(
                     text = item.desc,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.Normal,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
                 Text(
                     text = "Rp. ${item.price}",
+                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.body2
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -199,7 +200,7 @@ fun SectionHeader(text: String) {
 //        fontSize = 26.sp,
         fontWeight = FontWeight.ExtraBold,
         color = Color.Gray,
-        style = MaterialTheme.typography.h6,
+        style = MaterialTheme.typography.subtitle1,
         modifier = Modifier.padding(horizontal = 8.dp)
     )
 }
@@ -260,7 +261,7 @@ fun CategoryItem(title: String) {
             disabledContentColor = Color.Black
         ),
         border = BorderStroke(0.5.dp, Color.Gray),
-        modifier = Modifier.padding(horizontal = 8.dp)
+//        modifier = Modifier.padding(horizontal = 8.dp)
     ) {
         Text(
             text = title,

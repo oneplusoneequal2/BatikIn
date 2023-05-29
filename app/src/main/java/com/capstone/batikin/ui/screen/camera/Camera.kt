@@ -99,7 +99,7 @@ fun CameraApp() {
         if (image?.equals(Uri.EMPTY) == true) {
             Text(
                 text = "Choose The Batik You Want to Find The Pattern",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.h5,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray

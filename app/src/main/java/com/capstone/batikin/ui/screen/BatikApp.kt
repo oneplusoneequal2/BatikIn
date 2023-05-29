@@ -53,17 +53,10 @@ fun BatikApp(
     val currentRoute = navBackStackEntry?.destination?.route
 
     val wishlistItems = listDummy
-//
-//    Scaffold(
-//        bottomBar = {
-//
-//            if (currentRoute != Screen.DetailBatik.route) {
-//                BatikBottomBar(navController)
-//            }
-//        },
-//        modifier = modifier.background(Color.Transparent)
-//    )
-    // batas yang ad fab
+
+    // Simpan status apakah sedang membuka halaman Detail atau tidak
+    val isDetailScreen = remember { mutableStateOf(false) }
+
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.DetailBatik.route) {
@@ -72,37 +65,38 @@ fun BatikApp(
         },
         modifier = modifier.background(Color.Transparent),
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    // Navigasi ke CameraScreen
-                    navController.navigate(Screen.Camera.route)
-                },
-                backgroundColor = Color.White,
-                contentColor = Color(0xFFFFA500), // Warna ikon
-//                modifier = Modifier.padding(bottom = it.calculateBottomPadding()) // Mengatur padding bawah sesuai dengan bottomBar
-            ) {
-                Icon(
-                    imageVector = Icons.Default.CameraAlt,
-                    contentDescription = null
-                )
+            if (!isDetailScreen.value) { // Tampilkan FAB hanya jika bukan halaman Detail
+                FloatingActionButton(
+                    onClick = {
+                        // Navigasi ke CameraScreen
+                        navController.navigate(Screen.Camera.route)
+                    },
+                    backgroundColor = Color.White,
+                    contentColor = Color(0xFFFFA500), // Warna ikon
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CameraAlt,
+                        contentDescription = null
+                    )
+                }
             }
         },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
-
     )
-    {innerPadding ->
+    { innerPadding ->
         Box(
             modifier = Modifier
                 .background(Color.Transparent)
+        ) {
+            // Set nilai status isDetailScreen sesuai dengan rute saat ini
+            isDetailScreen.value = currentRoute == Screen.DetailBatik.route
 
-            ) {
             NavigationHost(navController = navController)
         }
-
     }
-
 }
+
 
 @Composable
 fun NavigationHost(navController: NavHostController) {

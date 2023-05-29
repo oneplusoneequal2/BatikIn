@@ -101,7 +101,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .height(200.dp) //klo height gk diatur bisa error infinity
+                    .height(400.dp) //klo height gk diatur bisa error infinity
                     .padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp) // Atur jarak antara item
             ) {

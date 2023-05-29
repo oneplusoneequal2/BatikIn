@@ -1,9 +1,15 @@
 package com.capstone.batikin.ui.screen
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -20,6 +26,8 @@ import com.capstone.batikin.ui.navigation.Screen
 import com.capstone.batikin.ui.screen.main.profile.ProfileScreen
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -31,9 +39,11 @@ import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.screen.camera.CameraApp
 import com.capstone.batikin.ui.screen.detail.DetailApp
+import com.capstone.batikin.ui.screen.main.history.HistoryScreen
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BatikApp(
     modifier: Modifier = Modifier,
@@ -42,86 +52,101 @@ fun BatikApp(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    val wishlistItems = listDummy
+//
+//    Scaffold(
+//        bottomBar = {
+//
+//            if (currentRoute != Screen.DetailBatik.route) {
+//                BatikBottomBar(navController)
+//            }
+//        },
+//        modifier = modifier.background(Color.Transparent)
+//    )
+    // batas yang ad fab
     Scaffold(
         bottomBar = {
             if (currentRoute != Screen.DetailBatik.route) {
                 BatikBottomBar(navController)
             }
         },
-        modifier = modifier
-    )
-    // batas copas yang ad fab
-//    Scaffold(
-//        bottomBar = {
-//            BottomAppBar(
-//                modifier = Modifier.fillMaxWidth(),
-//                backgroundColor = Color.White,
-//                cutoutShape = CircleShape
-//            ) {
-//                BatikBottomBar(navController = navController)
-//            }
-//        },
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = {
-//                    // Navigasi ke CameraScreen
-////                    navController.navigate(Screen.Camera.route)
-//                },
-//                // disini kena error BoxScopeInstance
-////                modifier = Modifier.align(Alignment.Center)
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Default.CameraAlt,
-//                    contentDescription = stringResource(R.string.camera_icon)
-//                )
-//            }
-//        },
-//        isFloatingActionButtonDocked = true,
-//        floatingActionButtonPosition = FabPosition.Center,
-//        modifier = modifier
-//    )
-    { innerPadding ->
-        val wishlistItems = listDummy
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(Screen.Home.route) {
-                HomeScreen(navController = navController)
-            }
-            composable(Screen.History.route) {
-                // Implementasi tampilan untuk History
-//                HistoryScreen()
-            }
-            composable(Screen.Wishlist.route) {
-                // Implementasi tampilan untuk Wishlist
-                WishlistScreen(wishlistItems = wishlistItems, navController = navController)
-            }
-            composable(Screen.Profile.route) {
-                // Implementasi tampilan untuk Profile
-                ProfileScreen()
-            }
-            composable(Screen.Camera.route) {
-                CameraApp()
-            }
-            //Implement detail
-            composable(
-                route = Screen.DetailBatik.route,
-                arguments = listOf(
-                    navArgument("batikId"){
-                        type = NavType.IntType
-                    }
+        modifier = modifier.background(Color.Transparent),
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    // Navigasi ke CameraScreen
+                    navController.navigate(Screen.Camera.route)
+                },
+                backgroundColor = Color.White,
+                contentColor = Color(0xFFFFA500), // Warna ikon
+//                modifier = Modifier.padding(bottom = it.calculateBottomPadding()) // Mengatur padding bawah sesuai dengan bottomBar
+            ) {
+                Icon(
+                    imageVector = Icons.Default.CameraAlt,
+                    contentDescription = null
                 )
-            ){
-                val batikId = it.arguments?.getInt("batikId")
-                if (batikId != null) {
-                    DetailApp(id = batikId, navController)
+            }
+        },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center,
+
+    )
+    {innerPadding ->
+        Box(
+            modifier = Modifier
+                .background(Color.Transparent)
+
+            ) {
+            NavigationHost(navController = navController)
+        }
+
+    }
+
+}
+
+@Composable
+fun NavigationHost(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Home.route
+    ) {
+        val wishlistItems = listDummy
+
+
+        composable(Screen.Home.route) {
+            HomeScreen(navController = navController)
+        }
+        composable(Screen.History.route) {
+            // Implementasi tampilan untuk History
+            HistoryScreen()
+        }
+        composable(Screen.Wishlist.route) {
+            // Implementasi tampilan untuk Wishlist
+            WishlistScreen(wishlistItems = wishlistItems, navController = navController)
+        }
+        composable(Screen.Profile.route) {
+            // Implementasi tampilan untuk Profile
+            ProfileScreen()
+        }
+        // Kamera klo gk pake FAB
+        composable(Screen.Camera.route) {
+            CameraApp()
+        }
+        //Implement detail
+        composable(
+            route = Screen.DetailBatik.route,
+            arguments = listOf(
+                navArgument("batikId") {
+                    type = NavType.IntType
                 }
+            )
+        ) {
+            val batikId = it.arguments?.getInt("batikId")
+            if (batikId != null) {
+                DetailApp(id = batikId, navController)
             }
         }
     }
-
 }
 
 
@@ -143,16 +168,17 @@ fun BatikBottomBar(
             icon = Icons.Default.History,
             screen = Screen.History
         ),
+        // Camera
+//        NavigationItem(
+//            title = stringResource(R.string.Camera),
+//            icon = Icons.Default.Camera,
+//            screen = Screen.Camera
+//        ),
+//        Spacer(modifier = Modifier.height(16.dp)),
         NavigationItem(
             title = stringResource(R.string.menu_wishlist),
             icon = Icons.Default.Favorite,
             screen = Screen.Wishlist
-        ),
-        // Camera
-        NavigationItem(
-            title = stringResource(R.string.Camera),
-            icon = Icons.Default.Camera,
-            screen = Screen.Camera
         ),
         NavigationItem(
             title = stringResource(R.string.menu_profile),
@@ -161,9 +187,14 @@ fun BatikBottomBar(
         )
     )
 
-    BottomNavigation(
+    BottomAppBar(
         modifier = modifier
+            .background(Color.Transparent),
+//        cutoutShape = CutCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp),
+        cutoutShape = CircleShape
+
     ) {
+//        navigationItems.forEachIndexed { index, item ->
         navigationItems.forEach { item ->
             BottomNavigationItem(
                 icon = {
@@ -183,6 +214,11 @@ fun BatikBottomBar(
                     }
                 }
             )
+            if (item.title == stringResource(R.string.menu_history)) {
+                Spacer(modifier = Modifier.width(70.dp)) // Jarak yang berbeda untuk "History"
+            } else if (item.title == stringResource(R.string.menu_wishlist)) {
+                Spacer(modifier = Modifier.width(-30.dp)) // Jarak default untuk item lainnya
+            }
         }
     }
 }

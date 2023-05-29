@@ -1,4 +1,4 @@
-package com.capstone.batikin.ui.screen.main.dashboard
+package com.capstone.batikin.ui.screen.main.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

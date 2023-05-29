@@ -42,78 +42,6 @@ import com.capstone.batikin.R
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
 
-//@OptIn(ExperimentalFoundationApi::class)
-//@Composable
-//fun HomeCompose(navController: NavHostController, modifier: Modifier = Modifier) {
-//
-//    var query by remember { mutableStateOf("") }
-//
-//    val mainViewModel = viewModel<MainViewModel>()
-//
-//    mainViewModel.getData()
-//
-//    val dataList by mainViewModel.listData.observeAsState()
-//
-//    val data = ArrayList<Batik>()
-//
-//    dataList?.map {
-//        data.add(it)
-//    }
-//
-//    Scaffold(
-//        topBar = { TopBar(query) { query = it } }
-//    ) { paddingValues ->
-//        Column(modifier = modifier
-//            .padding(
-//                start = 16.dp,
-//                top = 16.dp,
-//                end = 16.dp,
-//                bottom = paddingValues.calculateBottomPadding()),
-//            verticalArrangement = Arrangement.spacedBy(16.dp)) {
-//
-//            HomeBanner()
-//
-//            SectionHeader(text = "Batik Categories")
-//            LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-//                items(categoryDummy){
-//                    CategoryItem(title = it)
-//                }
-//            }
-//
-//            SectionHeader(text = "Recommendation")
-//            LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-//                items(data, key = { item ->
-//                    item.id
-//                }) {
-//                    Item(
-//                        it,
-//                        navController = navController
-//                    )
-//                }
-//            }
-//
-//            SectionHeader(text = "Discover More")
-//            LazyVerticalStaggeredGrid(
-//                columns = StaggeredGridCells.Fixed(2),
-//                horizontalArrangement = Arrangement.spacedBy(16.dp),
-//                state = rememberLazyStaggeredGridState(),
-//                verticalItemSpacing = 20.dp,
-//                modifier = Modifier.height(300.dp)
-//            ) {
-//                items(data, key = { item ->
-//                    item.id
-//                }) {
-//                    Item(
-//                        item = it,
-//                        modifier = Modifier.width(50.dp),
-//                        navController = navController
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -129,19 +57,25 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
     }
 
     Scaffold(
-        topBar = { TopBar(query) { query = it } }
+        topBar = { TopBar(query) { query = it } },
+//        modifier = Modifier.background(Color.Transparent),
+//        backgroundColor = Color.Transparent// Mengatur latbel Scaffold jadi transparan
     ) { paddingValues ->
         Column(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                .padding(start = 8.dp, top = 16.dp, end = 8.dp)
+//                .background(Color.Transparent)
         ) {
             HomeBanner()
 
             SectionHeader(text = "Batik Categories")
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            ) {
                 items(categoryDummy) { category ->
                     CategoryItem(title = category)
                 }
@@ -149,13 +83,15 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 
             SectionHeader(text = "Recommendation")
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 items(data, key = { item -> item.id }) { item ->
                     Item(
                         item = item,
                         navController = navController,
-                        modifier = Modifier.width(100.dp)
+                        modifier = Modifier
+                            .width(100.dp)
                     )
                 }
             }
@@ -165,9 +101,9 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .height(300.dp) //klo height gk diatur bisa error infinity
+                    .height(200.dp) //klo height gk diatur bisa error infinity
                     .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp) // Atur jarak antara item
+                verticalArrangement = Arrangement.spacedBy(10.dp) // Atur jarak antara item
             ) {
                 items(data, key = { item -> item.id }) { item ->
                     Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())

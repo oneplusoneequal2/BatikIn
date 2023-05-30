@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.batikin.api.ApiConfig
 import com.capstone.batikin.api.response.LoginResponse
+import com.capstone.batikin.api.response.RegisterResponse
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.emailDummy
 import com.capstone.batikin.model.listDummy
@@ -25,6 +26,9 @@ class MainViewModel: ViewModel() {
 
     private var _isLogin = MutableLiveData<Boolean>()
     val isLogin: LiveData<Boolean> = _isLogin
+
+    private var _isRegister = MutableLiveData<Boolean>()
+    val isRegister: LiveData<Boolean> = _isRegister
 
     private var _response = MutableLiveData<String?>()
     val response: LiveData<String?> = _response
@@ -52,6 +56,30 @@ class MainViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
+            }
+
+        })
+    }
+
+    fun registerData(name: String, email: String, password: String) {
+        val client = ApiConfig.getApiService().register(name, email, password)
+        client.enqueue(object: Callback<RegisterResponse>{
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
+                val responseBody = response.body()
+                if (responseBody?.status == 201) {
+                    _isRegister.postValue(true)
+                    _response.postValue(responseBody.message)
+                } else {
+                    _isRegister.postValue(false)
+                    _response.postValue(responseBody?.message)
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
 
             }
 

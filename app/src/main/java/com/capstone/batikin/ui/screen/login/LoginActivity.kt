@@ -8,18 +8,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.capstone.batikin.ui.EmailTextField
 import com.capstone.batikin.ui.PasswordTextField
 import com.capstone.batikin.ui.screen.main.MainActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.capstone.batikin.viewmodel.MainViewModel
 
-const val emailDummy = "test@gmail.com"
-const val passDummy = "12345678"
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,10 @@ fun Login(){
 
     val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
     var isEmailValid by remember { mutableStateOf(true) }
+
+    val mainViewModel = viewModel<MainViewModel>()
+
+    val isLogin by mainViewModel.isLogin.observeAsState()
 
     val context = LocalContext.current
 
@@ -81,11 +86,12 @@ fun Login(){
 
             Button(
                 onClick = {
-                          if (email == emailDummy && password == passDummy) {
-                              context.startActivity(Intent(context, MainActivity::class.java))
-                          } else {
-                              Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
-                          }
+                    mainViewModel.checkLogin(email, password)
+                    if(isLogin == true) {
+                        context.startActivity(Intent(context, MainActivity::class.java))
+                    } else if(isLogin == false) {
+                        Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
+                    }
                 },
 //                enabled = isButtonEnabled,
                 enabled = true,

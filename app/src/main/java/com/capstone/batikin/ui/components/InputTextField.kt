@@ -8,15 +8,27 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 
 @Composable
-fun NameTextField(name: String, onNameChange: (String) -> Unit) {
+fun NameTextField(
+    name: String,
+    onNameChange: (String) -> Unit,
+    onImeAction: () -> Unit
+
+) {
     var isError by remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -40,8 +52,8 @@ fun NameTextField(name: String, onNameChange: (String) -> Unit) {
         isError = isError,
         singleLine = true,
         maxLines = 1,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if (isError) Color.Red else LocalContentColor.current
         )
@@ -57,7 +69,11 @@ fun NameTextField(name: String, onNameChange: (String) -> Unit) {
 
 
 @Composable
-fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
+fun EmailTextField(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    onImeAction: () -> Unit
+) {
     val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
     var isEmailValid by remember { mutableStateOf(true) }
 
@@ -76,14 +92,14 @@ fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary,
+            unfocusedBorderColor = Color.Gray,
             disabledBorderColor = MaterialTheme.colors.primary
         ),
         isError = email.isNotEmpty() && !isEmailValid,
         singleLine = true,
         maxLines = 1,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if ((email.isEmpty() || !isEmailValid)) Color.Red else LocalContentColor.current
         )
@@ -104,7 +120,12 @@ fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
 }
 
 @Composable
-fun PasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
+fun PasswordTextField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    onImeAction: () -> Unit
+
+) {
     var isError by remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -123,14 +144,14 @@ fun PasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary,
+            unfocusedBorderColor = Color.Gray,
             disabledBorderColor = MaterialTheme.colors.primary
         ),
         isError = isError,
         singleLine = true,
         maxLines = 1,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if (isError) Color.Red else LocalContentColor.current
         )
@@ -151,7 +172,12 @@ fun PasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
 }
 
 @Composable
-fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
+fun ConfirmPasswordTextField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    onImeAction: () -> Unit
+
+) {
     var isError by remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -176,8 +202,8 @@ fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Uni
         isError = isError,
         singleLine = true,
         maxLines = 1,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if (isError) Color.Red else LocalContentColor.current
         )
@@ -198,6 +224,7 @@ fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Uni
 }
 
 
+
 @Preview(showBackground = true)
 @Composable
 fun InputFieldPreview() {
@@ -209,32 +236,46 @@ fun InputFieldPreview() {
 
         val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
         var isEmailValid by remember { mutableStateOf(true) }
+
+        val focusManager = LocalFocusManager.current
         Column(
             modifier = Modifier
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
         ){
-            NameTextField(name = name, onNameChange = { newName -> name = newName })
+
+            NameTextField(
+                name = name,
+                onNameChange = { newName -> name = newName },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
+            )
 
             Spacer(Modifier.height(8.dp))
 
-            EmailTextField(email = email, onEmailChange = { newValue ->
-                email = newValue
-                isEmailValid = newValue.matches(emailRegex)
-            })
+            EmailTextField(
+                email = email,
+                onEmailChange = { newValue ->
+                    email = newValue
+                    isEmailValid = newValue.matches(emailRegex)
+                },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
+            )
 
             Spacer(Modifier.height(8.dp))
 
             PasswordTextField(
                 password = password,
-                onPasswordChange = { password = it }
+                onPasswordChange = { password = it },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
             )
 
             Spacer(Modifier.height(8.dp))
 
             ConfirmPasswordTextField(
                 password = confirmPassword,
-                onPasswordChange = { confirmPassword = it }
+                onPasswordChange = { confirmPassword = it },
+                onImeAction = { focusManager.clearFocus() }
+
             )
 
         }

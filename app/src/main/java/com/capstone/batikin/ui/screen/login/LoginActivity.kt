@@ -11,7 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -52,6 +55,7 @@ fun Login(){
     val response by mainViewModel.response.observeAsState()
 
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(isLogin) {
         if (isLogin == true) {
@@ -80,16 +84,21 @@ fun Login(){
             )
             Spacer(Modifier.height(16.dp))
 
-            EmailTextField(email = email, onEmailChange = { newValue ->
-                email = newValue
-                isEmailValid = newValue.matches(emailRegex)
-            })
+            EmailTextField(
+                email = email,
+                onEmailChange = { newValue ->
+                    email = newValue
+                    isEmailValid = newValue.matches(emailRegex)
+                },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
+            )
 
             Spacer(Modifier.height(8.dp))
 
             PasswordTextField(
                 password = password,
-                onPasswordChange = { password = it }
+                onPasswordChange = { password = it },
+                onImeAction = { focusManager.clearFocus() }
             )
 
             Spacer(Modifier.height(50.dp))

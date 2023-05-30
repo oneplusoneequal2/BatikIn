@@ -75,18 +75,23 @@ fun TopBar(query: String, onChange: (String) -> Unit) {
 
     TopAppBar(
         backgroundColor = Color(0xFFFFA500),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(8.dp),
         contentColor = Color.White,
         elevation = 0.dp
     ) {
-        SearchBar(query = query, onChange = onChange)
-
-        Spacer(modifier = Modifier.width(20.dp))
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 20.dp)
+        ) {
+            SearchBar(query = query, onChange = onChange)
+        }
 
         Icon(
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
-            tint = Color.White
+            tint = Color.White,
+            modifier = Modifier.padding(end = 16.dp)
         )
     }
 }
@@ -98,7 +103,7 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         value = query,
         onValueChange = onChange,
         modifier = Modifier
-            .width(280.dp),
+            .fillMaxWidth(),
         textStyle = TextStyle(color = Color.Gray),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = Color.Gray,
@@ -110,7 +115,7 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = null,
+                contentDescription = "search",
                 tint = Color.Gray
             )
         },
@@ -122,65 +127,6 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         }
     )
 }
-
-
-//@Composable
-//fun TopBar(query: String, onChange: (String) -> Unit) {
-//    TopAppBar(
-//        backgroundColor = Color.Transparent,
-//        contentPadding = PaddingValues(16.dp),
-//        contentColor = Color.White,
-//        modifier = Modifier.fillMaxWidth()
-//    ) {
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            Column(
-//                modifier = Modifier.weight(1f)
-//            ) {
-//                SearchBar(query = query, onChange = onChange)
-//            }
-//            Spacer(modifier = Modifier.width(10.dp))
-//
-//            Icon(
-//                imageVector = Icons.Default.ShoppingCart,
-//                contentDescription = null,
-//                tint = Color(0xFFFFA500),
-//                modifier = Modifier.padding(8.dp)
-//            )
-//        }
-//    }
-//}
-//
-//@Composable
-//fun SearchBar(query: String, onChange: (String) -> Unit) {
-//    OutlinedTextField(
-//        value = query,
-//        onValueChange = onChange,
-//        modifier = Modifier.fillMaxWidth(),
-//        textStyle = TextStyle(color = Color.Gray),
-//        colors = TextFieldDefaults.outlinedTextFieldColors(
-//            textColor = Color.Gray,
-//            placeholderColor = Color.Gray.copy(alpha = 0.5f),
-//            unfocusedBorderColor = Color.Gray.copy(alpha = 0.5f)
-//        ),
-//        shape = RoundedCornerShape(5.dp),
-//        leadingIcon = {
-//            Icon(
-//                imageVector = Icons.Default.Search,
-//                contentDescription = null,
-//                tint = Color.Gray
-//            )
-//        },
-//        placeholder = {
-//            Text(
-//                text = "Search batik here",
-//                color = Color.Gray.copy(alpha = 0.5f)
-//            )
-//        }
-//    )
-//}
 
 @Preview(showBackground = true)
 @Composable

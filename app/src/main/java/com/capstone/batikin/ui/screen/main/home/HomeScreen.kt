@@ -77,10 +77,12 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
         ) {
             HomeBanner()
 
+            Spacer(modifier = Modifier.height(8.dp))
+
             SectionHeader(text = "Batik Categories")
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(horizontal = 8.dp)
+//                horizontalArrangement = Arrangement.spacedBy(0.dp),
+                modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 items(categoryDummy) { category ->
                     CategoryItem(title = category)
@@ -89,15 +91,15 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 
             SectionHeader(text = "Recommendation")
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+//                horizontalArrangement = Arrangement.spacedBy(0.dp),
+                modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 items(data, key = { item -> item.id }) { item ->
                     Item(
                         item = item,
                         navController = navController,
                         modifier = Modifier
-                            .width(100.dp)
+                            .width(140.dp)
                     )
                 }
             }
@@ -105,16 +107,17 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             SectionHeader(text = "Discover More")
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
-                    .height(600.dp) //klo height gk diatur bisa error infinity
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp) // Atur jarak antara item
+                    .height(620.dp) //klo height gk diatur bisa error infinity
+                    .padding(10.dp),
+                verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
             ) {
                 items(data, key = { item -> item.id }) { item ->
                     Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
                 }
             }
+
         }
     }
 }
@@ -128,11 +131,13 @@ fun Item(
 ) {
     val context = LocalContext.current
     Surface(
-        elevation = 8.dp,
+        elevation = 5.dp,
         shape = RoundedCornerShape(15.dp),
-        modifier = modifier.clickable {
-            navController.navigate(Screen.DetailBatik.createRoute(batikId = item.id))
-        }
+        modifier = modifier
+            .clickable {
+                navController.navigate(Screen.DetailBatik.createRoute(batikId = item.id))
+            }
+            .padding(10.dp)
     ) {
         Column() {
             AsyncImage(
@@ -261,7 +266,7 @@ fun CategoryItem(title: String) {
             disabledContentColor = Color.Black
         ),
         border = BorderStroke(0.5.dp, Color.Gray),
-//        modifier = Modifier.padding(horizontal = 8.dp)
+        modifier = Modifier.padding(horizontal = 8.dp)
     ) {
         Text(
             text = title,

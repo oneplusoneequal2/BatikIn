@@ -92,7 +92,8 @@ fun DetailApp(id: Int, navController: NavController) {
                 Text(
                     text = "Rp. ${batikItem?.price}",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
                 )
                 FloatingActionButton(
                     onClick = {},

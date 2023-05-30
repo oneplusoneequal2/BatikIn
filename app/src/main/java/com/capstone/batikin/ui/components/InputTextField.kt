@@ -39,6 +39,7 @@ fun NameTextField(name: String, onNameChange: (String) -> Unit) {
         ),
         isError = isError,
         singleLine = true,
+        maxLines = 1,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
         textStyle = MaterialTheme.typography.body1.copy(
@@ -80,6 +81,7 @@ fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
         ),
         isError = email.isNotEmpty() && !isEmailValid,
         singleLine = true,
+        maxLines = 1,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
         textStyle = MaterialTheme.typography.body1.copy(
@@ -126,6 +128,7 @@ fun PasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
         ),
         isError = isError,
         singleLine = true,
+        maxLines = 1,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
         textStyle = MaterialTheme.typography.body1.copy(
@@ -172,6 +175,7 @@ fun ConfirmPasswordTextField(password: String, onPasswordChange: (String) -> Uni
         ),
         isError = isError,
         singleLine = true,
+        maxLines = 1,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { /* Aksi saat btn done keyboard ditekan */ }),
         textStyle = MaterialTheme.typography.body1.copy(

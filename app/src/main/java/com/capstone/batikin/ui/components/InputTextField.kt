@@ -46,7 +46,7 @@ fun NameTextField(
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary,
+            unfocusedBorderColor = Color.Gray,
             disabledBorderColor = MaterialTheme.colors.primary
         ),
         isError = isError,
@@ -196,7 +196,7 @@ fun ConfirmPasswordTextField(
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = MaterialTheme.colors.primary,
-            unfocusedBorderColor = MaterialTheme.colors.primary,
+            unfocusedBorderColor = Color.Gray,
             disabledBorderColor = MaterialTheme.colors.primary
         ),
         isError = isError,

@@ -2,6 +2,9 @@ package com.capstone.batikin.model
 
 import androidx.compose.ui.res.stringResource
 
+val emailDummy = "test@gmail.com"
+val passDummy = "12345678"
+
 val listDummy = arrayListOf<Batik>(
     Batik(
         1,

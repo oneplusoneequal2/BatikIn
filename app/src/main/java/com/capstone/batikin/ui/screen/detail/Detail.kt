@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -31,6 +33,7 @@ import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.screen.payment.PaymentActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.capstone.batikin.viewmodel.MainViewModel
 
 @Composable
 fun DetailApp(id: Int, navController: NavController) {
@@ -39,7 +42,10 @@ fun DetailApp(id: Int, navController: NavController) {
 
     val context = LocalContext.current
 
-    val batikItem = listDummy.find { it.id == id }
+    val mainViewModel = viewModel<MainViewModel>()
+    mainViewModel.getDataDetail(id)
+
+    val batikItem by mainViewModel.detailData.observeAsState()
 
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)

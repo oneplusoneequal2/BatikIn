@@ -11,7 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -54,6 +56,8 @@ fun Register() {
     var isEmailValid by remember { mutableStateOf(true) }
 
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+
 
     val mainViewModel = viewModel<MainViewModel>()
 
@@ -85,27 +89,38 @@ fun Register() {
             )
             Spacer(Modifier.height(16.dp))
 
-            NameTextField(name = name, onNameChange = { newName -> name = newName })
+            NameTextField(
+                name = name,
+                onNameChange = { newName -> name = newName },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
+            )
 
             Spacer(Modifier.height(8.dp))
 
-            EmailTextField(email = email, onEmailChange = { newValue ->
-                email = newValue
-                isEmailValid = newValue.matches(emailRegex)
-            })
+            EmailTextField(
+                email = email,
+                onEmailChange = { newValue ->
+                    email = newValue
+                    isEmailValid = newValue.matches(emailRegex)
+                },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
+            )
 
             Spacer(Modifier.height(8.dp))
 
             PasswordTextField(
                 password = password,
-                onPasswordChange = { password = it }
+                onPasswordChange = { password = it },
+                onImeAction = { focusManager.moveFocus(FocusDirection.Down) }
             )
 
             Spacer(Modifier.height(8.dp))
 
             ConfirmPasswordTextField(
                 password = confirmPassword,
-                onPasswordChange = { confirmPassword = it }
+                onPasswordChange = { confirmPassword = it },
+                onImeAction = { focusManager.clearFocus() }
+
             )
 
             Spacer(Modifier.height(50.dp))

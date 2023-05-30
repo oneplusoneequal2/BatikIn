@@ -49,6 +49,7 @@ fun Login(){
     val mainViewModel = viewModel<MainViewModel>()
 
     val isLogin by mainViewModel.isLogin.observeAsState()
+    val response by mainViewModel.response.observeAsState()
 
     val context = LocalContext.current
 
@@ -89,6 +90,7 @@ fun Login(){
                     mainViewModel.checkLogin(email, password)
                     if(isLogin == true) {
                         context.startActivity(Intent(context, MainActivity::class.java))
+                        Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
                     } else if(isLogin == false) {
                         Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
                     }

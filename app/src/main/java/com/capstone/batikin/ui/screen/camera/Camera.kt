@@ -7,13 +7,15 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -34,7 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.R
+import com.capstone.batikin.ml.Model
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 import java.io.FileOutputStream
 
@@ -86,8 +92,10 @@ fun CameraApp() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .background(colorResource(id = R.color.pinkish_white))
+            .padding(16.dp)
             .fillMaxWidth()
             .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
     ) {
         Image(
             painter = rememberAsyncImagePainter(image),
@@ -150,6 +158,47 @@ fun CameraApp() {
                     style = MaterialTheme.typography.h6
                 )
             }
+
+            // TFLite
+
+            val model = Model.newInstance(context)
+            val imgBitmap = BitmapFactory.decodeStream(image?.let {
+                context.contentResolver.openInputStream(
+                    it
+                )
+            })
+
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+
+
+            val inputBitmap = Bitmap.createScaledBitmap(imgBitmap, 224, 224, true)
+
+            val tfImage = TensorImage(DataType.FLOAT32)
+            tfImage.load(inputBitmap)
+
+            inputFeature0.loadBuffer(tfImage.buffer)
+
+            val outputData = model.process(inputFeature0)
+
+//            Toast.makeText(context, outputData.toString(), Toast.LENGTH_SHORT).show()
+            val outputFeature = outputData.outputFeature0AsTensorBuffer.floatArray
+
+            val items = ArrayList<Float>()
+            for (i in outputFeature) {
+                items.add(i)
+            }
+
+            LazyColumn(
+                modifier = Modifier.height(100.dp)
+            ) {
+                items(items.sortedByDescending { it}) {
+                    Text(
+                        text = String.format("%.2f", it*100f)
+                    )
+                }
+            }
+
+            model.close()
         }
 
     }

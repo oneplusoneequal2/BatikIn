@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.capstone.batikin.R
 import com.capstone.batikin.ml.Model
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
@@ -61,11 +63,14 @@ private fun rotateFile(file: File, isBackCamera: Boolean = false) {
 fun CameraApp() {
     var image by remember { mutableStateOf<Uri?>(Uri.EMPTY)}
 
+    val showPreview = remember { mutableStateOf(false) }
+
     val context = LocalContext.current
 
     val getGallery =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
             image= it
+            showPreview.value = true
         }
 
     val launcherCameraX =
@@ -73,6 +78,7 @@ fun CameraApp() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == 200) {
+                showPreview.value = true
                 val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     it.data?.getSerializableExtra("picture", File::class.java)
                 } else {
@@ -97,17 +103,32 @@ fun CameraApp() {
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(image),
-            contentDescription = null,
-            modifier = Modifier
-                .width(300.dp)
-                .height(300.dp)
-        )
+        if (showPreview.value && image != null) {
+            Image(
+                painter = rememberAsyncImagePainter(image),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(300.dp)
+            )
+        } else {
+            Image(
+                painter = painterResource(R.drawable.batik_capture_example),
+                contentDescription = null,
+            )
+        }
+//        Image(
+//            painter = rememberAsyncImagePainter(image),
+//            contentDescription = null,
+//            modifier = Modifier
+//                .width(300.dp)
+//                .height(300.dp)
+//        )
         if (image?.equals(Uri.EMPTY) == true) {
+
             Text(
                 text = "Choose The Batik You Want to Find The Pattern",
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.h6,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray

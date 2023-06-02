@@ -17,9 +17,13 @@ import androidx.core.content.ContextCompat
 import com.capstone.batikin.R
 import com.capstone.batikin.databinding.ActivityCameraBinding
 import java.io.File
-import java.nio.file.Files.createFile
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.ScaleGestureDetector
+import android.widget.Button
+import android.widget.SeekBar
+import androidx.camera.core.*
+import kotlin.math.abs
 
 class CameraActivity : AppCompatActivity() {
 
@@ -31,14 +35,40 @@ class CameraActivity : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
 
         private const val FILENAME_FORMAT = "dd-MMM-yyyy"
-
     }
 
+    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    private lateinit var binding: ActivityCameraBinding
+    private lateinit var imageCapture: ImageCapture
+    private lateinit var cameraControl: CameraControl
+    private var zoomLevel: Float = 0f
+    private var scaleFactor: Float = 0f
 
-    val timeStamp: String = SimpleDateFormat(
-        FILENAME_FORMAT,
-        Locale.US
-    ).format(System.currentTimeMillis())
+    private lateinit var cameraProvider: ProcessCameraProvider
+    private lateinit var cameraInfo: CameraInfo
+
+    private lateinit var zoomInButton: Button
+    private lateinit var zoomOutButton: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        supportActionBar?.hide()
+
+        if (!allPermissionsGranted()) {
+            ActivityCompat.requestPermissions(
+                this,
+                REQUIRED_PERMISSIONS,
+                REQUEST_CODE_PERMISSIONS
+            )
+        }
+
+        startCamera()
+        setupZoomSlider()
+        binding.captureImage.setOnClickListener { takePhoto() }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -60,31 +90,6 @@ class CameraActivity : AppCompatActivity() {
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-
-    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-    private lateinit var binding: ActivityCameraBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        supportActionBar?.hide()
-
-        if (!allPermissionsGranted()) {
-            ActivityCompat.requestPermissions(
-                this,
-                REQUIRED_PERMISSIONS,
-                REQUEST_CODE_PERMISSIONS
-            )
-        }
-
-        startCamera()
-        binding.captureImage.setOnClickListener { takePhoto() }
-
-
     }
 
     private fun takePhoto() {
@@ -119,27 +124,25 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-    private var imageCapture: ImageCapture? = null
-
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             }
 
             imageCapture = ImageCapture.Builder().build()
 
+            val cameraSelector =
+                CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+
             try {
                 cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    this,
-                    cameraSelector,
-                    preview,
-                    imageCapture
-                )
+                val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+                cameraControl = camera.cameraControl
+                cameraInfo = camera.cameraInfo
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
@@ -158,7 +161,32 @@ class CameraActivity : AppCompatActivity() {
         val outputDirectory = if (mediaDir != null && mediaDir.exists())
             mediaDir else application.filesDir
 
+        val timeStamp: String = SimpleDateFormat(
+            FILENAME_FORMAT,
+            Locale.US
+        ).format(System.currentTimeMillis())
+
         return File(outputDirectory, "$timeStamp.jpg")
+    }
+
+
+    //Zoom pake slider
+    private fun setupZoomSlider() {
+        val zoomSlider = binding.zoomSlider
+        zoomSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val zoomLevel = (progress / 1000f) * (cameraInfo.zoomState.value?.maxZoomRatio ?: 0.5f)
+                cameraControl.setLinearZoom(zoomLevel)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Kosongkan kalau tidak diperlukan
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Kosongkan kalau tidak diperlukan
+            }
+        })
     }
 }
 

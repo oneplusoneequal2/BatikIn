@@ -148,16 +148,16 @@ fun CameraApp() {
             }
         } else {
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Default.AdfScanner,
-                    contentDescription = "Scan"
-                )
-                Text(
-                    text = "Scan",
-                    style = MaterialTheme.typography.h6
-                )
-            }
+//            Button(onClick = { }) {
+//                Icon(
+//                    imageVector = Icons.Default.AdfScanner,
+//                    contentDescription = "Scan"
+//                )
+//                Text(
+//                    text = "Scan",
+//                    style = MaterialTheme.typography.h6
+//                )
+//            }
 
             // TFLite
 
@@ -188,15 +188,45 @@ fun CameraApp() {
                 items.add(i)
             }
 
-            LazyColumn(
-                modifier = Modifier.height(100.dp)
-            ) {
-                items(items.sortedByDescending { it}) {
-                    Text(
-                        text = String.format("%.2f", it*100f)
-                    )
-                }
+            val maxValue = items.maxOrNull()
+
+            val maxValueIndex = items.indexOf(maxValue)
+
+            val batikTypes = arrayOf(
+                    "Batik Bali",
+                    "Batik Betawi",
+                    "Batik Cendrawasih",
+                    "Batik Dayak",
+                    "Batik Geblek Renteng",
+                    "Batik Ikat Celup",
+                    "Batik Insang",
+                    "Batik Kawung",
+                    "Batik Lasem",
+                    "Batik Megamendung",
+                    "Batik Pala",
+                    "Batik Parang",
+                    "Batik Poleng",
+                    "Batik Sekar Jagad",
+                    "Batik Tambal"
+            )
+
+            Toast.makeText(context, items.indexOf(maxValue).toString(), Toast.LENGTH_SHORT).show()
+
+            if (maxValue != null) {
+                Text(
+                    text = batikTypes[maxValueIndex] + " - " + String.format("%.2f", maxValue*100f)
+                )
             }
+
+//            LazyColumn(
+//                modifier = Modifier.height(100.dp)
+//            ) {
+//                items(items.sortedByDescending { it}) {
+//                    Text(
+//                        text = batikTypes[maxValueIndex] + " - " + String.format("%.2f", it*100f)
+//                    )
+//                }
+//            }
 
             model.close()
         }

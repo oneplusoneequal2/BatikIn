@@ -85,7 +85,9 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             HomeBanner()
 
             if (isLoading == true){
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -154,8 +156,10 @@ fun Item(
             AsyncImage(
                 model = item.photoUrl,
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(100.dp)
             )
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(

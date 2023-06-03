@@ -1,9 +1,6 @@
 package com.capstone.batikin.api
 
-import com.capstone.batikin.api.response.BatikResponse
-import com.capstone.batikin.api.response.DataItem
-import com.capstone.batikin.api.response.LoginResponse
-import com.capstone.batikin.api.response.RegisterResponse
+import com.capstone.batikin.api.response.*
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -33,6 +30,6 @@ interface ApiService {
     @GET("batik/{id}")
     fun getBatikDetail(
         @Path("id") id: Int
-    ): Call<DataItem>
+    ): Call<BatikDetailResponse>
 
 }

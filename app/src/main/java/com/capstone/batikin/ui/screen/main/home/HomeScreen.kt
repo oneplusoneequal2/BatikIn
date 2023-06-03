@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.capstone.batikin.R
+import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
 
@@ -48,12 +49,18 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
     var query by remember { mutableStateOf("") }
 
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getData()
+    mainViewModel.getBatikList()
     val dataList by mainViewModel.listData.observeAsState()
+    val isLoading by mainViewModel.isLoading.observeAsState()
+
     val data = ArrayList<Batik>()
 
     dataList?.map {
-        data.add(it)
+        if (it != null) {
+            data.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
+                it.rating as Double
+            ))
+        }
     }
 
     Scaffold(
@@ -77,6 +84,10 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
         ) {
             HomeBanner()
 
+            if (isLoading == true){
+                CircularProgressIndicator()
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
             SectionHeader(text = "Batik Categories")
@@ -94,7 +105,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 //                horizontalArrangement = Arrangement.spacedBy(0.dp),
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
-                items(data, key = { item -> item.id }) { item ->
+                items(data, key = { it.id }) { item ->
                     Item(
                         item = item,
                         navController = navController,

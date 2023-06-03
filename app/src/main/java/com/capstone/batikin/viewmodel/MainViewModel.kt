@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.batikin.api.ApiConfig
-import com.capstone.batikin.api.response.BatikResponse
-import com.capstone.batikin.api.response.DataItem
-import com.capstone.batikin.api.response.LoginResponse
-import com.capstone.batikin.api.response.RegisterResponse
+import com.capstone.batikin.api.response.*
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.emailDummy
 import com.capstone.batikin.model.listDummy
@@ -23,8 +20,8 @@ class MainViewModel: ViewModel() {
     private var _listData = MutableLiveData<List<DataItem?>?>()
     val listData: LiveData<List<DataItem?>?> = _listData
 
-    private var _detailData = MutableLiveData<DataItem?>()
-    val detailData: LiveData<DataItem?> = _detailData
+    private var _detailData = MutableLiveData<Data>()
+    val detailData: LiveData<Data> = _detailData
 
     private var _isLogin = MutableLiveData<Boolean>()
     val isLogin: LiveData<Boolean> = _isLogin
@@ -57,16 +54,19 @@ class MainViewModel: ViewModel() {
     fun getBatikDetail(id: Int) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getBatikDetail(id)
-        client.enqueue(object : Callback<DataItem>{
-            override fun onResponse(call: Call<DataItem>, response: Response<DataItem>) {
+        client.enqueue(object : Callback<BatikDetailResponse>{
+            override fun onResponse(
+                call: Call<BatikDetailResponse>,
+                response: Response<BatikDetailResponse>
+            ) {
                 _isLoading.value = false
-                val responseBody = response.body()
-                _detailData.postValue(responseBody)
+                _detailData.postValue(response.body()?.data)
             }
 
-            override fun onFailure(call: Call<DataItem>, t: Throwable) {
+            override fun onFailure(call: Call<BatikDetailResponse>, t: Throwable) {
                 _isLoading.value = false
             }
+
         })
     }
 

@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.batikin.api.ApiConfig
+import com.capstone.batikin.api.response.BatikResponse
+import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.api.response.LoginResponse
 import com.capstone.batikin.api.response.RegisterResponse
 import com.capstone.batikin.model.Batik
@@ -18,11 +20,11 @@ import java.lang.reflect.TypeVariable
 
 class MainViewModel: ViewModel() {
 
-    private var _listData = MutableLiveData<ArrayList<Batik>>()
-    val listData: LiveData<ArrayList<Batik>> = _listData
+    private var _listData = MutableLiveData<List<DataItem?>?>()
+    val listData: LiveData<List<DataItem?>?> = _listData
 
-    private var _detailData = MutableLiveData<Batik>()
-    val detailData: LiveData<Batik> = _detailData
+    private var _detailData = MutableLiveData<DataItem?>()
+    val detailData: LiveData<DataItem?> = _detailData
 
     private var _isLogin = MutableLiveData<Boolean>()
     val isLogin: LiveData<Boolean> = _isLogin
@@ -33,12 +35,39 @@ class MainViewModel: ViewModel() {
     private var _response = MutableLiveData<String?>()
     val response: LiveData<String?> = _response
 
-    fun getData() {
-        _listData.postValue(listDummy)
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    fun getBatikList() {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getBatikList()
+        client.enqueue(object: Callback<BatikResponse>{
+            override fun onResponse(call: Call<BatikResponse>, response: Response<BatikResponse>) {
+                _isLoading.value = false
+                val responseBody = response.body()
+                _listData.postValue(responseBody?.data)
+            }
+
+            override fun onFailure(call: Call<BatikResponse>, t: Throwable) {
+                _isLoading.value = false
+            }
+        })
     }
 
-    fun getDataDetail(id: Int) {
-        _detailData.postValue(listDummy.find { it.id == id })
+    fun getBatikDetail(id: Int) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getBatikDetail(id)
+        client.enqueue(object : Callback<DataItem>{
+            override fun onResponse(call: Call<DataItem>, response: Response<DataItem>) {
+                _isLoading.value = false
+                val responseBody = response.body()
+                _detailData.postValue(responseBody)
+            }
+
+            override fun onFailure(call: Call<DataItem>, t: Throwable) {
+                _isLoading.value = false
+            }
+        })
     }
 
     fun checkLogin(email: String, password: String) {

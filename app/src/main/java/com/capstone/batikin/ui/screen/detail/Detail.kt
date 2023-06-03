@@ -43,13 +43,13 @@ fun DetailApp(id: Int, navController: NavController) {
     val context = LocalContext.current
 
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getDataDetail(id)
+    mainViewModel.getBatikDetail(id)
 
     val batikItem by mainViewModel.detailData.observeAsState()
 
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(batikItem?.photoUrl)
+            .data(batikItem?.photourl)
             .size(Size.ORIGINAL)
             .build()
     )
@@ -123,7 +123,7 @@ fun DetailApp(id: Int, navController: NavController) {
             )
             Spacer(modifier = Modifier.height(10.dp))
             if (batikItem != null) {
-                batikItem?.desc?.let {
+                batikItem?.description?.let {
                     Text(
                         text = it,
                         maxLines = if (isExpanded) 10 else 3,

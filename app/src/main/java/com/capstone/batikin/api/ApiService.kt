@@ -1,11 +1,15 @@
 package com.capstone.batikin.api
 
+import com.capstone.batikin.api.response.BatikResponse
+import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.api.response.LoginResponse
 import com.capstone.batikin.api.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @FormUrlEncoded
@@ -22,5 +26,13 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<RegisterResponse>
+
+    @GET("batik")
+    fun getBatikList(): Call<BatikResponse>
+
+    @GET("batik/{id}")
+    fun getBatikDetail(
+        @Path("id") id: Int
+    ): Call<DataItem>
 
 }

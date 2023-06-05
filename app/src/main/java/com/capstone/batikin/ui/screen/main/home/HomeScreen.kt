@@ -26,6 +26,7 @@ import com.capstone.batikin.viewmodel.MainViewModel
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -147,7 +148,7 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController) {
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier
-            .height(620.dp) //klo height gk diatur bisa error infinity
+            .height(570.dp) //klo height gk diatur bisa error infinity
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
     ) {
@@ -155,6 +156,8 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController) {
             Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
         }
     }
+
+    Spacer(modifier = Modifier.height(46.dp))
 }
 
 
@@ -180,7 +183,7 @@ fun Item(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(120.dp)
             )
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
@@ -252,7 +255,8 @@ fun SectionHeader(text: String) {
 fun HomeBanner() {
     Box(
         modifier = Modifier
-//            .clip(shape = RoundedCornerShape(20.dp))
+            .padding(horizontal = 8.dp)
+            .clip(shape = RoundedCornerShape(20.dp))
             .background(color = Color.Gray)
             .fillMaxWidth()
             .height(100.dp),

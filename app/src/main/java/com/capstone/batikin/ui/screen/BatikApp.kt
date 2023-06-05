@@ -87,12 +87,14 @@ fun BatikApp(
     { innerPadding ->
         Box(
             modifier = Modifier
-                .background(Color.Transparent)
+                .background(Color.White)
         ) {
             // Set nilai status isDetailScreen sesuai dengan rute saat ini
             isDetailScreen.value = currentRoute == Screen.DetailBatik.route
 
             NavigationHost(navController = navController)
+
+
         }
     }
 }
@@ -100,12 +102,14 @@ fun BatikApp(
 
 @Composable
 fun NavigationHost(navController: NavHostController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val wishlistItems = listDummy
+
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route,
     ) {
-        val wishlistItems = listDummy
-
 
         composable(Screen.Home.route) {
             HomeScreen(navController = navController)
@@ -141,6 +145,7 @@ fun NavigationHost(navController: NavHostController) {
             }
         }
     }
+
 }
 
 

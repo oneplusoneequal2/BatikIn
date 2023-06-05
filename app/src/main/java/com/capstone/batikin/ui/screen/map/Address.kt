@@ -23,40 +23,34 @@ import com.capstone.batikin.ui.ui.theme.BatikInTheme
 fun Address() {
     var address by remember { mutableStateOf("") }
 
-    Box(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Row(
+        OutlinedTextField(
+            value = address,
+            onValueChange = { address = it },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(end = 8.dp)
-        ) {
-            OutlinedTextField(
-                value = address,
-                onValueChange = { address = it },
-                modifier = Modifier
-                    .weight(1f),
-                label = { Text("Masukan Alamat") },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    backgroundColor = Color.White
-                )
+                .weight(1f),
+            label = { Text("Masukan Alamat") },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                backgroundColor = Color.White
             )
+        )
 
-            IconButton(
-                onClick = {
+        IconButton(
+            onClick = {
 
-                },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    Icons.Default.KeyboardArrowRight,
-                    contentDescription = "Open Maps",
-                    tint = MaterialTheme.colors.primary
-                )
-            }
+            },
+            modifier = Modifier.align(Alignment.CenterVertically)
+        ) {
+            Icon(
+                Icons.Default.KeyboardArrowRight,
+                contentDescription = "Open Maps",
+                tint = MaterialTheme.colors.primary
+            )
         }
+
     }
 }
 

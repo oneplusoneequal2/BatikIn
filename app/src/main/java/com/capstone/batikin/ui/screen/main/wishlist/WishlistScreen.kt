@@ -36,14 +36,19 @@ fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, na
             titleResId = R.string.title_wishlist
         )
         LazyColumn(
-
-            modifier = modifier,
+            modifier = modifier
+                .fillMaxSize()
+                .padding(bottom = 56.dp),
         ) {
             items(wishlistItems) { item ->
                 WishlistItem(item = item, navController = navController)
             }
+
         }
+
     }
+
+
 }
 
 @OptIn(ExperimentalMaterialApi::class)

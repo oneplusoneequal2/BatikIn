@@ -62,7 +62,7 @@ import com.capstone.batikin.ui.ui.theme.BatikInTheme
 fun TopBar(query: String, onChange: (String) -> Unit) {
 
     TopAppBar(
-        backgroundColor = Color(0xFFFFA500),
+        backgroundColor = Color.White,
         contentPadding = PaddingValues(8.dp),
         contentColor = Color.White,
         elevation = 0.dp
@@ -78,7 +78,7 @@ fun TopBar(query: String, onChange: (String) -> Unit) {
         Icon(
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
-            tint = Color.White,
+            tint = Color(0xFFFFA500),
             modifier = Modifier.padding(end = 16.dp)
         )
     }

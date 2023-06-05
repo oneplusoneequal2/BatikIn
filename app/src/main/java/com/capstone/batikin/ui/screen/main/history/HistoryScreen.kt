@@ -12,18 +12,29 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.capstone.batikin.R
+import com.capstone.batikin.ui.components.TopBar
 
 @Composable
 fun HistoryScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Still Under Development",
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Gray),
-            textAlign = TextAlign.Center
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopBar(
+            titleResId = R.string.title_history
         )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentSize(Alignment.Center)
+        ) {
+            Text(
+                text = "Still Under Development",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                ),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

@@ -214,28 +214,26 @@ fun CameraApp() {
             val maxValueIndex = items.indexOf(maxValue)
 
             val batikTypes = arrayOf(
-                    "Batik Bali",
-                    "Batik Betawi",
-                    "Batik Cendrawasih",
-                    "Batik Dayak",
-                    "Batik Geblek Renteng",
-                    "Batik Ikat Celup",
-                    "Batik Insang",
-                    "Batik Kawung",
-                    "Batik Lasem",
-                    "Batik Megamendung",
-                    "Batik Pala",
-                    "Batik Parang",
-                    "Batik Poleng",
-                    "Batik Sekar Jagad",
-                    "Batik Tambal"
+                "Batik Cendrawasih",
+                "Batik Dayak",
+                "Batik Geblek Renteng",
+                "Batik Ikat Celup",
+                "Batik Insang",
+                "Batik Kawung",
+                "Batik Lasem",
+                "Batik Megamendung",
+                "Batik Pala",
+                "Batik Parang",
+                "Batik Poleng",
+                "Batik Sekar Jagad",
+                "Batik Tambal"
             )
 
             Toast.makeText(context, items.indexOf(maxValue).toString(), Toast.LENGTH_SHORT).show()
 
             if (maxValue != null) {
                 Text(
-                    text = batikTypes[maxValueIndex] + " - " + String.format("%.2f", maxValue*100f)
+                    text = batikTypes[maxValueIndex] + " - " + String.format("%.2f", maxValue*100f) + "%"
                 )
             }
 

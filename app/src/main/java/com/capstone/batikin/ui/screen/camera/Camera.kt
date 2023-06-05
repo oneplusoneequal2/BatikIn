@@ -67,10 +67,23 @@ fun CameraApp() {
 
     val context = LocalContext.current
 
+//    val getGallery =
+//        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
+//            image= it
+//            showPreview.value = true
+//        }
+
+    /** ini yg back **/
     val getGallery =
-        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
-            image= it
-            showPreview.value = true
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            if (uri != null) {
+                image = uri
+                showPreview.value = true
+            } else {
+                // Handle pas batal milih gmbr balik ke camera screen
+                image = Uri.EMPTY //Setel gambar ke kosong untuk menghapus gambar yang dipilih sebelumnya
+                showPreview.value = false // Sembuynikan  preview
+            }
         }
 
     val launcherCameraX =

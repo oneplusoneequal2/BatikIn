@@ -2,6 +2,7 @@ package com.capstone.batikin.ui.screen.main.home
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -25,7 +26,6 @@ import com.capstone.batikin.viewmodel.MainViewModel
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.capstone.batikin.R
-import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
 
@@ -82,55 +81,78 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 //                .padding(start = 8.dp, top = 16.dp, end = 8.dp)
 //                .background(Color.Transparent)
         ) {
-            HomeBanner()
-
             if (isLoading == true){
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            SectionHeader(text = "Batik Categories")
-            LazyRow(
-//                horizontalArrangement = Arrangement.spacedBy(0.dp),
-                modifier = Modifier.padding(vertical = 8.dp)
-            ) {
-                items(categoryDummy) { category ->
-                    CategoryItem(title = category)
-                }
+            if (query !== "") {
+                SearchHome(query = query, data, navController)
+            } else {
+                HomeContent(data, navController)
             }
+        }
+    }
+}
 
-            SectionHeader(text = "Recommendation")
-            LazyRow(
+@Composable
+fun SearchHome(query: String, data: ArrayList<Batik>, navController: NavHostController) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier
+            .height(600.dp)
+            .padding(10.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
+    ) {
+        items(data.filter { it.title.lowercase().contains(query.lowercase())}, key = { item -> item.id }) { item ->
+            Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
+        }
+    }
+}
+
+@Composable
+fun HomeContent(data: ArrayList<Batik>, navController: NavHostController) {
+    HomeBanner()
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    SectionHeader(text = "Batik Categories")
+    LazyRow(
 //                horizontalArrangement = Arrangement.spacedBy(0.dp),
-                modifier = Modifier.padding(vertical = 8.dp)
-            ) {
-                items(data, key = { it.id }) { item ->
-                    Item(
-                        item = item,
-                        navController = navController,
-                        modifier = Modifier
-                            .width(140.dp)
-                    )
-                }
-            }
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
+        items(categoryDummy) { category ->
+            CategoryItem(title = category)
+        }
+    }
 
-            SectionHeader(text = "Discover More")
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+    SectionHeader(text = "Recommendation")
+    LazyRow(
+//                horizontalArrangement = Arrangement.spacedBy(0.dp),
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
+        items(data.filter { it.rating >= 4.2}, key = { it.id }) { item ->
+            Item(
+                item = item,
+                navController = navController,
                 modifier = Modifier
-                    .height(620.dp) //klo height gk diatur bisa error infinity
-                    .padding(10.dp),
-                verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
-            ) {
-                items(data, key = { item -> item.id }) { item ->
-                    Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
-                }
-            }
+                    .width(140.dp)
+            )
+        }
+    }
 
+    SectionHeader(text = "Discover More")
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier
+            .height(620.dp) //klo height gk diatur bisa error infinity
+            .padding(10.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
+    ) {
+        items(data, key = { item -> item.id }) { item ->
+            Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
         }
     }
 }
@@ -142,7 +164,6 @@ fun Item(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    val context = LocalContext.current
     Surface(
         elevation = 5.dp,
         shape = RoundedCornerShape(15.dp),

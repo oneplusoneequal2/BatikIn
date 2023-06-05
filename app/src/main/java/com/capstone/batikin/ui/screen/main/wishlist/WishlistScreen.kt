@@ -23,17 +23,25 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.model.Batik
 import coil.compose.rememberImagePainter
+import com.capstone.batikin.R
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.components.TopBar
 import com.capstone.batikin.ui.navigation.Screen
 
 
 @Composable
 fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController) {
-    LazyColumn(
-        modifier = modifier,
-    ) {
-        items(wishlistItems) { item ->
-            WishlistItem(item = item, navController = navController)
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopBar(
+            titleResId = R.string.title_wishlist
+        )
+        LazyColumn(
+
+            modifier = modifier,
+        ) {
+            items(wishlistItems) { item ->
+                WishlistItem(item = item, navController = navController)
+            }
         }
     }
 }

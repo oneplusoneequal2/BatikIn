@@ -96,7 +96,14 @@ fun DetailApp(id: Int, navController: NavController) {
                     modifier = Modifier.weight(1f)
                 )
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = {
+                              //maskuin wishlist
+                        val photoUrl = batikItem?.photourl ?: ""
+                        val price = batikItem?.price ?: 0
+                        val title = batikItem?.title ?: ""
+
+                        mainViewModel.addWishlist(photoUrl, price, title)
+                    },
                     backgroundColor = colorResource(id = R.color.orange_light),
                     contentColor = Color.White,
                     modifier = Modifier

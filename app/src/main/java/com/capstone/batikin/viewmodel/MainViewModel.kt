@@ -38,6 +38,9 @@ class MainViewModel: ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private var _wishlistData = MutableLiveData<List<DataWishlist>>()
+    val wishlistData: LiveData<List<DataWishlist>> = _wishlistData
+
     private val userState = UserState()
 
     fun getBatikList() {
@@ -70,6 +73,23 @@ class MainViewModel: ViewModel() {
 
             override fun onFailure(call: Call<BatikDetailResponse>, t: Throwable) {
                 _isLoading.value = false
+            }
+
+        })
+    }
+
+    fun getWishlist(id: Int) {
+        val client = ApiConfig.getApiService().getWishlist(id)
+        client.enqueue(object : Callback<WishlistResponse>{
+            override fun onResponse(
+                call: Call<WishlistResponse>,
+                response: Response<WishlistResponse>
+            ) {
+                _wishlistData.postValue(response.body()?.data)
+            }
+
+            override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
+
             }
 
         })

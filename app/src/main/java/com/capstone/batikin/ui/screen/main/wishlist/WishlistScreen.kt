@@ -9,6 +9,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -27,10 +30,20 @@ import com.capstone.batikin.R
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.components.TopBar
 import com.capstone.batikin.ui.navigation.Screen
+import com.capstone.batikin.viewmodel.MainViewModel
 
 
 @Composable
-fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController) {
+fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController, userId: Int) {
+    val mainViewModel = viewModel<MainViewModel>()
+    mainViewModel.getWishlist(userId)
+    val wishlist by mainViewModel.wishlistData.observeAsState()
+    val wishlistData = ArrayList<Batik>()
+    wishlist?.map {
+        wishlistData.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
+            it.rating as Double, true))
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
             titleResId = R.string.title_wishlist
@@ -40,7 +53,7 @@ fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, na
                 .fillMaxSize()
                 .padding(bottom = 56.dp),
         ) {
-            items(wishlistItems) { item ->
+            items(wishlistData) { item ->
                 WishlistItem(item = item, navController = navController)
             }
 
@@ -112,5 +125,5 @@ fun WishlistScreenPreview() {
     val wishlistItems = listDummy
     var navController: NavHostController = rememberNavController()
 
-    WishlistScreen(wishlistItems = wishlistItems, navController = navController)
+    WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = 1)
 }

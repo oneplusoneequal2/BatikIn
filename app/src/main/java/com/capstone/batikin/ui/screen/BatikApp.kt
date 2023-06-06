@@ -122,7 +122,7 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         }
         composable(Screen.Wishlist.route) {
             // Implementasi tampilan untuk Wishlist
-            WishlistScreen(wishlistItems = wishlistItems, navController = navController)
+            userState.id?.let { it1 -> WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = it1) }
         }
         composable(Screen.Profile.route) {
             // Implementasi tampilan untuk Profile

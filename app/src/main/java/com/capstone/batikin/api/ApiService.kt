@@ -32,4 +32,9 @@ interface ApiService {
         @Path("id") id: Int
     ): Call<BatikDetailResponse>
 
+    @GET("wishlist/{id}")
+    fun getWishlist(
+        @Path("id") id: Int
+    ): Call<WishlistResponse>
+
 }

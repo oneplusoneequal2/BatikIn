@@ -36,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.capstone.batikin.model.Batik
+import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.screen.camera.CameraApp
 import com.capstone.batikin.ui.screen.detail.DetailApp
@@ -47,6 +48,7 @@ import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
 @Composable
 fun BatikApp(
     modifier: Modifier = Modifier,
+    userState: UserState,
     navController: NavHostController = rememberNavController(),
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -92,7 +94,7 @@ fun BatikApp(
             // Set nilai status isDetailScreen sesuai dengan rute saat ini
             isDetailScreen.value = currentRoute == Screen.DetailBatik.route
 
-            NavigationHost(navController = navController)
+            NavigationHost(navController = navController, userState)
 
 
         }
@@ -101,7 +103,7 @@ fun BatikApp(
 
 
 @Composable
-fun NavigationHost(navController: NavHostController) {
+fun NavigationHost(navController: NavHostController, userState: UserState) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val wishlistItems = listDummy
@@ -112,7 +114,7 @@ fun NavigationHost(navController: NavHostController) {
     ) {
 
         composable(Screen.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, name = userState.name)
         }
         composable(Screen.History.route) {
             // Implementasi tampilan untuk History
@@ -124,7 +126,7 @@ fun NavigationHost(navController: NavHostController) {
         }
         composable(Screen.Profile.route) {
             // Implementasi tampilan untuk Profile
-            ProfileScreen()
+            ProfileScreen(userState)
         }
         // Kamera klo gk pake FAB
         composable(Screen.Camera.route) {

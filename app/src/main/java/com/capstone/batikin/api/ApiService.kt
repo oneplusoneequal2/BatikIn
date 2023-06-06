@@ -37,4 +37,11 @@ interface ApiService {
         @Path("id") id: Int
     ): Call<WishlistResponse>
 
+    @FormUrlEncoded
+    @POST("wishlist/{id}")
+    fun postWishList(
+        @Field("photoUrl") photoUrl: String,
+        @Field("price") price: Int,
+        @Field("title") title: String,
+    ): Call<WishlistResponse>
 }

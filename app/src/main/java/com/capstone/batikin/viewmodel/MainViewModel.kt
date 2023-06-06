@@ -95,6 +95,29 @@ class MainViewModel: ViewModel() {
         })
     }
 
+    fun addWishlist(photoUrl: String, price: Int, title: String) {
+        val id = userState.id // Mendapatkan ID pengguna dari state
+
+        val client = ApiConfig.getApiService().postWishList(photoUrl, price, title)
+        client.enqueue(object : Callback<WishlistResponse> {
+            override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    _wishlistData.postValue(responseBody.data)
+                    // Refresh daftar wishlist setelah menambahkan item baru
+                    if (id != null) {
+                        getWishlist(id)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
+                // Penanganan kesalahan saat gagal menambahkan wishlist
+            }
+        })
+    }
+
+
     fun checkLogin(context: Context, email: String, password: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().login(email, password)

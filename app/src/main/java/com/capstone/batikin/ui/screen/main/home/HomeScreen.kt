@@ -45,7 +45,7 @@ import com.capstone.batikin.ui.navigation.Screen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifier = Modifier) {
     var query by remember { mutableStateOf("") }
 
     val mainViewModel = viewModel<MainViewModel>()
@@ -90,7 +90,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             if (query !== "") {
                 SearchHome(query = query, data, navController)
             } else {
-                HomeContent(data, navController)
+                HomeContent(data, navController, name = name)
             }
         }
     }
@@ -113,8 +113,8 @@ fun SearchHome(query: String, data: ArrayList<Batik>, navController: NavHostCont
 }
 
 @Composable
-fun HomeContent(data: ArrayList<Batik>, navController: NavHostController) {
-    HomeBanner()
+fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: String?) {
+    HomeBanner(name)
 
     Spacer(modifier = Modifier.height(8.dp))
 
@@ -252,7 +252,7 @@ fun SectionHeader(text: String) {
 
 
 @Composable
-fun HomeBanner() {
+fun HomeBanner(name: String?) {
     Box(
         modifier = Modifier
             .padding(horizontal = 8.dp)
@@ -274,7 +274,7 @@ fun HomeBanner() {
             modifier = Modifier.padding(start = 20.dp)
         ){
             Text(
-                text = "Hello Test!",
+                text = "Hello $name!",
 //                fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold,
                 style = MaterialTheme.typography.h5,

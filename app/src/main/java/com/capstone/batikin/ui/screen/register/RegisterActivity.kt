@@ -62,14 +62,15 @@ fun Register() {
     val mainViewModel = viewModel<MainViewModel>()
 
     val isRegister by mainViewModel.isRegister.observeAsState()
-    val response by mainViewModel.response.observeAsState()
+    val response by mainViewModel.registerResponse.observeAsState()
+    val isLoading by mainViewModel.isLoading.observeAsState()
 
     LaunchedEffect(isRegister) {
         if (isRegister == true) {
             context.startActivity(Intent(context, LoginActivity::class.java))
-            Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, response?.message.toString(), Toast.LENGTH_SHORT).show()
         } else if (isRegister == false) {
-            Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, response?.message.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -134,6 +135,10 @@ fun Register() {
                 modifier = Modifier.width(250.dp),
             ) {
                 Text("Daftar")
+            }
+
+            if (isLoading == true) {
+                CircularProgressIndicator()
             }
         }
     }

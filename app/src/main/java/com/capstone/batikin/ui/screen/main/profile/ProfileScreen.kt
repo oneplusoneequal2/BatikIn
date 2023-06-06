@@ -1,5 +1,6 @@
 package com.capstone.batikin.ui.screen.main.profile
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,20 +21,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.capstone.batikin.R
+import com.capstone.batikin.model.UserState
 import com.capstone.batikin.ui.components.TopBar
+import com.capstone.batikin.ui.screen.main.MainActivity
+import com.capstone.batikin.ui.screen.welcome.WelcomeActivity
+import com.capstone.batikin.viewmodel.MainViewModel
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(userState: UserState) {
     val expanded = remember { mutableStateOf(false) }
     val selectedOption = remember { mutableStateOf("") }
     val showDialog = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val mainViewModel = viewModel<MainViewModel>()
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
@@ -56,7 +65,7 @@ fun ProfileScreen() {
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "John Doe",
+                text = userState.name.toString(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center
@@ -209,7 +218,11 @@ fun ProfileScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { /* button click */ }
+                    .clickable {
+                        mainViewModel.logout(context)
+                        val intent = Intent(context, WelcomeActivity::class.java)
+                        context.startActivity(intent)
+                    }
                     .background(Color.White, shape = RoundedCornerShape(2.dp))
             ) {
                 Row(
@@ -240,9 +253,9 @@ fun ProfileScreen() {
 }
 
 
-
-@Preview
-@Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
-}
+//
+//@Preview
+//@Composable
+//fun ProfileScreenPreview() {
+//    ProfileScreen()
+//}

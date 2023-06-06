@@ -52,15 +52,17 @@ fun Login(){
     val mainViewModel = viewModel<MainViewModel>()
 
     val isLogin by mainViewModel.isLogin.observeAsState()
-    val response by mainViewModel.response.observeAsState()
+    val response by mainViewModel.loginResponse.observeAsState()
+    val isLoading by mainViewModel.isLoading.observeAsState()
 
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
     LaunchedEffect(isLogin) {
         if (isLogin == true) {
-            context.startActivity(Intent(context, MainActivity::class.java))
-            Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+            Toast.makeText(context, response?.message.toString(), Toast.LENGTH_SHORT).show()
         } else if (isLogin == false) {
             Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
         }
@@ -113,7 +115,7 @@ fun Login(){
 //                        Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
 //                    }
 
-                    mainViewModel.checkLogin(email, password)
+                    mainViewModel.checkLogin(context, email, password)
 
                 },
 //                enabled = isButtonEnabled,
@@ -125,6 +127,10 @@ fun Login(){
 
                 ) {
                 Text("Masuk")
+            }
+
+            if (isLoading == true) {
+                CircularProgressIndicator()
             }
         }
     }

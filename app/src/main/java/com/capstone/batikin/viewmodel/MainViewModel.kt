@@ -1,15 +1,15 @@
 package com.capstone.batikin.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.MutableState
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.capstone.batikin.api.ApiConfig
 import com.capstone.batikin.api.response.*
-import com.capstone.batikin.model.Batik
-import com.capstone.batikin.model.emailDummy
-import com.capstone.batikin.model.listDummy
-import com.capstone.batikin.model.passDummy
+import com.capstone.batikin.model.*
+import com.capstone.batikin.model.preference.UserPref
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,11 +29,16 @@ class MainViewModel: ViewModel() {
     private var _isRegister = MutableLiveData<Boolean>()
     val isRegister: LiveData<Boolean> = _isRegister
 
-    private var _response = MutableLiveData<String?>()
-    val response: LiveData<String?> = _response
+    private var _loginResponse = MutableLiveData<LoginResponse?>()
+    val loginResponse: LiveData<LoginResponse?> = _loginResponse
+
+    private var _registerResponse = MutableLiveData<RegisterResponse?>()
+    val registerResponse: LiveData<RegisterResponse?> = _registerResponse
 
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val userState = UserState()
 
     fun getBatikList() {
         _isLoading.value = true
@@ -70,49 +75,80 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun checkLogin(email: String, password: String) {
+    fun checkLogin(context: Context, email: String, password: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().login(email, password)
         client.enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 val responseBody = response.body()
+                _isLoading.value = false
                 if (responseBody?.status == 200) {
                     _isLogin.postValue(true)
-                    _response.postValue(responseBody.message)
+                    _loginResponse.postValue(responseBody)
+                    setStateLogin(context, true, responseBody)
                 } else {
                     _isLogin.postValue(false)
-                    _response.postValue(responseBody?.message)
+                    _loginResponse.postValue(responseBody)
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
+                _isLoading.value = false
             }
 
         })
     }
 
+    fun logout(context: Context) {
+        setStateLogout(context, false, "", -1, "")
+    }
+
     fun registerData(name: String, email: String, password: String) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().register(name, email, password)
         client.enqueue(object: Callback<RegisterResponse>{
             override fun onResponse(
                 call: Call<RegisterResponse>,
                 response: Response<RegisterResponse>
             ) {
+                _isLoading.value = false
                 val responseBody = response.body()
                 if (responseBody?.status == 201) {
                     _isRegister.postValue(true)
-                    _response.postValue(responseBody.message)
+                    _registerResponse.postValue(responseBody)
                 } else {
                     _isRegister.postValue(false)
-                    _response.postValue(responseBody?.message)
+                    _registerResponse.postValue(responseBody)
                 }
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-
+                _isLoading.value = false
             }
 
         })
+    }
+
+    private fun setStateLogin(context: Context, isLogin: Boolean, response: LoginResponse) {
+        val userPref = UserPref(context)
+
+        userState.isLogin = isLogin
+        userState.name = response.data.userName
+        userState.token = response.data.token
+        userState.id = response.data.userId
+
+        userPref.setState(userState)
+    }
+
+    private fun setStateLogout(context: Context, isLogin: Boolean, name: String, id: Int, token:String) {
+        val userPref = UserPref(context)
+
+        userState.isLogin = isLogin
+        userState.name = name
+        userState.token = token
+        userState.id = id
+
+        userPref.setState(userState)
     }
 
 }

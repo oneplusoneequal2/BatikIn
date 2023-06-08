@@ -114,6 +114,27 @@ class MainViewModel: ViewModel() {
         })
     }
 
+    fun deleteWishlist(token: String, wishlistId: Int) {
+        val client = ApiConfig.getApiService().deleteWishlist(token, wishlistId)
+        client.enqueue(object : Callback<WishlistResponse> {
+            override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
+                val responseBody = response.body()
+                if (response.isSuccessful && responseBody != null) {
+
+                    _wishlistData.postValue(responseBody.data)
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
+
+            }
+        })
+    }
+
+
+
 
     fun checkLogin(context: Context, email: String, password: String) {
         _isLoading.value = true

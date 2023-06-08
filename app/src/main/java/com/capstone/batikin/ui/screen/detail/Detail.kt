@@ -119,10 +119,11 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                     onClick = {
                               //masukuin wishlist
                         if (!isAddedToWishlist) {
-                            userState.id?.let {
-                                mainViewModel.addWishlist(token,
-                                    it, id, photoUrl, price, title)
-                            }
+//                            userState.id?.let {
+//                                mainViewModel.addWishlist(token,
+//                                    it, id, photoUrl, price, title)
+//                            }
+                            mainViewModel.addWishlist(token, id, photoUrl, price, title)
                             isAddedToWishlist = true
                         } else {
                             // Tindakan lain jika item sudah ada dalam Wishlist

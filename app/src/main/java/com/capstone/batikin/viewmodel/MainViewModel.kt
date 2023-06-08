@@ -95,9 +95,9 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun addWishlist(token: String, userId: Int, id: Int, photoUrl: String, price: Int, title: String) {
+    fun addWishlist(token: String, batikId: Int, photoUrl: String, price: Int, title: String) {
 
-        val client = ApiConfig.getApiService().postWishList(token, userId, id, photoUrl, price, title)
+        val client = ApiConfig.getApiService().postWishList(token, batikId, photoUrl, price, title)
         client.enqueue(object : Callback<WishlistResponse> {
             override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
                 val responseBody = response.body()

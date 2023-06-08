@@ -2,11 +2,7 @@ package com.capstone.batikin.api
 
 import com.capstone.batikin.api.response.*
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
@@ -34,12 +30,15 @@ interface ApiService {
 
     @GET("wishlist/{id}")
     fun getWishlist(
+        @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<WishlistResponse>
 
     @FormUrlEncoded
     @POST("wishlist/{id}")
     fun postWishList(
+        @Header("Authorization") token: String,
+        @Field("id") id: Int,
         @Field("photoUrl") photoUrl: String,
         @Field("price") price: Int,
         @Field("title") title: String,

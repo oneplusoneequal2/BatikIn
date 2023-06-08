@@ -25,10 +25,12 @@ import com.capstone.batikin.ui.navigation.NavigationItem
 import com.capstone.batikin.ui.navigation.Screen
 import com.capstone.batikin.ui.screen.main.profile.ProfileScreen
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,6 +45,7 @@ import com.capstone.batikin.ui.screen.detail.DetailApp
 import com.capstone.batikin.ui.screen.main.history.HistoryScreen
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
+import com.capstone.batikin.viewmodel.MainViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -122,7 +125,8 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         }
         composable(Screen.Wishlist.route) {
             // Implementasi tampilan untuk Wishlist
-            userState.id?.let { it1 -> WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = it1) }
+            val token = userState.token
+            userState.id?.let { it1 -> WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = it1, token = token.toString()) }
         }
         composable(Screen.Profile.route) {
             // Implementasi tampilan untuk Profile
@@ -143,7 +147,18 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         ) {
             val batikId = it.arguments?.getInt("batikId")
             if (batikId != null) {
-                DetailApp(id = batikId, navController)
+                val navController = rememberNavController()
+                val mainViewModel = viewModel<MainViewModel>()
+                val token = userState.token
+
+                    // Panggil fungsi getBatikDetail di ViewModel untuk mendapatkan data detail batik
+                    mainViewModel.getBatikDetail(batikId)
+
+                // Ambil data detail batik dari ViewModel
+                val batikItem by mainViewModel.detailData.observeAsState()
+
+                // Render DetailApp dengan data yang diperlukan
+                DetailApp(id = batikId, navController = navController, token = token.toString(), photoUrl = batikItem?.photourl ?: "", price = batikItem?.price ?: 0, title = batikItem?.title ?: "")
             }
         }
     }

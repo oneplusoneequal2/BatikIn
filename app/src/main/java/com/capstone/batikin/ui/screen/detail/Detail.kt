@@ -30,25 +30,40 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.capstone.batikin.R
 import com.capstone.batikin.model.Batik
+import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.screen.payment.PaymentActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.capstone.batikin.viewmodel.MainViewModel
 
 @Composable
-fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: String, price: Int, title: String) {
+fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: String, price: Int, title: String, userState: UserState) {
     var isExpanded by remember { mutableStateOf(false) }
     var loadingDone by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
-    val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getBatikDetail(id)
-
-    mainViewModel.addWishlist(token, id, photoUrl, price, title)
     //buat tmbh wishlist
     var isAddedToWishlist by remember { mutableStateOf(false) }
 
+    val mainViewModel = viewModel<MainViewModel>()
+    mainViewModel.getBatikDetail(id)
+
+    userState.token?.let {
+        userState.id?.let { it1 ->
+            mainViewModel.getWishlist(it, it1)
+        }
+    }
+
+    val wishlistCheckData by mainViewModel.wishlistData.observeAsState()
+
+    val wishlistCheckArray = wishlistCheckData?.filter { it.id == id }
+
+
+    isAddedToWishlist = wishlistCheckArray?.isNotEmpty() ?: false
+
+
+//    mainViewModel.addWishlist(token, id, photoUrl, price, title)
 
     val batikItem by mainViewModel.detailData.observeAsState()
 
@@ -104,7 +119,10 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                     onClick = {
                               //maskuin wishlist
                         if (!isAddedToWishlist) {
-                            mainViewModel.addWishlist(token, id, photoUrl, price, title)
+                            userState.id?.let {
+                                mainViewModel.addWishlist(token,
+                                    it, photoUrl, price, title)
+                            }
                             isAddedToWishlist = true
                         } else {
                             // Tindakan lain jika item sudah ada dalam Wishlist

@@ -147,18 +147,18 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         ) {
             val batikId = it.arguments?.getInt("batikId")
             if (batikId != null) {
-                val navController = rememberNavController()
+//                val navController = rememberNavController()
                 val mainViewModel = viewModel<MainViewModel>()
                 val token = userState.token
 
-                    // Panggil fungsi getBatikDetail di ViewModel untuk mendapatkan data detail batik
-                    mainViewModel.getBatikDetail(batikId)
+                // Panggil fungsi getBatikDetail di ViewModel untuk mendapatkan data detail batik
+                mainViewModel.getBatikDetail(batikId)
 
                 // Ambil data detail batik dari ViewModel
                 val batikItem by mainViewModel.detailData.observeAsState()
 
                 // Render DetailApp dengan data yang diperlukan
-                DetailApp(id = batikId, navController = navController, token = token.toString(), photoUrl = batikItem?.photourl ?: "", price = batikItem?.price ?: 0, title = batikItem?.title ?: "")
+                DetailApp(id = batikId, navController = navController, token = token.toString(), photoUrl = batikItem?.photourl ?: "", price = batikItem?.price ?: 0, title = batikItem?.title ?: "", userState = userState)
             }
         }
     }

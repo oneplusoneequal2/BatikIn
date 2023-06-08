@@ -117,11 +117,11 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                 )
                 FloatingActionButton(
                     onClick = {
-                              //maskuin wishlist
+                              //masukuin wishlist
                         if (!isAddedToWishlist) {
                             userState.id?.let {
                                 mainViewModel.addWishlist(token,
-                                    it, photoUrl, price, title)
+                                    it, id, photoUrl, price, title)
                             }
                             isAddedToWishlist = true
                         } else {

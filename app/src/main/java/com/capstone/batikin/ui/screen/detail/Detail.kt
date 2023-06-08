@@ -126,8 +126,16 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                             mainViewModel.addWishlist(token, id, photoUrl, price, title)
                             isAddedToWishlist = true
                         } else {
-                            // Tindakan lain jika item sudah ada dalam Wishlist
+//                            batikItem?.id?.let { wishlistId ->
+//                                userState.token?.let { token ->
+//                                    mainViewModel.deleteWishlist(token, wishlistId)
+//                                }
+//                            }
+
+                            mainViewModel.deleteWishlist(token, id)
+                            isAddedToWishlist = false
                         }
+
                     },
                     backgroundColor = colorResource(id = R.color.orange_light),
                     contentColor = Color.White,

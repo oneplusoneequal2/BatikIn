@@ -43,4 +43,10 @@ interface ApiService {
         @Field("price") price: Int,
         @Field("title") title: String,
     ): Call<WishlistResponse>
+
+    @DELETE("wishlist/{batikId}")
+    fun deleteWishlist(
+        @Header("Authorization") token: String,
+        @Path("batikId") id: Int,
+    ): Call<WishlistResponse>
 }

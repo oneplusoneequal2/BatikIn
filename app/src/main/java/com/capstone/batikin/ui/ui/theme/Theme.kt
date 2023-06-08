@@ -1,11 +1,16 @@
 package com.capstone.batikin.ui.ui.theme
 
+import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
@@ -39,16 +44,40 @@ fun BatikInTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
         LightColorPalette
     }
 
-    val systemUiController = rememberSystemUiController()
-    if(darkTheme){
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent
-        )
-    }else{
-        systemUiController.setSystemBarsColor(
-            color = Color.White
-        )
-    }
+//    val systemUiController = rememberSystemUiController()
+//    val context = LocalContext.current
+//
+//    CompositionLocalProvider(LocalContentColor provides Color.White) {
+//        SideEffect {
+//            val currentTheme =
+//                context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+//            val isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES
+//
+//            if (isDarkTheme) {
+//                systemUiController.setSystemBarsColor(
+//                    color = Color.Transparent
+//                )
+//            } else {
+//                systemUiController.setSystemBarsColor(
+//                    color = Color.White
+//                )
+//            }
+//        }
+//    }
+
+//    val systemUiController = rememberSystemUiController()
+//    val useDarkIcons = MaterialTheme.colors.isLight
+//
+//    SideEffect {
+//        systemUiController.setStatusBarColor(
+//            color = Color.Transparent,
+//            darkIcons = useDarkIcons
+//        )
+//        systemUiController.setNavigationBarColor(
+//            color = Color.Transparent,
+//            darkIcons = useDarkIcons
+//        )
+//    }
 
     MaterialTheme(
         colors = colors,

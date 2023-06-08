@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,6 +68,7 @@ fun WelcomeApp() {
             fontSize = 50.sp,
             color = colorResource(R.color.black),
             textAlign = TextAlign.Center,
+            fontFamily = FontFamily.Cursive
         )
         Spacer(modifier = Modifier.height(20.dp))
         Button(
@@ -74,12 +76,18 @@ fun WelcomeApp() {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             modifier = Modifier
-                .width(242.dp)
+                .width(250.dp)
                 .height(45.dp)
         ) {
-            Text(text = "Login", color = Color.White, fontSize = 16.sp)
+            Text(
+                text = "Login",
+                color = Color.Black,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace
+            )
         }
         Spacer(modifier = Modifier.height(15.dp))
         Button(
@@ -89,10 +97,17 @@ fun WelcomeApp() {
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
             modifier = Modifier
-                .width(242.dp)
+                .width(250.dp)
                 .height(45.dp)
         ) {
-            Text(text = "Sign Up", color = Color.Black, fontSize = 16.sp)
+            Text(
+                text = "Sign Up",
+                color = Color.Black,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = FontFamily.Monospace
+
+            )
         }
 
     }

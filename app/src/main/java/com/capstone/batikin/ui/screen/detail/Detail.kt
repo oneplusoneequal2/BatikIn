@@ -36,7 +36,7 @@ import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.capstone.batikin.viewmodel.MainViewModel
 
 @Composable
-fun DetailApp(id: Int, navController: NavController) {
+fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: String, price: Int, title: String) {
     var isExpanded by remember { mutableStateOf(false) }
     var loadingDone by remember { mutableStateOf(false) }
 
@@ -44,6 +44,11 @@ fun DetailApp(id: Int, navController: NavController) {
 
     val mainViewModel = viewModel<MainViewModel>()
     mainViewModel.getBatikDetail(id)
+
+    mainViewModel.addWishlist(token, id, photoUrl, price, title)
+    //buat tmbh wishlist
+    var isAddedToWishlist by remember { mutableStateOf(false) }
+
 
     val batikItem by mainViewModel.detailData.observeAsState()
 
@@ -98,11 +103,12 @@ fun DetailApp(id: Int, navController: NavController) {
                 FloatingActionButton(
                     onClick = {
                               //maskuin wishlist
-                        val photoUrl = batikItem?.photourl ?: ""
-                        val price = batikItem?.price ?: 0
-                        val title = batikItem?.title ?: ""
-
-                        mainViewModel.addWishlist(photoUrl, price, title)
+                        if (!isAddedToWishlist) {
+                            mainViewModel.addWishlist(token, id, photoUrl, price, title)
+                            isAddedToWishlist = true
+                        } else {
+                            // Tindakan lain jika item sudah ada dalam Wishlist
+                        }
                     },
                     backgroundColor = colorResource(id = R.color.orange_light),
                     contentColor = Color.White,
@@ -111,7 +117,7 @@ fun DetailApp(id: Int, navController: NavController) {
                         .height(34.dp)
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.baseline_favorite_border_24),
+                        painter = painterResource(id = if (isAddedToWishlist) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24),
                         contentDescription = null
                     )
                 }
@@ -296,9 +302,9 @@ fun DetailApp(id: Int, navController: NavController) {
 fun DetailAppPreview() {
     var navController : NavHostController = rememberNavController()
     BatikInTheme {
-        DetailApp(
-            1,
-            navController
-        )
+//        DetailApp(
+//            1,
+//            navController
+//        )
     }
 }

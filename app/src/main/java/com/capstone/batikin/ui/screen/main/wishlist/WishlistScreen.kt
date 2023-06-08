@@ -34,9 +34,9 @@ import com.capstone.batikin.viewmodel.MainViewModel
 
 
 @Composable
-fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController, userId: Int) {
+fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController,token: String, userId: Int) {
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getWishlist(userId)
+    mainViewModel.getWishlist(token, userId)
     val wishlist by mainViewModel.wishlistData.observeAsState()
     val wishlistData = ArrayList<Batik>()
     wishlist?.map {
@@ -125,5 +125,5 @@ fun WishlistScreenPreview() {
     val wishlistItems = listDummy
     var navController: NavHostController = rememberNavController()
 
-    WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = 1)
+//    WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = 1, token = token)
 }

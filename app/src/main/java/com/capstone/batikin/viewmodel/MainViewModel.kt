@@ -78,8 +78,8 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun getWishlist(id: Int) {
-        val client = ApiConfig.getApiService().getWishlist(id)
+    fun getWishlist(token: String, id: Int) {
+        val client = ApiConfig.getApiService().getWishlist(token, id)
         client.enqueue(object : Callback<WishlistResponse>{
             override fun onResponse(
                 call: Call<WishlistResponse>,
@@ -95,24 +95,21 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun addWishlist(photoUrl: String, price: Int, title: String) {
-        val id = userState.id // Mendapatkan ID pengguna dari state
+    fun addWishlist(token: String, id: Int, photoUrl: String, price: Int, title: String) {
 
-        val client = ApiConfig.getApiService().postWishList(photoUrl, price, title)
+        val client = ApiConfig.getApiService().postWishList(token, id, photoUrl, price, title)
         client.enqueue(object : Callback<WishlistResponse> {
             override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     _wishlistData.postValue(responseBody.data)
-                    // Refresh daftar wishlist setelah menambahkan item baru
-                    if (id != null) {
-                        getWishlist(id)
-                    }
+                    getWishlist(token, id)
+
                 }
             }
 
             override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
-                // Penanganan kesalahan saat gagal menambahkan wishlist
+
             }
         })
     }

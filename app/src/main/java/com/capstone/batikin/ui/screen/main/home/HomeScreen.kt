@@ -133,7 +133,7 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: 
 //                horizontalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
-        items(data.filter { it.rating >= 4.2}, ) { item ->
+        items(data.filter { it.rating >= 4.2}, key = { item -> item.id }) { item ->
             Item(
                 item = item,
                 navController = navController,
@@ -152,7 +152,7 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: 
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
     ) {
-        items(data,) { item ->
+        items(data, key = { item -> item.id }) { item ->
             Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
         }
     }
@@ -274,7 +274,7 @@ fun HomeBanner(name: String?) {
             modifier = Modifier.padding(start = 20.dp)
         ){
             Text(
-                text = "Hello $name!",
+                text = "Hello $name",
 //                fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold,
                 style = MaterialTheme.typography.h5,

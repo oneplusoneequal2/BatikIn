@@ -1,6 +1,7 @@
 package com.capstone.batikin.ui.screen.main.wishlist
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +29,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.model.Batik
 import coil.compose.rememberImagePainter
 import com.capstone.batikin.R
+import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.components.TopBar
 import com.capstone.batikin.ui.navigation.Screen
@@ -34,9 +37,14 @@ import com.capstone.batikin.viewmodel.MainViewModel
 
 
 @Composable
-fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, navController: NavHostController,token: String, userId: Int) {
+fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostController, userState: UserState) {
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getWishlist(token, userId)
+    val context = LocalContext.current
+    userState.token?.let {
+        userState.id?.let { it1 ->
+            mainViewModel.getWishlist(it, it1)
+        }
+    }
     val wishlist by mainViewModel.wishlistData.observeAsState()
     val wishlistData = ArrayList<Batik>()
     wishlist?.map {
@@ -54,7 +62,11 @@ fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, na
                 .padding(bottom = 56.dp),
         ) {
             items(wishlistData) { item ->
-                WishlistItem(item = item, navController = navController)
+                WishlistItem(item = item, navController = navController, onDelete = {
+                    userState.token?.let {
+                        mainViewModel.deleteWishlist(context, it, item.id)
+                    }
+                })
             }
 
         }
@@ -66,7 +78,7 @@ fun WishlistScreen(wishlistItems: List<Batik>, modifier: Modifier = Modifier, na
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun WishlistItem(item: Batik, navController: NavHostController) {
+fun WishlistItem(item: Batik, navController: NavHostController, onDelete: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,7 +123,8 @@ fun WishlistItem(item: Batik, navController: NavHostController) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = "Remove from wishlist",
-                    tint = Color.Red
+                    tint = Color.Red,
+                    modifier = Modifier.clickable(true, onClick = onDelete)
                 )
             }
         }

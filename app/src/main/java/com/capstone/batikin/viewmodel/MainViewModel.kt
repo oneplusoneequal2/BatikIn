@@ -1,6 +1,7 @@
 package com.capstone.batikin.viewmodel
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -95,7 +96,7 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun addWishlist(token: String, batikId: Int, photoUrl: String, price: Int, title: String) {
+    fun addWishlist(context: Context, token: String, batikId: Int, photoUrl: String, price: Int, title: String) {
 
         val client = ApiConfig.getApiService().postWishList(token, batikId, photoUrl, price, title)
         client.enqueue(object : Callback<WishlistResponse> {
@@ -104,7 +105,7 @@ class MainViewModel: ViewModel() {
                 if (responseBody != null) {
                     _wishlistData.postValue(responseBody.data)
 //                    getWishlist(token, id)
-
+                    Toast.makeText(context, responseBody.message, Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -114,14 +115,14 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun deleteWishlist(token: String, wishlistId: Int) {
+    fun deleteWishlist(context: Context, token: String, wishlistId: Int) {
         val client = ApiConfig.getApiService().deleteWishlist(token, wishlistId)
         client.enqueue(object : Callback<WishlistResponse> {
             override fun onResponse(call: Call<WishlistResponse>, response: Response<WishlistResponse>) {
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
-
                     _wishlistData.postValue(responseBody.data)
+                    Toast.makeText(context, responseBody.message, Toast.LENGTH_SHORT).show()
                 } else {
 
                 }

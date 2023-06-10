@@ -123,7 +123,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 //                                mainViewModel.addWishlist(token,
 //                                    it, id, photoUrl, price, title)
 //                            }
-                            mainViewModel.addWishlist(token, id, photoUrl, price, title)
+                            mainViewModel.addWishlist(context, token, id, photoUrl, price, title)
                             isAddedToWishlist = true
                         } else {
 //                            batikItem?.id?.let { wishlistId ->
@@ -132,7 +132,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 //                                }
 //                            }
 
-                            mainViewModel.deleteWishlist(token, id)
+                            mainViewModel.deleteWishlist(context, token, id)
                             isAddedToWishlist = false
                         }
 

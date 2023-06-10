@@ -126,7 +126,7 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         composable(Screen.Wishlist.route) {
             // Implementasi tampilan untuk Wishlist
             val token = userState.token
-            userState.id?.let { it1 -> WishlistScreen(wishlistItems = wishlistItems, navController = navController, userId = it1, token = token.toString()) }
+            userState.id?.let { WishlistScreen(userState = userState, navController = navController) }
         }
         composable(Screen.Profile.route) {
             // Implementasi tampilan untuk Profile

@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.capstone.batikin.R
 import com.capstone.batikin.ui.ConfirmPasswordTextField
 import com.capstone.batikin.ui.EmailTextField
 import com.capstone.batikin.ui.NameTextField
@@ -32,7 +34,6 @@ class RegisterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BatikInTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -82,7 +83,7 @@ fun Register() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                "Buat Akun",
+                text = stringResource(R.string.buat_akun),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.h4,
@@ -134,7 +135,7 @@ fun Register() {
                 ),
                 modifier = Modifier.width(250.dp),
             ) {
-                Text("Daftar")
+                Text(text = stringResource(R.string.daftar))
             }
 
             if (isLoading == true) {

@@ -180,11 +180,11 @@ class CameraActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // Kosongkan kalau tidak diperlukan
+
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // Kosongkan kalau tidak diperlukan
+
             }
         })
     }

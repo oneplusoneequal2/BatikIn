@@ -30,6 +30,7 @@ import com.capstone.batikin.ui.ui.theme.Shapes
 import com.capstone.batikin.R
 import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
+import com.capstone.batikin.ui.components.TopBarGeneral
 import com.capstone.batikin.ui.screen.map.Address
 
 
@@ -38,23 +39,27 @@ class PaymentActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BatikInTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        verticalArrangement = Arrangement.Top,
-//                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        HeaderMini(text = "Alamat")
-                        Address()
-                        Spacer(modifier = Modifier.height(16.dp))
-                        HeaderMini(text = "Jumlah barang")
-                        PaymentScreen()
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        TopBarGeneral(
+                            titleResId = R.string.title_payment
+                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            verticalArrangement = Arrangement.Top,
+                            //                        horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            HeaderMini(text = "Alamat")
+                            Address()
+                            Spacer(modifier = Modifier.height(16.dp))
+                            HeaderMini(text = "Jumlah barang")
+                            PaymentScreen()
+                        }
                     }
                 }
             }

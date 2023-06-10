@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TopBar(
+fun TopBarGeneral(
     titleResId: Int,
     modifier: Modifier = Modifier
 ) {
     val title = stringResource(id = titleResId)
+    val orangeColor = Color(0xFFFFA500)
 
     TopAppBar(
         backgroundColor = Color.White,
@@ -38,7 +39,7 @@ fun TopBar(
                 text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                color = Color(0xFFFFA500),
+                color = orangeColor,
                 fontFamily = FontFamily.Monospace
 //            modifier = Modifier.background(Color(0xFFFFA500))
             )

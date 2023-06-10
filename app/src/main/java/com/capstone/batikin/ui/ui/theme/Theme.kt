@@ -44,40 +44,20 @@ fun BatikInTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
         LightColorPalette
     }
 
-//    val systemUiController = rememberSystemUiController()
-//    val context = LocalContext.current
-//
-//    CompositionLocalProvider(LocalContentColor provides Color.White) {
-//        SideEffect {
-//            val currentTheme =
-//                context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-//            val isDarkTheme = currentTheme == Configuration.UI_MODE_NIGHT_YES
-//
-//            if (isDarkTheme) {
-//                systemUiController.setSystemBarsColor(
-//                    color = Color.Transparent
-//                )
-//            } else {
-//                systemUiController.setSystemBarsColor(
-//                    color = Color.White
-//                )
-//            }
-//        }
-//    }
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = MaterialTheme.colors.isLight
+    val orangeColor = Color(0xFFFFA500)
 
-//    val systemUiController = rememberSystemUiController()
-//    val useDarkIcons = MaterialTheme.colors.isLight
-//
-//    SideEffect {
-//        systemUiController.setStatusBarColor(
-//            color = Color.Transparent,
-//            darkIcons = useDarkIcons
-//        )
-//        systemUiController.setNavigationBarColor(
-//            color = Color.Transparent,
-//            darkIcons = useDarkIcons
-//        )
-//    }
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = orangeColor,
+            darkIcons = useDarkIcons
+        )
+        systemUiController.setNavigationBarColor(
+            color = Color.Transparent,
+            darkIcons = useDarkIcons
+        )
+    }
 
     MaterialTheme(
         colors = colors,

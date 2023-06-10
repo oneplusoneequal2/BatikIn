@@ -46,6 +46,7 @@ import com.capstone.batikin.ui.screen.main.history.HistoryScreen
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
 import com.capstone.batikin.viewmodel.MainViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

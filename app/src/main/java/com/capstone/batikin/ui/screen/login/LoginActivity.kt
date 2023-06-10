@@ -15,9 +15,11 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.capstone.batikin.R
 import com.capstone.batikin.ui.EmailTextField
 import com.capstone.batikin.ui.PasswordTextField
 import com.capstone.batikin.ui.screen.main.MainActivity
@@ -64,7 +66,7 @@ fun Login(){
             context.startActivity(intent)
             Toast.makeText(context, response?.message.toString(), Toast.LENGTH_SHORT).show()
         } else if (isLogin == false) {
-            Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.invalid_data_message), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -77,7 +79,7 @@ fun Login(){
 
         ) {
             Text(
-                "Login",
+                text = stringResource(R.string.login),
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.h4,
@@ -107,14 +109,6 @@ fun Login(){
 
             Button(
                 onClick = {
-//                    mainViewModel.checkLogin(email, password)
-//                    if(isLogin == true) {
-//                        context.startActivity(Intent(context, MainActivity::class.java))
-//                        Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
-//                    } else if(isLogin == false) {
-//                        Toast.makeText(context, "email atau password salah!", Toast.LENGTH_SHORT).show()
-//                    }
-
                     mainViewModel.checkLogin(context, email, password)
 
                 },
@@ -126,7 +120,7 @@ fun Login(){
                 modifier = Modifier.width(250.dp),
 
                 ) {
-                Text("Masuk")
+                Text(text = stringResource(R.string.masuk))
             }
 
             if (isLoading == true) {

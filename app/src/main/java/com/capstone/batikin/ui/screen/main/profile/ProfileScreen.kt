@@ -22,17 +22,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.capstone.batikin.R
 import com.capstone.batikin.model.UserState
-import com.capstone.batikin.ui.components.TopBar
-import com.capstone.batikin.ui.screen.main.MainActivity
+import com.capstone.batikin.ui.components.TopBarGeneral
 import com.capstone.batikin.ui.screen.welcome.WelcomeActivity
 import com.capstone.batikin.viewmodel.MainViewModel
 
@@ -45,7 +45,7 @@ fun ProfileScreen(userState: UserState) {
     val mainViewModel = viewModel<MainViewModel>()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar(
+        TopBarGeneral(
             titleResId = R.string.title_profile
         )
         Column(
@@ -55,11 +55,12 @@ fun ProfileScreen(userState: UserState) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo_batikin),
+                painter = painterResource(id = R.drawable.profile_picture),
                 contentDescription = null,
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
+                    .border(2.dp, colorResource(id = R.color.orange_light), CircleShape)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -103,7 +104,7 @@ fun ProfileScreen(userState: UserState) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Settings",
+                                text = stringResource(R.string.setting),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp
                             )
@@ -140,7 +141,7 @@ fun ProfileScreen(userState: UserState) {
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = "Dark Mode",
+                                    text = stringResource(R.string.dark_mode),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp
                                 )

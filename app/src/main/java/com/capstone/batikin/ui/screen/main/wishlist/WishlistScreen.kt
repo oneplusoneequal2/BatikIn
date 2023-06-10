@@ -22,16 +22,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.model.Batik
-import coil.compose.rememberImagePainter
 import com.capstone.batikin.R
 import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
-import com.capstone.batikin.ui.components.TopBar
+import com.capstone.batikin.ui.components.TopBarGeneral
 import com.capstone.batikin.ui.navigation.Screen
 import com.capstone.batikin.viewmodel.MainViewModel
 
@@ -53,7 +51,7 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar(
+        TopBarGeneral(
             titleResId = R.string.title_wishlist
         )
         LazyColumn(
@@ -79,10 +77,13 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun WishlistItem(item: Batik, navController: NavHostController, onDelete: () -> Unit) {
+
+    val orangeColor = Color(0xFFFFA500)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp), // Atur jarak horizontal dan vertical pada Card
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         elevation = 8.dp,
         shape = RoundedCornerShape(8.dp),
         onClick = {navController.navigate(Screen.DetailBatik.createRoute(batikId = item.id))}
@@ -113,7 +114,7 @@ fun WishlistItem(item: Batik, navController: NavHostController, onDelete: () -> 
                 Text(
                     text = "Rp. ${item.price}",
                     style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colors.secondary
+                    color = orangeColor
                 )
             }
             IconButton(

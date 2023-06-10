@@ -13,12 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.capstone.batikin.R
-import com.capstone.batikin.ui.components.TopBar
+import com.capstone.batikin.ui.components.TopBarGeneral
 
 @Composable
 fun HistoryScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar(
+        TopBarGeneral(
             titleResId = R.string.title_history
         )
         Column(

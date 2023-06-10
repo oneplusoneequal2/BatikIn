@@ -2,7 +2,6 @@ package com.capstone.batikin.ui.screen.main.home
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -29,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,7 +41,6 @@ import com.capstone.batikin.R
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifier = Modifier) {
     var query by remember { mutableStateOf("") }
@@ -114,6 +111,7 @@ fun SearchHome(query: String, data: ArrayList<Batik>, navController: NavHostCont
 
 @Composable
 fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: String?) {
+
     HomeBanner(name)
 
     Spacer(modifier = Modifier.height(8.dp))
@@ -259,11 +257,11 @@ fun HomeBanner(name: String?) {
             .clip(shape = RoundedCornerShape(20.dp))
             .background(color = Color.Gray)
             .fillMaxWidth()
-            .height(100.dp),
+            ,
         contentAlignment = Alignment.CenterStart
     ){
         Image(
-            painter = painterResource(id = R.drawable.home_banner),
+            painter = painterResource(id = R.drawable.banner_home_jajar),
             contentDescription = "banner",
             modifier = Modifier
                 .fillMaxWidth()

@@ -1,14 +1,17 @@
 package com.capstone.batikin.ui.screen.welcome
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,17 +25,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.capstone.batikin.R
 import com.capstone.batikin.ui.screen.login.LoginActivity
 import com.capstone.batikin.ui.screen.register.RegisterActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 class WelcomeActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BatikInTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -47,6 +55,22 @@ class WelcomeActivity : ComponentActivity() {
 @Composable
 fun WelcomeApp() {
     val context = LocalContext.current
+
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = MaterialTheme.colors.isLight
+    val orangeColor = Color(0xFFFFA500)
+
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = orangeColor,
+            darkIcons = useDarkIcons
+        )
+        systemUiController.setNavigationBarColor(
+            color = orangeColor,
+            darkIcons = useDarkIcons
+        )
+    }
+
     Column(
         modifier = Modifier
             .background(colorResource(R.color.orange_light))

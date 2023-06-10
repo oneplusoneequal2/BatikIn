@@ -9,60 +9,19 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capstone.batikin.R
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
-
-//punya adit
-//@Composable
-//fun TopBar(query: String, onChange: (String) -> Unit) {
-//
-//    TopAppBar(
-//        backgroundColor = MaterialTheme.colors.primary,
-//        contentPadding = PaddingValues(16.dp),
-//        contentColor = Color.White
-//    ) {
-//
-//        SearchBar(query = query, onChange = onChange)
-//
-//        Spacer(modifier = Modifier.width(20.dp))
-//
-//        Icon(
-//            imageVector = Icons.Default.ShoppingCart,
-//            contentDescription = null,
-//            tint = MaterialTheme.colors.onPrimary
-//        )
-//
-//    }
-//}
-//
-//@Composable
-//fun SearchBar(query: String, onChange: (String) -> Unit) {
-//    TextField(
-//        value = query,
-//        label = { Text("Search batik here")},
-//        onValueChange = onChange ,
-//        modifier = Modifier
-//            .clip(shape = RoundedCornerShape(30.dp)),
-//        colors = TextFieldDefaults.textFieldColors(
-//            backgroundColor = Color.White,
-//            textColor = Color.Gray
-//        ),
-//        leadingIcon = {
-//            Icon(
-//                imageVector = Icons.Default.Search,
-//                contentDescription = null)
-//        },
-//    )
-//}
-
 
 @Composable
 fun TopBar(query: String, onChange: (String) -> Unit) {
 
+    val orangeColor = Color(0xFFFFA500)
+
     TopAppBar(
-//        backgroundColor = Color(0xFFFFA500),
         backgroundColor = Color.White,
         contentPadding = PaddingValues(8.dp),
         contentColor = Color.White,
@@ -79,8 +38,7 @@ fun TopBar(query: String, onChange: (String) -> Unit) {
         Icon(
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
-            tint = Color(0xFFFFA500),
-//            tint = Color.White,
+            tint = orangeColor,
             modifier = Modifier.padding(end = 16.dp)
         )
     }
@@ -111,7 +69,7 @@ fun SearchBar(query: String, onChange: (String) -> Unit) {
         },
         placeholder = {
             Text(
-                text = "Search batik here",
+                text = stringResource(R.string.search_batik_here),
                 color = Color.Gray.copy(alpha = 0.5f)
             )
         }

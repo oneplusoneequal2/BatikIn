@@ -47,5 +47,42 @@
     <string name="menu_profile">Profile</string>
     <string name="Camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="title_camera">Camera</string>
+    <string name="capture_batik">Capture Your Batik Pattern</string>
+
+    <string name="batik_cendrawasih">Batik Cendrawasih</string>
+    <string name="batik_dayak">Batik Dayak</string>
+    <string name="batik_geblek_renteng">Batik Geblek Renteng</string>
+    <string name="batik_ikat_celup">Batik Ikat Celup</string>
+    <string name="batik_insang">Batik Insang</string>
+    <string name="batik_kawung">Batik Kawung</string>
+    <string name="batik_lasem">Batik Lasem</string>
+    <string name="batik_megamendung">Batik Mega Mendung</string>
+    <string name="batik_pala">Batik Pala</string>
+    <string name="batik_parang">Batik Parang</string>
+    <string name="batik_poleng">Batik Poleng</string>
+    <string name="batik_tambal">Batik Tambal</string>
+    <string name="batik_sekar_jagad">Batik Sekar Jagad</string>
+
+    <string name="plus_keranjang">+ Keranjang</string>
+    <string name="beli_langsung">Beli Langsung</string>
+    <string name="lihat_semua">Lihat semua</string>
+    <string name="sembunyikan_semua">Sembunyikan</string>
+    <string name="deskripsi">Deskripsi</string>
+
+    <!--price detail -->
+    <string name="price_format">Rp. %s</string>
+
+    <string name="masuk">Masuk</string>
+    <string name="login">Login</string>
+    <string name="invalid_data_message">Email atau Password salah!</string>
+    <string name="buat_akun">Buat Akun</string>
+    <string name="daftar">Daftar</string>
+    <string name="setting">Settings</string>
+    <string name="title_batik_scan">Batik Scan</string>
+    <string name="search_batik_here">Search Batik Here!</string>
+    <string name="title_payment">Payment</string>
+    <string name="detail_title">Detail Batik</string>
+
 
 </resources>

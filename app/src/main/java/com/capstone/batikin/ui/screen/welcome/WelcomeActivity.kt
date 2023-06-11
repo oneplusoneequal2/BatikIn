@@ -25,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.capstone.batikin.R
@@ -50,7 +52,15 @@ class WelcomeActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity() // Menutup semua aktivitas di tumpukan aktivitas
+    }
+
 }
+
+
 
 @Composable
 fun WelcomeApp() {
@@ -59,8 +69,8 @@ fun WelcomeApp() {
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
     val orangeColor = Color(0xFFFFA500)
-    val darkOrangeColor = Color(0xFFFF8C00)
-
+    val brownColor = Color(0xFF87481C)
+    val creamColor = Color(0xFFFDCF8A)
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -102,14 +112,14 @@ fun WelcomeApp() {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+            colors = ButtonDefaults.buttonColors(backgroundColor = creamColor),
             modifier = Modifier
                 .width(250.dp)
                 .height(45.dp)
         ) {
             Text(
                 text = "Login",
-                color = darkOrangeColor,
+                color = brownColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace
@@ -121,14 +131,14 @@ fun WelcomeApp() {
                 val intent = Intent(context, RegisterActivity::class.java)
                 context.startActivity(intent)
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+            colors = ButtonDefaults.buttonColors(backgroundColor = creamColor),
             modifier = Modifier
                 .width(250.dp)
                 .height(45.dp)
         ) {
             Text(
                 text = "Sign Up",
-                color = darkOrangeColor,
+                color = brownColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace

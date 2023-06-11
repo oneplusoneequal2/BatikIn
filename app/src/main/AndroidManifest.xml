@@ -5,7 +5,6 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,7 +16,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/batikin_symbol"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BatikIn"
@@ -35,7 +34,7 @@
         <activity
             android:name=".ui.screen.main.MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_main">
+            >
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,9 +42,6 @@
         </activity>
         <activity
             android:name=".ui.screen.camera.CameraActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.screen.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.screen.register.RegisterActivity"

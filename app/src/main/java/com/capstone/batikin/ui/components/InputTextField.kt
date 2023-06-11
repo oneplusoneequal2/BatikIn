@@ -6,6 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -124,9 +127,9 @@ fun PasswordTextField(
     password: String,
     onPasswordChange: (String) -> Unit,
     onImeAction: () -> Unit
-
 ) {
     var isError by remember { mutableStateOf(false) }
+    var passwordVisibility by remember { mutableStateOf(false) }
 
     OutlinedTextField(
         value = password,
@@ -139,7 +142,7 @@ fun PasswordTextField(
                 Text("Password")
             }
         },
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -154,7 +157,18 @@ fun PasswordTextField(
         keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if (isError) Color.Red else LocalContentColor.current
-        )
+        ),
+        trailingIcon = {
+            IconButton(
+                onClick = { passwordVisibility = !passwordVisibility }, // sandi terlihat saat ikonn ditekan
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Icon(
+                    imageVector = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                    contentDescription = if (passwordVisibility) "Hide Password" else "Show Password"
+                )
+            }
+        }
     )
     if (password.isEmpty() && password.isNotEmpty()) {
         Text(
@@ -171,14 +185,15 @@ fun PasswordTextField(
     }
 }
 
+
 @Composable
 fun ConfirmPasswordTextField(
     password: String,
     onPasswordChange: (String) -> Unit,
     onImeAction: () -> Unit
-
 ) {
     var isError by remember { mutableStateOf(false) }
+    var passwordVisibility by remember { mutableStateOf(false) }
 
     OutlinedTextField(
         value = password,
@@ -191,7 +206,7 @@ fun ConfirmPasswordTextField(
                 Text("Confirm Password")
             }
         },
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -206,7 +221,18 @@ fun ConfirmPasswordTextField(
         keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         textStyle = MaterialTheme.typography.body1.copy(
             color = if (isError) Color.Red else LocalContentColor.current
-        )
+        ),
+        trailingIcon = {
+            IconButton(
+                onClick = { passwordVisibility = !passwordVisibility },
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Icon(
+                    imageVector = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                    contentDescription = if (passwordVisibility) "Hide Password" else "Show Password"
+                )
+            }
+        }
     )
     if (password.isEmpty() && password.isNotEmpty()) {
         Text(
@@ -222,6 +248,7 @@ fun ConfirmPasswordTextField(
         )
     }
 }
+
 
 
 

@@ -59,6 +59,8 @@ fun WelcomeApp() {
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
     val orangeColor = Color(0xFFFFA500)
+    val darkOrangeColor = Color(0xFFFF8C00)
+
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -73,7 +75,7 @@ fun WelcomeApp() {
 
     Column(
         modifier = Modifier
-            .background(colorResource(R.color.orange_light))
+            .background(orangeColor)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -100,14 +102,14 @@ fun WelcomeApp() {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
             modifier = Modifier
                 .width(250.dp)
                 .height(45.dp)
         ) {
             Text(
                 text = "Login",
-                color = Color.Black,
+                color = darkOrangeColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace
@@ -119,14 +121,14 @@ fun WelcomeApp() {
                 val intent = Intent(context, RegisterActivity::class.java)
                 context.startActivity(intent)
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
             modifier = Modifier
                 .width(250.dp)
                 .height(45.dp)
         ) {
             Text(
                 text = "Sign Up",
-                color = Color.Black,
+                color = darkOrangeColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = FontFamily.Monospace

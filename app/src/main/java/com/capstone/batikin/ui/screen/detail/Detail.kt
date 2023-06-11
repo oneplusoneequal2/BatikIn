@@ -269,20 +269,20 @@ fun TopBarDetail(
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowLeft,
                     contentDescription = "Back",
-                    tint = Color(0xFFFFA500),
+                    tint = Color.White,
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable { onBackClicked() }
-                        .background(Color.White, shape = CircleShape)
+                        .background(Color(0xFFFFA500), shape = CircleShape)
                 )
                 Text(
                     text = batikTitle,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = Color(0xFFFFA500),
+                    color = Color.White,
                     fontFamily = FontFamily.Monospace,
                     modifier = Modifier
-                        .background(Color.White, shape = CutCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp))
+                        .background(Color(0xFFFFA500), shape = CutCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp))
                         .padding(horizontal = 10.dp)
                 )
             }

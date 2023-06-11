@@ -50,12 +50,10 @@ fun BatikInTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
 
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = orangeColor,
-            darkIcons = useDarkIcons
+            color = Color.White,
         )
         systemUiController.setNavigationBarColor(
-            color = Color.Transparent,
-            darkIcons = useDarkIcons
+            color = Color.White,
         )
     }
 

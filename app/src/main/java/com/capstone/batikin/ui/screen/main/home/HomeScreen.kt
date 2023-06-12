@@ -46,7 +46,10 @@ fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifi
     var query by remember { mutableStateOf("") }
 
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getBatikList()
+    LaunchedEffect(mainViewModel) {
+        mainViewModel.getBatikList()
+    }
+
     val dataList by mainViewModel.listData.observeAsState()
     val isLoading by mainViewModel.isLoading.observeAsState()
 
@@ -131,7 +134,7 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: 
 //                horizontalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
-        items(data.filter { it.rating >= 4.2}, key = { item -> item.id }) { item ->
+        items(data.filter { it.rating >= 4.5}, key = { item -> item.id }) { item ->
             Item(
                 item = item,
                 navController = navController,

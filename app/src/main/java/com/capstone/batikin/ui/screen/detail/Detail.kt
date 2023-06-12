@@ -64,12 +64,14 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
     var isAddedToWishlist by remember { mutableStateOf(false) }
 
     val mainViewModel = viewModel<MainViewModel>()
-    mainViewModel.getBatikDetail(id)
-    mainViewModel.getBatikList()
 
-    userState.token?.let {
-        userState.id?.let { it1 ->
-            mainViewModel.getWishlist(it, it1)
+    LaunchedEffect(mainViewModel) {
+        mainViewModel.getBatikDetail(id)
+        mainViewModel.getBatikList()
+        userState.token?.let {
+            userState.id?.let { it1 ->
+                mainViewModel.getWishlist(it, it1)
+            }
         }
     }
 
@@ -83,7 +85,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
     val batikListLive by mainViewModel.listData.observeAsState()
     val isLoading by mainViewModel.isLoading.observeAsState()
     val batikList = arrayListOf<Batik>()
-    batikListLive?.filter { it?.id != batikItem?.id }?.map {
+    batikListLive?.filter { it?.id != batikItem?.id  }?.map {
         batikList.add(Batik(it!!.id, it.title, it.photourl, it.price, it.description,
             it.rating as Double
         ))
@@ -232,10 +234,8 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 
                 // Row dibawah tombol beli
 
-                Row(horizontalArrangement = Arrangement.Center) {
-                    if(isLoading == true){
-                        CircularProgressIndicator()
-                    }
+                if(isLoading == true){
+                    CircularProgressIndicator()
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -244,7 +244,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                 LazyRow(
                     modifier = Modifier.padding(vertical = 8.dp)
                 ) {
-                    items(batikList.take(5), key = {it.id}) {
+                    items(batikList.shuffled().take(10), key = {it.id}) {
                         Item(
                             item = it,
                             navController = navController as NavHostController,

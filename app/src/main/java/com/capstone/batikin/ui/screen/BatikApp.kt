@@ -3,20 +3,14 @@ package com.capstone.batikin.ui.screen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -26,18 +20,14 @@ import com.capstone.batikin.ui.navigation.Screen
 import com.capstone.batikin.ui.screen.main.profile.ProfileScreen
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.screen.camera.CameraApp
@@ -46,7 +36,6 @@ import com.capstone.batikin.ui.screen.main.history.HistoryScreen
 import com.capstone.batikin.ui.screen.main.home.HomeScreen
 import com.capstone.batikin.ui.screen.main.wishlist.WishlistScreen
 import com.capstone.batikin.viewmodel.MainViewModel
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -98,7 +87,7 @@ fun BatikApp(
             // Set nilai status isDetailScreen sesuai dengan rute saat ini
             isDetailScreen.value = currentRoute == Screen.DetailBatik.route
 
-            NavigationHost(navController = navController, userState)
+            NavigationHost(navController = navController, userState, innerPadding)
 
 
         }
@@ -107,7 +96,11 @@ fun BatikApp(
 
 
 @Composable
-fun NavigationHost(navController: NavHostController, userState: UserState) {
+fun NavigationHost(
+    navController: NavHostController,
+    userState: UserState,
+    innerPadding: PaddingValues
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val wishlistItems = listDummy
@@ -135,7 +128,7 @@ fun NavigationHost(navController: NavHostController, userState: UserState) {
         }
         // Kamera klo gk pake FAB
         composable(Screen.Camera.route) {
-            CameraApp()
+            CameraApp(navController = navController, paddingValues = innerPadding)
         }
         //Implement detail
         composable(

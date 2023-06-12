@@ -11,13 +11,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,15 +28,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.batikin.R
 import com.capstone.batikin.ml.Model
+import com.capstone.batikin.model.Batik
 import com.capstone.batikin.ui.components.TopBarGeneral
+import com.capstone.batikin.ui.screen.main.home.Item
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
+import com.capstone.batikin.viewmodel.MainViewModel
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -54,7 +66,7 @@ private fun rotateFile(file: File, isBackCamera: Boolean = false) {
 }
 
 @Composable
-fun CameraApp() {
+fun CameraApp(navController: NavHostController, paddingValues: PaddingValues) {
     var image by remember { mutableStateOf<Uri?>(Uri.EMPTY)}
 
     val showPreview = remember { mutableStateOf(false) }
@@ -180,17 +192,8 @@ fun CameraApp() {
                     }
                 }
             } else {
+                Divider()
                 Spacer(modifier = Modifier.height(16.dp))
-                //            Button(onClick = { }) {
-                //                Icon(
-                //                    imageVector = Icons.Default.AdfScanner,
-                //                    contentDescription = "Scan"
-                //                )
-                //                Text(
-                //                    text = "Scan",
-                //                    style = MaterialTheme.typography.h6
-                //                )
-                //            }
 
                 // TFLite
 
@@ -243,27 +246,60 @@ fun CameraApp() {
                 )
 
 
-                Toast.makeText(context, items.indexOf(maxValue).toString(), Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, items.indexOf(maxValue).toString(), Toast.LENGTH_SHORT)
+//                    .show()
+                val mainViewModel = viewModel<MainViewModel>()
 
-                if (maxValue != null) {
+                if (maxValue != null && (maxValue*100f) > 50f) {
                     Text(
-                        text = batikTypes[maxValueIndex] + " - " + String.format(
-                            "%.2f",
-                            maxValue * 100f
-                        ) + "%"
+//                        text = batikTypes[maxValueIndex] + " - " + String.format(
+//                            "%.2f",
+//                            maxValue * 100f
+//                        ) + "%"
+                        text = batikTypes[maxValueIndex],
+                        style = MaterialTheme.typography.h5
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    LaunchedEffect(key1 = mainViewModel) {
+                        mainViewModel.getBatikList()
+                    }
+
+                    val batikList by mainViewModel.listData.observeAsState()
+                    val isLoading by mainViewModel.isLoading.observeAsState()
+
+                    if(isLoading == true) {
+                        CircularProgressIndicator()
+                    }
+
+                    val batikArray = arrayListOf<Batik>()
+
+                    batikList?.filter { it!!.title.lowercase() == batikTypes[maxValueIndex].lowercase() }?.map { item ->
+                        batikArray.add(Batik(item!!.id, item.title, item.photourl, item.price, item.description,
+                            item.rating as Double)
+                        )
+                    }
+
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier
+                            .height(500.dp)
+                            .padding(paddingValues),
+                        verticalArrangement = Arrangement.spacedBy(5.dp)
+                    ) {
+                        items(batikArray, key = { it.id }) { item ->
+                            Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
+                        }
+                    }
+
+                }else {
+                    Text(
+                        text = "Undefined Batik's Type"
                     )
                 }
 
-                //            LazyColumn(
-                //                modifier = Modifier.height(100.dp)
-                //            ) {
-                //                items(items.sortedByDescending { it}) {
-                //                    Text(
-                //                        text = batikTypes[maxValueIndex] + " - " + String.format("%.2f", it*100f)
-                //                    )
-                //                }
-                //            }
 
                 model.close()
             }
@@ -272,10 +308,11 @@ fun CameraApp() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CameraAppPreview() {
-    BatikInTheme {
-        CameraApp()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun CameraAppPreview() {
+//
+//    BatikInTheme {
+//        CameraApp()
+//    }
+//}

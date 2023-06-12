@@ -67,7 +67,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 
     LaunchedEffect(mainViewModel) {
         mainViewModel.getBatikDetail(id)
-        mainViewModel.getBatikList()
+//        mainViewModel.getBatikList()
         userState.token?.let {
             userState.id?.let { it1 ->
                 mainViewModel.getWishlist(it, it1)
@@ -82,14 +82,14 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
     isAddedToWishlist = wishlistCheckArray?.isNotEmpty() ?: false
 
     val batikItem by mainViewModel.detailData.observeAsState()
-    val batikListLive by mainViewModel.listData.observeAsState()
-    val isLoading by mainViewModel.isLoading.observeAsState()
-    val batikList = arrayListOf<Batik>()
-    batikListLive?.filter { it?.id != batikItem?.id  }?.map {
-        batikList.add(Batik(it!!.id, it.title, it.photourl, it.price, it.description,
-            it.rating as Double
-        ))
-    }
+//    val batikListLive by mainViewModel.listData.observeAsState()
+//    val isLoading by mainViewModel.isLoading.observeAsState()
+//    val batikList = arrayListOf<Batik>()
+//    batikListLive?.filter { it?.id != batikItem?.id  }?.map {
+//        batikList.add(Batik(it!!.id, it.title, it.photourl, it.price, it.description,
+//            it.rating as Double
+//        ))
+//    }
 
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
@@ -118,8 +118,9 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                     Image(
                         painter = painter,
                         contentDescription = null,
+                        contentScale = ContentScale.FillHeight,
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxWidth().height(300.dp)
                     )
                 }
             }
@@ -234,24 +235,24 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 
                 // Row dibawah tombol beli
 
-                if(isLoading == true){
-                    CircularProgressIndicator()
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                SectionHeader(text = "Discover More")
-                LazyRow(
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    items(batikList.shuffled().take(10), key = {it.id}) {
-                        Item(
-                            item = it,
-                            navController = navController as NavHostController,
-                            modifier = Modifier
-                                .width(140.dp))
-                    }
-                }
+//                if(isLoading == true){
+//                    CircularProgressIndicator()
+//                }
+//
+//                Spacer(modifier = Modifier.height(20.dp))
+//
+//                SectionHeader(text = "Discover More")
+//                LazyRow(
+//                    modifier = Modifier.padding(vertical = 8.dp)
+//                ) {
+//                    items(batikList.shuffled().take(10), key = {it.id}) {
+//                        Item(
+//                            item = it,
+//                            navController = navController as NavHostController,
+//                            modifier = Modifier
+//                                .width(140.dp))
+//                    }
+//                }
             }
         }
     }

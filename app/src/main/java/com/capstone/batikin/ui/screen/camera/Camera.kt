@@ -109,7 +109,7 @@ fun CameraApp() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .background(colorResource(id = R.color.white))
+                .background(MaterialTheme.colors.background)
                 .padding(16.dp)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())

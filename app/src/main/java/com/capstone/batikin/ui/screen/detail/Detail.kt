@@ -95,6 +95,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
+                .background(MaterialTheme.colors.background)
         ) {
             Box(modifier = Modifier.alpha(imageAlpha)) {
                 if (loadingDone) {

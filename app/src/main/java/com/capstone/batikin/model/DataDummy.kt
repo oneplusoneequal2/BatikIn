@@ -1,6 +1,7 @@
 package com.capstone.batikin.model
 
 import androidx.compose.ui.res.stringResource
+import com.capstone.batikin.R
 
 val emailDummy = "test@gmail.com"
 val passDummy = "12345678"
@@ -125,12 +126,19 @@ val listDummy = arrayListOf<Batik>(
     )
 )
 
-val categoryDummy = arrayListOf<String>(
+val categoryDummy = arrayListOf(
     "Semua",
-   "Sogan (Solo)",
-    "Gentongan (Madura)",
-    "Mega Mendung (Cirebon)",
-    "Kraton (Yogyakarta)",
-    "Simbut (Banten)",
-    "Sedapur (Magetan)"
+    "Batik Cendrawasih",
+    "Batik Dayak",
+    "Batik Geblek Renteng",
+    "Batik Ikat Celup",
+    "Batik Insang",
+    "Batik Kawung",
+    "Batik Lasem",
+    "Batik Mega Mendung",
+    "Batik Pala",
+    "Batik Parang",
+    "Batik Poleng",
+    "Batik Tambal",
+    "Batik Sekar Jagad"
 )

@@ -163,7 +163,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                     batikItem?.description?.let {
                         Text(
                             text = it,
-                            maxLines = if (isExpanded) 10 else 3,
+                            maxLines = if (isExpanded) 20 else 3,
                             overflow = TextOverflow.Ellipsis
                         )
                     }

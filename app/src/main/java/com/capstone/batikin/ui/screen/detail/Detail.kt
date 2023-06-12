@@ -1,8 +1,11 @@
 package com.capstone.batikin.ui.screen.detail
 
 import android.content.Intent
+import android.widget.Space
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,6 +46,8 @@ import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.UserState
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.components.TopBarGeneral
+import com.capstone.batikin.ui.screen.main.home.Item
+import com.capstone.batikin.ui.screen.main.home.SectionHeader
 import com.capstone.batikin.ui.screen.payment.PaymentActivity
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.capstone.batikin.viewmodel.MainViewModel
@@ -60,6 +65,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
 
     val mainViewModel = viewModel<MainViewModel>()
     mainViewModel.getBatikDetail(id)
+    mainViewModel.getBatikList()
 
     userState.token?.let {
         userState.id?.let { it1 ->
@@ -74,6 +80,14 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
     isAddedToWishlist = wishlistCheckArray?.isNotEmpty() ?: false
 
     val batikItem by mainViewModel.detailData.observeAsState()
+    val batikListLive by mainViewModel.listData.observeAsState()
+    val isLoading by mainViewModel.isLoading.observeAsState()
+    val batikList = arrayListOf<Batik>()
+    batikListLive?.filter { it?.id != batikItem?.id }?.map {
+        batikList.add(Batik(it!!.id, it.title, it.photourl, it.price, it.description,
+            it.rating as Double
+        ))
+    }
 
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
@@ -215,6 +229,29 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                         )
                     }
                 }
+
+                // Row dibawah tombol beli
+
+                Row(horizontalArrangement = Arrangement.Center) {
+                    if(isLoading == true){
+                        CircularProgressIndicator()
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                SectionHeader(text = "Discover More")
+                LazyRow(
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    items(batikList.take(5), key = {it.id}) {
+                        Item(
+                            item = it,
+                            navController = navController as NavHostController,
+                            modifier = Modifier
+                                .width(140.dp))
+                    }
+                }
             }
         }
     }
@@ -283,7 +320,15 @@ fun TopBarDetail(
                     color = Color.White,
                     fontFamily = FontFamily.Monospace,
                     modifier = Modifier
-                        .background(Color(0xFFFFA500), shape = CutCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomEnd = 16.dp, bottomStart = 16.dp))
+                        .background(
+                            Color(0xFFFFA500),
+                            shape = CutCornerShape(
+                                topStart = 16.dp,
+                                topEnd = 16.dp,
+                                bottomEnd = 16.dp,
+                                bottomStart = 16.dp
+                            )
+                        )
                         .padding(horizontal = 10.dp)
                 )
             }

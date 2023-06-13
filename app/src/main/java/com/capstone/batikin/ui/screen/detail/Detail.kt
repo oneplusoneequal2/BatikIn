@@ -217,6 +217,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                     Button(
                         onClick = {
                             val intent = Intent(context, PaymentActivity::class.java)
+                            intent.putExtra("id_extra", id)
                             context.startActivity(intent)
                         },
                         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.orange_light)),

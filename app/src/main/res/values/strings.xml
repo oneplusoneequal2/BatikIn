@@ -38,7 +38,7 @@
     <string name="price_payment">Rp. %d </string>
 
 
-<!--    bottom nav-->
+    <!--    bottom nav-->
     <string name="hide_bottom_view_on_scroll_behavior">com.google.android.material.bottomnavigation.HideBottomViewOnScrollBehavior</string>
     <string name="fab_bottom_appbar_behavior">com.google.android.material.behavior.FloatingActionButton.Behavior</string>
     <string name="menu_home">Home</string>
@@ -83,6 +83,7 @@
     <string name="search_batik_here">Search Batik Here!</string>
     <string name="title_payment">Payment</string>
     <string name="detail_title">Detail Batik</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>

@@ -6,7 +6,7 @@ BatikIn is an Android application developed by Capstone Team C23-PS257. The main
 
 - Scan Batik Motifs: Users can use the app to scan and identify batik motifs by capturing an image of a batik fabric or pattern.
 - Motif Identification: BatikIn utilizes machine learning algorithms to analyze the scanned image and identify the specific batik motif.
-- Motif Information: Once the motif is identified, the app provides detailed information about the history, cultural significance, and characteristics of the batik motif.
+- Motif Information: The app provides detailed information about the description of the batik motif.
 - E-commerce Integration: In the future, BatikIn aims to become an e-commerce platform where users can purchase batik fabrics and products directly from the app.
 
 ## Development Team

@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 BatikApp(navController = navController, userState = userState)
 
+                //back di home langsung keluar
                 BackHandler {
                     if (navController.currentDestination?.route == "home") {
                         finish()

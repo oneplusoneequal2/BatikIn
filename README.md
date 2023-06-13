@@ -30,6 +30,9 @@ In the future, the BatikIn team plans to further enhance the application by impl
 - User Profiles: Implement user profiles to enable personalized recommendations and a seamless shopping experience.
 - Dark mode: Implement dark mode in order to make better user experience
 
+## Link Apk
+https://drive.google.com/drive/u/1/folders/1Wvwf4f_gIf0dT38Z860GYiB6dlYM-g10
+
 Link Screenshot
 https://drive.google.com/drive/u/3/folders/1C3EbZSAWArOhbVboJ_az79z9a2iv2X1p
 

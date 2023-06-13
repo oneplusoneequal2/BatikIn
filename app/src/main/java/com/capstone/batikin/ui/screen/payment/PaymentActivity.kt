@@ -1,6 +1,7 @@
 package com.capstone.batikin.ui.screen.payment
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -12,10 +13,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -24,6 +27,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.capstone.batikin.ui.ui.theme.BatikInTheme
 import com.capstone.batikin.ui.ui.theme.Shapes
@@ -32,11 +37,13 @@ import com.capstone.batikin.model.Batik
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.components.TopBarGeneral
 import com.capstone.batikin.ui.screen.map.Address
+import com.capstone.batikin.viewmodel.MainViewModel
 
 
 class PaymentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val id = intent.getIntExtra("id_extra", 0)
         setContent {
             BatikInTheme {
                 Surface(
@@ -58,7 +65,7 @@ class PaymentActivity : ComponentActivity() {
                             Address()
                             Spacer(modifier = Modifier.height(16.dp))
                             HeaderMini(text = "Jumlah barang")
-                            PaymentScreen()
+                            PaymentScreen(id)
                         }
                     }
                 }
@@ -80,9 +87,23 @@ fun HeaderMini(text: String){
 }
 
 @Composable
-fun PaymentScreen() {
-    val productList = remember { mutableStateListOf<Batik>() }
-    productList.add(listDummy[0]) // Menambahkan satu item batik dari data dummy
+fun PaymentScreen(id: Int) {
+//    val productList = remember { mutableStateListOf<Batik>() }
+//    productList.add(listDummy[0]) // Menambahkan satu item batik dari data dummy
+
+    val mainViewModel = viewModel<MainViewModel>()
+
+    LaunchedEffect(mainViewModel) {
+        mainViewModel.getBatikDetail(id)
+    }
+
+    val item by mainViewModel.detailData.observeAsState()
+
+
+    val product =
+        item?.let { Batik(it.id, item!!.title, item!!.photourl, item!!.price, item!!.description, item!!.rating as Double) }
+
+//    productList.add(Batik(item!!.id, item!!.title, item!!.photourl, item!!.price, item!!.description, item!!.rating as Double))
 
     val productCountMap = remember { mutableStateMapOf<Int, Int>() }
 
@@ -93,24 +114,29 @@ fun PaymentScreen() {
             modifier = Modifier.weight(1f)
         ) {
             item {
-                val product = productList[0]
-                val count = productCountMap[product.id] ?: 0
-                val totalPrice = product.price * count
+                val count = productCountMap[product?.id] ?: 1
+                val totalPrice = product?.price?.times(count)
 
-                PaymentItem(
-                    item = product,
-                    count = count,
-                    totalPrice = totalPrice,
-                    onProductCountChanged = { id, newCount ->
-                        productCountMap[id] = newCount
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (product != null) {
+                    if (totalPrice != null) {
+                        PaymentItem(
+                            item = product,
+                            count = count,
+                            totalPrice = totalPrice,
+                            onProductCountChanged = { id, newCount ->
+                                productCountMap[id] = newCount
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
             }
         }
 
+        val context = LocalContext.current
+
         Button(
-            onClick = { /* Tombol Bayar diklik */ },
+            onClick = { Toast.makeText(context, "Still under development", Toast.LENGTH_SHORT).show() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -196,6 +222,6 @@ fun PaymentItemPreview() {
 @Preview
 @Composable
 fun PaymentScreenPreview(){
-    PaymentScreen()
+    PaymentScreen(1)
 }
 

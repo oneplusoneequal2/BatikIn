@@ -80,6 +80,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getWishlist(token: String, id: Int) {
+        _isLoading.value = true
         val client = ApiConfig.getApiService().getWishlist(token, id)
         client.enqueue(object : Callback<WishlistResponse>{
             override fun onResponse(
@@ -87,6 +88,7 @@ class MainViewModel: ViewModel() {
                 response: Response<WishlistResponse>
             ) {
                 _wishlistData.postValue(response.body()?.data)
+                _isLoading.value = false
             }
 
             override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {

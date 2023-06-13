@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -38,13 +39,18 @@ import com.capstone.batikin.viewmodel.MainViewModel
 fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostController, userState: UserState) {
     val mainViewModel = viewModel<MainViewModel>()
     val context = LocalContext.current
-    userState.token?.let {
-        userState.id?.let { it1 ->
-            mainViewModel.getWishlist(it, it1)
+    val wishlist by mainViewModel.wishlistData.observeAsState()
+    val isLoading by mainViewModel.isLoading.observeAsState()
+    val wishlistData = ArrayList<Batik>()
+
+    LaunchedEffect(key1 = wishlist) {
+        userState.token?.let {
+            userState.id?.let { it1 ->
+                mainViewModel.getWishlist(it, it1)
+            }
         }
     }
-    val wishlist by mainViewModel.wishlistData.observeAsState()
-    val wishlistData = ArrayList<Batik>()
+
     wishlist?.map {
         wishlistData.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
             it.rating as Double, true))
@@ -54,6 +60,9 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
         TopBarGeneral(
             titleResId = R.string.title_wishlist
         )
+        if (isLoading == true) {
+            CircularProgressIndicator()
+        }
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()

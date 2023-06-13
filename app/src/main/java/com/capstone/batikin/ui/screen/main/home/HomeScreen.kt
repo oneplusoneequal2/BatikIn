@@ -46,14 +46,13 @@ fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifi
     var query by remember { mutableStateOf("") }
 
     val mainViewModel = viewModel<MainViewModel>()
-    LaunchedEffect(mainViewModel) {
-        mainViewModel.getBatikList()
-    }
-
     val dataList by mainViewModel.listData.observeAsState()
     val isLoading by mainViewModel.isLoading.observeAsState()
-
     val data = ArrayList<Batik>()
+
+    LaunchedEffect(key1 = dataList) {
+        mainViewModel.getBatikList()
+    }
 
     dataList?.map {
         if (it != null) {

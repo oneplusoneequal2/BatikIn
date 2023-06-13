@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.capstone.batikin.R
+import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
 
@@ -54,13 +55,13 @@ fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifi
         mainViewModel.getBatikList()
     }
 
-    dataList?.map {
-        if (it != null) {
-            data.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
-                it.rating as Double
-            ))
-        }
-    }
+//    dataList?.map {
+//        if (it != null) {
+//            data.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
+//                it.rating as Double
+//            ))
+//        }
+//    }
 
     Scaffold(
         topBar = {
@@ -87,16 +88,16 @@ fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifi
                 )
             }
             if (query !== "") {
-                SearchHome(query = query, data, navController)
+                SearchHome(query = query, dataList, navController)
             } else {
-                HomeContent(data, navController, name = name)
+                HomeContent(dataList, navController, name = name)
             }
         }
     }
 }
 
 @Composable
-fun SearchHome(query: String, data: ArrayList<Batik>, navController: NavHostController) {
+fun SearchHome(query: String, data: List<DataItem?>?, navController: NavHostController) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -105,14 +106,22 @@ fun SearchHome(query: String, data: ArrayList<Batik>, navController: NavHostCont
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
     ) {
-        items(data.filter { it.title.lowercase().contains(query.lowercase())}, key = { item -> item.id }) { item ->
-            Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
+        if (data != null) {
+            items(data.filter { it!!.title.lowercase().contains(query.lowercase())}, key = { item ->
+                item?.id ?:  0
+            }) { item ->
+                if (item != null) {
+                    Item(item = Batik(item.id, item.title, item.photourl, item.price, item.description,
+                        item.rating as Double
+                    ), navController = navController, modifier = Modifier.fillMaxWidth())
+                }
+            }
         }
     }
 }
 
 @Composable
-fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: String?) {
+fun HomeContent(data: List<DataItem?>?, navController: NavHostController, name: String?) {
 
     HomeBanner(name)
 
@@ -133,13 +142,19 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: 
 //                horizontalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
-        items(data.filter { it.rating >= 4.5}, key = { item -> item.id }) { item ->
-            Item(
-                item = item,
-                navController = navController,
-                modifier = Modifier
-                    .width(140.dp)
-            )
+        if (data != null) {
+            items(data.filter { it?.rating as Double >= 4.5}, key = { item -> item?.id ?: 0 }) { item ->
+                if (item != null) {
+                    Item(
+                        item = Batik(item.id, item.title, item.photourl, item.price, item.description,
+                            item.rating as Double
+                        ),
+                        navController = navController,
+                        modifier = Modifier
+                            .width(140.dp)
+                    )
+                }
+            }
         }
     }
 
@@ -152,8 +167,14 @@ fun HomeContent(data: ArrayList<Batik>, navController: NavHostController, name: 
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp) // Atur jarak antara item
     ) {
-        items(data, key = { item -> item.id }) { item ->
-            Item(item = item, navController = navController, modifier = Modifier.fillMaxWidth())
+        if (data != null) {
+            items(data.filter { it?.id != 0}, key = { item -> item?.id ?: 0 }) { item ->
+                if (item != null) {
+                    Item(item = Batik(item.id, item.title, item.photourl, item.price, item.description,
+                        item.rating as Double
+                    ), navController = navController, modifier = Modifier.fillMaxWidth())
+                }
+            }
         }
     }
 

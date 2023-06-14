@@ -2,6 +2,7 @@ package com.capstone.batikin.ui.screen.detail
 
 import android.content.Intent
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -188,7 +189,7 @@ fun DetailApp(id: Int, navController: NavController, token: String, photoUrl: St
                 Row(horizontalArrangement = Arrangement.Center) {
                     Button(
                         onClick = {
-
+                            Toast.makeText(context, "Still under development", Toast.LENGTH_SHORT).show()
                         },
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                         modifier = Modifier

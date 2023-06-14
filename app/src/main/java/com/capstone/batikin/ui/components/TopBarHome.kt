@@ -1,5 +1,7 @@
 package com.capstone.batikin.ui.components
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -9,6 +11,7 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +23,7 @@ import com.capstone.batikin.ui.ui.theme.BatikInTheme
 fun TopBar(query: String, onChange: (String) -> Unit) {
 
     val orangeColor = Color(0xFFFFA500)
+    val context = LocalContext.current
 
     TopAppBar(
         backgroundColor = Color.White,
@@ -39,7 +43,9 @@ fun TopBar(query: String, onChange: (String) -> Unit) {
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
             tint = orangeColor,
-            modifier = Modifier.padding(end = 16.dp)
+            modifier = Modifier.padding(end = 16.dp).clickable(true) {
+                Toast.makeText(context, "Still under development", Toast.LENGTH_SHORT).show()
+            }
         )
     }
 }

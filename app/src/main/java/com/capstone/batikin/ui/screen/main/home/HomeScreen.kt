@@ -1,5 +1,6 @@
 package com.capstone.batikin.ui.screen.main.home
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +43,7 @@ import com.capstone.batikin.R
 import com.capstone.batikin.api.response.DataItem
 import com.capstone.batikin.model.listDummy
 import com.capstone.batikin.ui.navigation.Screen
+import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifier = Modifier) {
@@ -49,19 +52,10 @@ fun HomeScreen(navController: NavHostController, name: String?, modifier: Modifi
     val mainViewModel = viewModel<MainViewModel>()
     val dataList by mainViewModel.listData.observeAsState()
     val isLoading by mainViewModel.isLoading.observeAsState()
-    val data = ArrayList<Batik>()
 
     LaunchedEffect(key1 = dataList) {
         mainViewModel.getBatikList()
     }
-
-//    dataList?.map {
-//        if (it != null) {
-//            data.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
-//                it.rating as Double
-//            ))
-//        }
-//    }
 
     Scaffold(
         topBar = {
@@ -129,7 +123,6 @@ fun HomeContent(data: List<DataItem?>?, navController: NavHostController, name: 
 
     SectionHeader(text = "Batik Categories")
     LazyRow(
-//                horizontalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
         items(categoryDummy) { category ->
@@ -139,7 +132,6 @@ fun HomeContent(data: List<DataItem?>?, navController: NavHostController, name: 
 
     SectionHeader(text = "Recommendation")
     LazyRow(
-//                horizontalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.padding(vertical = 8.dp)
     ) {
         if (data != null) {
@@ -262,7 +254,6 @@ fun ItemPreview() {
 fun SectionHeader(text: String) {
     Text(
         text = text,
-//        fontSize = 26.sp,
         fontWeight = FontWeight.ExtraBold,
         color = Color.Gray,
         style = MaterialTheme.typography.subtitle1,
@@ -296,7 +287,6 @@ fun HomeBanner(name: String?) {
         ){
             Text(
                 text = "Hello $name",
-//                fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.background,
@@ -312,6 +302,7 @@ fun HomeBanner(name: String?) {
 fun CategoryItem(title: String) {
 
     var isClick by remember { mutableStateOf(title == categoryDummy[0]) }
+    val context = LocalContext.current
 
     // masih blm bisa di klik
 
@@ -335,7 +326,10 @@ fun CategoryItem(title: String) {
             fontWeight = FontWeight.SemiBold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.clickable(true) {
+                Toast.makeText(context, "Still under development", Toast.LENGTH_SHORT).show()
+            }
         )
     }
 }

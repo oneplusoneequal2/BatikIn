@@ -41,7 +41,6 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
     val context = LocalContext.current
     val wishlist by mainViewModel.wishlistData.observeAsState()
     val isLoading by mainViewModel.isLoading.observeAsState()
-    val wishlistData = ArrayList<Batik>()
 
     LaunchedEffect(key1 = wishlist) {
         userState.token?.let {
@@ -51,12 +50,7 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
         }
     }
 
-    wishlist?.map {
-        wishlistData.add(Batik(it.id, it.title, it.photourl, it.price, it.description,
-            it.rating as Double, true))
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         TopBarGeneral(
             titleResId = R.string.title_wishlist
         )
@@ -68,12 +62,16 @@ fun WishlistScreen(modifier: Modifier = Modifier, navController: NavHostControll
                 .fillMaxSize()
                 .padding(bottom = 56.dp),
         ) {
-            items(wishlistData) { item ->
-                WishlistItem(item = item, navController = navController, onDelete = {
-                    userState.token?.let {
-                        mainViewModel.deleteWishlist(context, it, item.id)
-                    }
-                })
+            wishlist?.let { it ->
+                items(it.filter { it.id != 0 }, key = { it.id}) { item ->
+                    WishlistItem(
+                        item = Batik(item.id, item.title, item.photourl, item.price, item.description, item.rating as Double, true),
+                        navController = navController, onDelete = {
+                            userState.token?.let {
+                                mainViewModel.deleteWishlist(context, it, item.id)
+                            }
+                        })
+                }
             }
 
         }

@@ -11,8 +11,15 @@ BatikIn is an Android application developed by Capstone Team C23-PS257. The main
 
 ## Development Team
 
-- Team Name: C23-PS257
-- Members: list team member
+- Team Code: C23-PS257
+- Members: 
+1. (ML) M264DKX4362 – Ricaro Alisio – Universitas Multimedia Nusantara - Active
+2. (ML) M172DSX2495 – Raihan Faiz – Universitas Gunadarma - Active
+3. (CC) C040DKX3974 – Imam Windharko – Institut Teknologi Sumatera - Active
+4. (CC) C172DSX2629 – Rifqi Feliantyto Rahmawan– Universitas Gunadarma - Active
+5. (MD) A264DSX2086 – Alan Prastowo – Universitas Multimedia Nusantara- Active
+6. (MD) A264DSX1402 – Aditya Fadhil Herindro – Universitas Multimedia Nusantara - Active
+
 
 ## Technologies Used
 

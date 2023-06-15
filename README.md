@@ -36,6 +36,8 @@ In the future, the BatikIn team plans to further enhance the application by impl
 - E-commerce Functionality: Integrate an e-commerce platform within the app, allowing users to purchase batik fabrics and products directly.
 - User Profiles: Implement user profiles to enable personalized recommendations and a seamless shopping experience.
 - Dark mode: Implement dark mode in order to make better user experience
+- Language Switching: Users will be able to switch between languages seamlessly within the app, allowing them to explore content in their preferred language.
+
 
 ## Link
 Link Apk BatikIn

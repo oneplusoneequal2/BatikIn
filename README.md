@@ -27,7 +27,8 @@ BatikIn is an Android application developed by Capstone Team C23-PS257. The main
 - Kotlin: The programming language used for developing the Android app.
 - Jetpack Compose: Modern toolkit for building native Android UI using a declarative approach. Jetpack compose offers a more efficient and flexible way to create UI compared to traditional Android XML layouts.
 - Machine Learning: The Machine Learning model uses the TensorFlow framework, which incorporates various processes such as data augmentation, transfer learning using the MobileNetV3 base model, and a model with 7 layers. The layers consist of a base_model, 3 dense layers, 2 dropout layers, and 1 Flatten layer. The model utilizes the Adam optimizer and the categorical_crossentropy loss function.
-- Cloud Computing: the using API from google cloud.....
+- Cloud Computing: Deploy the API using google cloud, the service that we use is app engine. then  for database we use cloud SQL. Then we save all photo database in the bucket of google storage
+
   
 ## Future Plans
 
